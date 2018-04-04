@@ -1,5 +1,6 @@
 package br.com.suprasync.apresentacao.servlet;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -77,6 +78,19 @@ public class AuxiliarServlet {
 				} catch (Exception e) {
 					arrayDados = (JsonArray) jparser.parse(parametroString);
 				}
+			} else {
+				JsonObject objetoJson = new JsonObject();
+				JsonParser jparser = new JsonParser();
+				StringBuilder sb = new StringBuilder();
+			    BufferedReader br = request.getReader();
+			    String str;
+			    while( (str = br.readLine()) != null ){
+			        sb.append(str);
+			    } 
+			    if (!sb.toString().isEmpty()) {
+			    	objetoJson = (JsonObject) jparser.parse(sb.toString());
+				    arrayDados.add(objetoJson);
+			    }	
 			}
 			
 			if (this.action == 1) {
@@ -99,6 +113,8 @@ public class AuxiliarServlet {
 			return true;
 
 		} catch (NumberFormatException | JsonSyntaxException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 

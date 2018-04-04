@@ -31,6 +31,7 @@ public class SacOcorrenciaFilter {
 	private Date dataFimPrevisaoTermino;
 	private Integer position;
 	private Integer max;
+	private boolean uteis;
 
 	public SacOcorrenciaFilter() {
 
@@ -174,6 +175,14 @@ public class SacOcorrenciaFilter {
 
 	public void setMax(Integer max) {
 		this.max = max;
+	}
+
+	public boolean isUteis() {
+		return uteis;
+	}
+
+	public void setUteis(boolean uteis) {
+		this.uteis = uteis;
 	}
 
 	private void montaFilterJson(JsonArray filterJson) throws ParseException, FalhaAoConverterDataException {

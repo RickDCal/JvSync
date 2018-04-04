@@ -1,5 +1,6 @@
 package br.com.suprasync.persistencia.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import javax.persistence.Query;
 
 import br.com.suprasync.persistencia.SacOcorrencia;
 import br.com.suprasync.persistencia.dao.exception.SacOcorrenciaNaoEncontradaException;
+import br.com.suprasync.persistencia.enumerate.SACOcorrenciaEnum;
 import br.com.suprasync.persistencia.filter.SacOcorrenciaFilter;
 
 @Stateless
@@ -102,6 +104,17 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 		if (filter.getDataFimPrevisaoTermino() != null) {
 			consulta.append(" and o.dataPrevisaoTermino <= :dataFimPrevisao ");
 			parametros.put("dataFimPrevisao", filter.getDataFimPrevisaoTermino());
+		}
+		
+		if (filter.isUteis()) {
+			consulta.append(" and o.situacaoOcorrencia not in :listSituacaoInuteis ");
+			List<SACOcorrenciaEnum> listSituacoes = new ArrayList<SACOcorrenciaEnum>();
+			listSituacoes.add(SACOcorrenciaEnum.AGRUPADA);
+			listSituacoes.add(SACOcorrenciaEnum.FEEDBACK);
+			listSituacoes.add(SACOcorrenciaEnum.SOLUCIONADA);
+			listSituacoes.add(SACOcorrenciaEnum.REMOVIDA);
+			
+			parametros.put("listSituacaoInuteis", listSituacoes);
 		}
 			
 		consulta.append(" order by o.id ");

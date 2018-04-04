@@ -9,6 +9,7 @@ public class SacOcorrenciaDTO {
 	private int id;	
 	private Integer idFuncionario;
 	private Integer idCliente;
+	private String nomeCliente;
 	private Date dataCadastro;
 	private Integer idSituacao;
 	private String assunto;
@@ -47,6 +48,14 @@ public class SacOcorrenciaDTO {
 
 	public void setIdCliente(Integer idCliente) {
 		this.idCliente = idCliente;
+	}
+
+	public String getNomeCliente() {
+		return nomeCliente;
+	}
+
+	public void setNomeCliente(String nomeCliente) {
+		this.nomeCliente = nomeCliente;
 	}
 
 	public Date getDataCadastro() {

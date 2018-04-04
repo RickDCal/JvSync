@@ -24,7 +24,7 @@ import br.com.suprasync.persistencia.SacOcorrencia;
 import br.com.suprasync.persistencia.dao.exception.ObjetoNaoEncontradoException;
 import br.com.suprasync.persistencia.filter.SacOcorrenciaFilter;;
 
-@WebServlet("/ocorrenciaServlet")
+@WebServlet("/syncOcorrenciaServlet")
 
 public class SacSyncServlet extends GenericServlet {
 	private static final long serialVersionUID = 1L;
@@ -38,19 +38,19 @@ public class SacSyncServlet extends GenericServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
+
+
 		AuxiliarServlet auxiliar = new AuxiliarServlet();
 		JsonObject retorno = new JsonObject();		
 		try {		
 			auxiliar.load(request);				
 			JsonArray dados = new JsonArray();		
-			
+
 			Integer position = auxiliar.position;		
 			Integer max = auxiliar.max;
 			Integer action = auxiliar.action;
 			JsonArray arrayDados = auxiliar.jsRecebido;		
-			
+
 			GenericFacade genericFacade = new GenericFacade();
 			SacOcorrenciaFacade sacFacade = new SacOcorrenciaFacade();
 			JsonParser jsonParser = new JsonParser();
@@ -60,50 +60,16 @@ public class SacSyncServlet extends GenericServlet {
 
 				switch (action) {
 				case 2:
-					if (auxiliar.id != null) {
-						Integer id = auxiliar.id;
 
-						SacOcorrencia ocorrencia = (SacOcorrencia) genericFacade.pesquisar(SacOcorrencia.class, id);				
-						if (ocorrencia != null) {
-							SacOcorrenciaDTO ocorrenciaDTO = new SacOcorrenciaDTO();							
-							JsonObject objetoJson = (JsonObject) jsonParser.parse(gson.toJson(ocorrenciaDTO.convertToDTO(ocorrencia)));
-							dados.add(objetoJson);
-						}					
-						auxiliar.setSuccess(true);
-					} else {
+					try {
+						SacOcorrenciaFilter filter = new SacOcorrenciaFilter();
+						filter = gson.fromJson(arrayDados.get(0), SacOcorrenciaFilter.class);
+						//filter.setId(2297); testes 
 
 						List<SacOcorrencia> ocorrencias = new ArrayList<SacOcorrencia>();	
-						Integer totalRegistros = 0;		
-
-						if (auxiliar.jsFiltros != null) {
-							
-							SacOcorrenciaFilter filter = new SacOcorrenciaFilter(auxiliar.jsFiltros);
-							ocorrencias = sacFacade.obter(filter);
-							totalRegistros = ocorrencias.size();
-
-//							String tipoFiltro = null;
-//							String valorFiltro = null;
-//							try {
-//								JsonArray filters = (auxiliar.jsFiltros);
-//								JsonObject objetoJson = (JsonObject) filters.get(0);
-//								tipoFiltro = objetoJson.get("property").getAsString();
-//								valorFiltro = objetoJson.get("value").getAsString();
-//							} catch (Exception e) {
-//								e.printStackTrace();
-//								auxiliar.setMensagemRetorno("Falha: " + e.getCause().getMessage() + ".");
-//							}
-//
-//							//TODO criar SACOcorrenciaFilter
-//
-//							if (tipoFiltro != null && tipoFiltro.equalsIgnoreCase("id") && valorFiltro != null) {							
-//								SacOcorrencia ocorrencia = (SacOcorrencia) genericFacade.pesquisar(SacOcorrencia.class,(Integer.parseInt(valorFiltro)));						
-//								ocorrencias.add(ocorrencia);
-//								totalRegistros = ocorrencias.size();							
-//							}						
-
-						}else{
-							ocorrencias = genericFacade.pesquisar(SacOcorrencia.class, position, max);
-						}
+						Integer totalRegistros = 0;	
+						ocorrencias = sacFacade.obter(filter);
+						totalRegistros = ocorrencias.size();
 
 						for (SacOcorrencia ocorrencia : ocorrencias) {	
 							SacOcorrenciaDTO ocorrenciaDTO = new SacOcorrenciaDTO();
@@ -112,12 +78,12 @@ public class SacSyncServlet extends GenericServlet {
 						} 
 						auxiliar.setSuccess(true);
 						retorno.addProperty("total", totalRegistros);
-
+						retorno.add("data", dados);
+					} catch (Exception e1) {
+						e1.printStackTrace();
+						auxiliar.setMensagemRetorno("Falha: " + e1.getCause().getMessage() + ".");
 					}
-					retorno.add("data", dados);
-
 					break;
-
 				case 3:				
 					try {
 						for (int i = 0; i < arrayDados.size(); i++) {
@@ -132,7 +98,7 @@ public class SacSyncServlet extends GenericServlet {
 								ocorrencia = (SacOcorrencia) genericFacade.pesquisar(SacOcorrencia.class, objetoJson.get("id").getAsInt()); //recarrega o objeto
 
 								auxiliar.setMensagemRetorno("Ocorrência atualizada com sucesso!");
-								
+
 								SacOcorrenciaDTO ocorrenciaDTO = new SacOcorrenciaDTO();								
 								objetoJsonResposta = (JsonObject) jsonParser.parse(gson.toJson(ocorrenciaDTO.convertToDTO(ocorrencia)));										
 
@@ -156,7 +122,7 @@ public class SacSyncServlet extends GenericServlet {
 					}
 					retorno.add("data", dados);	
 					auxiliar.setSuccess(true);
-				break;
+					break;
 				default:
 					break;
 				}
@@ -165,13 +131,13 @@ public class SacSyncServlet extends GenericServlet {
 			} catch (ObjetoNaoEncontradoException e) {
 				e.printStackTrace();
 			}
-			
+
 		} catch (Exception e) {
-			
+
 		}
-		
+
 		auxiliar.despachaResposta(response, retorno);	
-		
+
 	}
 
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

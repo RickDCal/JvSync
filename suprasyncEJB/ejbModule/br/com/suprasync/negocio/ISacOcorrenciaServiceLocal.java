@@ -2,7 +2,9 @@ package br.com.suprasync.negocio;
 
 import java.util.List;
 
+import br.com.suprasync.negocio.dto.SacOcorrenciaDTO;
 import br.com.suprasync.persistencia.SacOcorrencia;
+import br.com.suprasync.persistencia.dao.exception.ObjetoNaoEncontradoException;
 import br.com.suprasync.persistencia.dao.exception.SacOcorrenciaNaoEncontradaException;
 import br.com.suprasync.persistencia.filter.SacOcorrenciaFilter;
 
@@ -20,5 +22,7 @@ public interface ISacOcorrenciaServiceLocal {
 	public void remover(SacOcorrencia sacOcorrencia) throws SacOcorrenciaNaoEncontradaException;
 
 	public List<SacOcorrencia> obter(SacOcorrenciaFilter filter) throws SacOcorrenciaNaoEncontradaException;
+	
+	public SacOcorrencia convertfromDTO (SacOcorrenciaDTO ocorrenciaDTO) throws ObjetoNaoEncontradoException;
 
 }
