@@ -59,18 +59,24 @@ public class SacOcorrenciaService implements ISacOcorrenciaServiceLocal {
 		SacOcorrencia ocorrencia = new SacOcorrencia();
 
 		ocorrencia.setId(ocorrenciaDTO.getId());
-		ocorrencia.setCliente((Cliente) genericDao.obter(Cliente.class, ocorrenciaDTO.getIdCliente()));
 		ocorrencia.setDataCadastro(ocorrenciaDTO.getDataCadastro());
 		ocorrencia.setSituacaoOcorrencia(SACOcorrenciaEnum.getEnum(ocorrenciaDTO.getIdSituacao()));
 		ocorrencia.setAssunto(ocorrenciaDTO.getAssunto());
-		ocorrencia.setEtapa((SacEtapa) genericDao.obter(SacEtapa.class, ocorrenciaDTO.getIdEtapa()));
 		ocorrencia.setSolicitacao(ocorrenciaDTO.getSolicitacao());
 		ocorrencia.setEstimativa(ocorrenciaDTO.getEstimativa());
 		ocorrencia.setDescricaoDesenvolvimento(ocorrenciaDTO.getDescricaoDesenvolvimento());
 		ocorrencia.setComentarioDesenvolvimento(ocorrenciaDTO.getComentarioDesenvolvimento());
 		ocorrencia.setDataUltimoRedirecionamento(ocorrenciaDTO.getDataUltimoRedirecionamento());
-		ocorrencia.setUsuarioCadastro((Usuario) genericDao.obter(Usuario.class, ocorrenciaDTO.getIdUsuario()));
-		ocorrencia.setDataPrevisaoTermino(ocorrenciaDTO.getDataPrevisaoTermino());		
+		ocorrencia.setDataPrevisaoTermino(ocorrenciaDTO.getDataPrevisaoTermino());	
+		if (ocorrenciaDTO.getIdCliente() != null) {
+			ocorrencia.setCliente((Cliente) genericDao.obter(Cliente.class, ocorrenciaDTO.getIdCliente()));
+		}
+		if (ocorrenciaDTO.getIdEtapa() != null) {
+			ocorrencia.setEtapa((SacEtapa) genericDao.obter(SacEtapa.class, ocorrenciaDTO.getIdEtapa()));
+		}
+		if (ocorrenciaDTO.getIdUsuario() != null) {
+			ocorrencia.setUsuarioCadastro((Usuario) genericDao.obter(Usuario.class, ocorrenciaDTO.getIdUsuario()));
+		}
 		return ocorrencia;
 	}
 

@@ -63,7 +63,10 @@ public class SacSyncServlet extends GenericServlet {
 
 					try {
 						SacOcorrenciaFilter filter = new SacOcorrenciaFilter();
-						filter = gson.fromJson(arrayDados.get(0), SacOcorrenciaFilter.class);
+						if(arrayDados.size() > 0) {
+							filter = gson.fromJson(arrayDados.get(0), SacOcorrenciaFilter.class);
+						}
+						
 						//filter.setId(2297); testes 
 
 						List<SacOcorrencia> ocorrencias = new ArrayList<SacOcorrencia>();	
