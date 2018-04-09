@@ -8,18 +8,16 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity  
-@Table(name="usuario")// o nome da tabela correspondente quando for entity
-public class Usuario {
+@Table(name="funcionario")// o nome da tabela correspondente quando for entity
+public class Funcionario {
 
 	private int id;	
 	private String nome;
-	private String senha;
-	private Integer idFuncionario;
 	private Date dataExclusao;
-	private Integer idPerfil;
+	//private List<Usuario> usuarios;
 	
 			
-	public Usuario() {
+	public Funcionario() {
 		
 	}
 	
@@ -34,31 +32,13 @@ public class Usuario {
 		this.id = id;
 	}
 
-	@Column(name="nome", columnDefinition="nvarchar")
+	@Column(name = "nome", columnDefinition="nvarchar")
 	public String getNome() {
 		return nome;
 	}
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	@Column(name = "senha", columnDefinition="nvarchar")
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
-	@Column(name = "func_codigo", columnDefinition="int")
-	public Integer getIdFuncionario() {
-		return idFuncionario;
-	}
-
-	public void setIdFuncionario(Integer idFuncionario) {
-		this.idFuncionario = idFuncionario;
 	}
 
 	@Column(name="data_exclusao", columnDefinition="datetime")
@@ -70,13 +50,15 @@ public class Usuario {
 		this.dataExclusao = dataExclusao;
 	}
 
-	@Column(name="perf_codigo", columnDefinition="int")
-	public Integer getIdPerfil() {
-		return idPerfil;
-	}
-
-	public void setIdPerfil(Integer idPerfil) {
-		this.idPerfil = idPerfil;
-	}
+//	@OneToMany(fetch = FetchType.EAGER)
+//	@JoinColumn(name = "func_codigo")
+//	@OrderBy(value="codigo DESC")
+//	public List<Usuario> getUsuarios() {
+//		return usuarios;
+//	}
+//
+//	public void setUsuarios(List<Usuario> usuarios) {
+//		this.usuarios = usuarios;
+//	}
 	
 }

@@ -28,8 +28,8 @@ public class SacOcorrencia {
 	private String descricaoDesenvolvimento;
 	private String comentarioDesenvolvimento;
 	private Date dataUltimoRedirecionamento;
-	private Usuario usuarioCadastro;
-	private Usuario usuarioRedirecionamento;
+	private Funcionario funcionarioCadastro;
+	private Funcionario funcionarioRedirecionamento;
 	private Date dataPrevisaoTermino;
 			
 	public SacOcorrencia() {
@@ -132,21 +132,21 @@ public class SacOcorrencia {
 	
 	@OneToOne
 	@JoinColumn(name = "func_codigo_solicitacao")
-	public Usuario getUsuarioCadastro() {
-		return usuarioCadastro;
+	public Funcionario getFuncionarioCadastro() {
+		return funcionarioCadastro;
 	}
 
-	public void setUsuarioCadastro(Usuario usuarioCadastro) {
-		this.usuarioCadastro = usuarioCadastro;
+	public void setFuncionarioCadastro(Funcionario funcionarioCadastro) {
+		this.funcionarioCadastro = funcionarioCadastro;
 	}
 
 	@OneToOne
 	@JoinColumn(name = "func_codigo_redirecionamento")
-	public Usuario getUsuarioRedirecionamento() {
-		return usuarioRedirecionamento;
+	public Funcionario getFuncionarioRedirecionamento() {
+		return funcionarioRedirecionamento;
 	}
-	public void setUsuarioRedirecionamento(Usuario usuarioRedirecionamento) {
-		this.usuarioRedirecionamento = usuarioRedirecionamento;
+	public void setFuncionarioRedirecionamento(Funcionario funcionarioRedirecionamento) {
+		this.funcionarioRedirecionamento = funcionarioRedirecionamento;
 	}
 
 	@Column(name="data_previsao_termino", columnDefinition="datetime")

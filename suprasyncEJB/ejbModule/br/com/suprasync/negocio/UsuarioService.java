@@ -5,9 +5,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import com.google.gson.JsonObject;
-
-import br.com.suprasync.negocio.exception.FalhaAoCriarJSONException;
 import br.com.suprasync.negocio.exception.UsuarioInexistenteException;
 import br.com.suprasync.persistencia.Usuario;
 import br.com.suprasync.persistencia.dao.IUsuarioDAO;
@@ -54,19 +51,5 @@ public class UsuarioService implements IUsuarioServiceLocal {
 
 	}
 
-	public void cadastrar (Usuario usuario) {	
-
-		usuarioDao.inserir(usuario);		
-	}  
-
-	public void atualizar (Usuario usuario) throws UsuarioInexistenteException {
-
-		usuarioDao.alterar(usuario);		
-	} 
-
-	public void remover (Usuario usuario) throws UsuarioInexistenteException {
-
-		usuarioDao.remover(usuario);		
-	} 
 
 }

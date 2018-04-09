@@ -19,7 +19,6 @@ public class SacOcorrenciaDTO {
 	private String descricaoDesenvolvimento;
 	private String comentarioDesenvolvimento;
 	private Date dataUltimoRedirecionamento; 
-	private Integer idUsuario;
 	private Date dataPrevisaoTermino;
 			
 	public SacOcorrenciaDTO() {
@@ -130,14 +129,6 @@ public class SacOcorrenciaDTO {
 		this.dataUltimoRedirecionamento = dataUltimoRedirecionamento;
 	}
 
-	public Integer getIdUsuario() {
-		return idUsuario;
-	}
-
-	public void setIdUsuario(Integer idUsuario) {
-		this.idUsuario = idUsuario;
-	}
-
 	public Date getDataPrevisaoTermino() {
 		return dataPrevisaoTermino;
 	}
@@ -150,6 +141,7 @@ public class SacOcorrenciaDTO {
 		
 		setId(ocorrencia.getId());
 		setIdCliente(ocorrencia.getCliente() != null ? ocorrencia.getCliente().getId():null);
+		setNomeCliente(ocorrencia.getCliente() != null ? ocorrencia.getCliente().getNome():null);
 		setDataCadastro(ocorrencia.getDataCadastro());
 		setIdSituacao(ocorrencia.getSituacaoOcorrencia() != null ? ocorrencia.getSituacaoOcorrencia().getCode():null);
 		setAssunto(ocorrencia.getAssunto());
@@ -159,9 +151,9 @@ public class SacOcorrenciaDTO {
 		setDescricaoDesenvolvimento(ocorrencia.getDescricaoDesenvolvimento());
 		setComentarioDesenvolvimento(ocorrencia.getComentarioDesenvolvimento());
 		setDataUltimoRedirecionamento(ocorrencia.getDataUltimoRedirecionamento());
-		setIdUsuario(
-				ocorrencia.getUsuarioRedirecionamento() != null ? ocorrencia.getUsuarioRedirecionamento().getId(): 
-				ocorrencia.getUsuarioCadastro() != null ? ocorrencia.getUsuarioCadastro().getId() : null 				
+		setIdFuncionario(
+				ocorrencia.getFuncionarioRedirecionamento() != null ? ocorrencia.getFuncionarioRedirecionamento().getId(): 
+				ocorrencia.getFuncionarioCadastro() != null ? ocorrencia.getFuncionarioCadastro().getId() : null 				
 		);
 		setDataPrevisaoTermino(ocorrencia.getDataPrevisaoTermino());		
 		return this;		

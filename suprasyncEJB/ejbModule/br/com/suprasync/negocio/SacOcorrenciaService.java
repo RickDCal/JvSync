@@ -9,7 +9,7 @@ import br.com.suprasync.negocio.dto.SacOcorrenciaDTO;
 import br.com.suprasync.persistencia.Cliente;
 import br.com.suprasync.persistencia.SacEtapa;
 import br.com.suprasync.persistencia.SacOcorrencia;
-import br.com.suprasync.persistencia.Usuario;
+import br.com.suprasync.persistencia.Funcionario;
 import br.com.suprasync.persistencia.dao.IGenericDAO;
 import br.com.suprasync.persistencia.dao.ISacOcorrenciaDAO;
 import br.com.suprasync.persistencia.dao.exception.ObjetoNaoEncontradoException;
@@ -74,8 +74,8 @@ public class SacOcorrenciaService implements ISacOcorrenciaServiceLocal {
 		if (ocorrenciaDTO.getIdEtapa() != null) {
 			ocorrencia.setEtapa((SacEtapa) genericDao.obter(SacEtapa.class, ocorrenciaDTO.getIdEtapa()));
 		}
-		if (ocorrenciaDTO.getIdUsuario() != null) {
-			ocorrencia.setUsuarioCadastro((Usuario) genericDao.obter(Usuario.class, ocorrenciaDTO.getIdUsuario()));
+		if (ocorrenciaDTO.getIdFuncionario() != null) {
+			ocorrencia.setFuncionarioCadastro((Funcionario) genericDao.obter(Funcionario.class, ocorrenciaDTO.getIdFuncionario()));
 		}
 		return ocorrencia;
 	}

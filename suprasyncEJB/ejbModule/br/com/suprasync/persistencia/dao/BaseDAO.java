@@ -5,7 +5,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 
-import br.com.suprasync.persistencia.Usuario;
+import br.com.suprasync.persistencia.Funcionario;
 import br.com.suprasync.persistencia.dao.exception.ObjetoNaoEncontradoException;
 import br.com.suprasync.persistencia.dao.exception.UsuarioNaoEncontradoException;
 

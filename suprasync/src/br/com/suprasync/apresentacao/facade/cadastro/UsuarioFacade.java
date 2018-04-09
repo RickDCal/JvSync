@@ -7,10 +7,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import com.google.gson.JsonObject;
-
 import br.com.suprasync.negocio.IUsuarioServiceLocal;
-import br.com.suprasync.negocio.exception.FalhaAoCriarJSONException;
 import br.com.suprasync.negocio.exception.UsuarioInexistenteException;
 import br.com.suprasync.persistencia.Usuario;
 
@@ -40,13 +37,6 @@ public class UsuarioFacade {
 	public List<Usuario> pesquisar(Integer position, Integer max) throws UsuarioInexistenteException {
 		return service.pesquisar(position, max);
 	}
-	
-	public void cadastrar (Usuario usuario) throws UsuarioInexistenteException {
-		service.cadastrar(usuario);
-	}
-	
-	public void atualizar (Usuario usuario) throws UsuarioInexistenteException {
-		service.atualizar(usuario);
-	}
+
 
 }

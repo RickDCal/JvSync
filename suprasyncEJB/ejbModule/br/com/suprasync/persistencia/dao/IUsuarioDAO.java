@@ -9,12 +9,6 @@ import br.com.suprasync.persistencia.dao.exception.UsuarioNaoEncontradoException
 
 @Local
 public interface IUsuarioDAO {
-	
-public Usuario inserir (Usuario usuario);
-	
-	public Usuario alterar (Usuario usuario);
-	
-	public void remover (Usuario usuario);
 
 	public Usuario obter(String userName, String password) 	throws UsuarioNaoEncontradoException;
 
