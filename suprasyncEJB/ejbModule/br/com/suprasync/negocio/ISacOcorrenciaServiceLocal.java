@@ -24,5 +24,7 @@ public interface ISacOcorrenciaServiceLocal {
 	public List<SacOcorrencia> obter(SacOcorrenciaFilter filter) throws SacOcorrenciaNaoEncontradaException;
 	
 	public SacOcorrencia convertfromDTO (SacOcorrenciaDTO ocorrenciaDTO) throws ObjetoNaoEncontradoException;
+	
+	public boolean liberarVersao (Integer id, String numeroVersao);
 
 }

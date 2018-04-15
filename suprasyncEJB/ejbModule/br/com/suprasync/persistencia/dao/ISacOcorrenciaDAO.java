@@ -25,5 +25,7 @@ public interface ISacOcorrenciaDAO {
 	
 public List<SacOcorrencia> obter(SacOcorrenciaFilter filter) throws SacOcorrenciaNaoEncontradaException;
 
+public boolean liberarVersao (Integer id, String numeroVersao);
+
 
 }

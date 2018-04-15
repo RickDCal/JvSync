@@ -136,5 +136,19 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 		return query.getResultList();	
 
 	}
+	
+	public boolean liberarVersao (Integer id, String numeroVersao) {
+		try {
+			StringBuilder consulta = new StringBuilder("update sac_ocorrencia set versao_atualizador = ")
+					.append(numeroVersao).append(" func_codigo_redirecionamento = func_codigo_solicitacao, id_situacao = 5")
+					.append(" where codigo = ").append(id);
+			Query query = entityManager.createNativeQuery(consulta.toString());
+			query.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 
 }

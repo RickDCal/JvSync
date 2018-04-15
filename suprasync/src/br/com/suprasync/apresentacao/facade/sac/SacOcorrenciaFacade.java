@@ -51,6 +51,9 @@ public class SacOcorrenciaFacade {
 		return service.obter(filter);
 	}
 
+	public boolean liberarVersao (Integer id, String numeroVersao) {
+		return service.liberarVersao(id, numeroVersao);
+	}
 		
 	
 }

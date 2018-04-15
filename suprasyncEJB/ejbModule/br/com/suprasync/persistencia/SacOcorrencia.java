@@ -31,6 +31,7 @@ public class SacOcorrencia {
 	private Funcionario funcionarioCadastro;
 	private Funcionario funcionarioRedirecionamento;
 	private Date dataPrevisaoTermino;
+	private String numeroVersao;
 			
 	public SacOcorrencia() {
 		
@@ -156,6 +157,15 @@ public class SacOcorrencia {
 
 	public void setDataPrevisaoTermino(Date dataPrevisaoTermino) {
 		this.dataPrevisaoTermino = dataPrevisaoTermino;
+	}
+	
+	@Column(name="versao_atualizador", columnDefinition="nvarchar")
+	public String getNumeroVersao() {
+		return numeroVersao;
+	}
+
+	public void setNumeroVersao(String numeroVersao) {
+		this.numeroVersao = numeroVersao;
 	}
 	
 }

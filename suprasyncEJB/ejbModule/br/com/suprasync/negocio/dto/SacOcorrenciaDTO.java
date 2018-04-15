@@ -20,6 +20,7 @@ public class SacOcorrenciaDTO {
 	private String comentarioDesenvolvimento;
 	private Date dataUltimoRedirecionamento; 
 	private Date dataPrevisaoTermino;
+	private String numeroVersao;
 			
 	public SacOcorrenciaDTO() {
 		
@@ -137,6 +138,14 @@ public class SacOcorrenciaDTO {
 		this.dataPrevisaoTermino = dataPrevisaoTermino;
 	}
 	
+	public String getNumeroVersao() {
+		return numeroVersao;
+	}
+
+	public void setNumeroVersao(String numeroVersao) {
+		this.numeroVersao = numeroVersao;
+	}
+
 	public SacOcorrenciaDTO convertToDTO (SacOcorrencia ocorrencia) {
 		
 		setId(ocorrencia.getId());
@@ -155,7 +164,8 @@ public class SacOcorrenciaDTO {
 				ocorrencia.getFuncionarioRedirecionamento() != null ? ocorrencia.getFuncionarioRedirecionamento().getId(): 
 				ocorrencia.getFuncionarioCadastro() != null ? ocorrencia.getFuncionarioCadastro().getId() : null 				
 		);
-		setDataPrevisaoTermino(ocorrencia.getDataPrevisaoTermino());		
+		setDataPrevisaoTermino(ocorrencia.getDataPrevisaoTermino());	
+		setNumeroVersao(ocorrencia.getNumeroVersao());
 		return this;		
 	}	
 	

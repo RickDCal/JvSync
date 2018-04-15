@@ -38,19 +38,19 @@ public class SacOcorrenciaServlet extends GenericServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
+
+
 		AuxiliarServlet auxiliar = new AuxiliarServlet();
 		JsonObject retorno = new JsonObject();		
 		try {		
 			auxiliar.load(request);				
 			JsonArray dados = new JsonArray();		
-			
+
 			Integer position = auxiliar.position;		
 			Integer max = auxiliar.max;
 			Integer action = auxiliar.action;
 			JsonArray arrayDados = auxiliar.jsRecebido;		
-			
+
 			GenericFacade genericFacade = new GenericFacade();
 			SacOcorrenciaFacade sacFacade = new SacOcorrenciaFacade();
 			JsonParser jsonParser = new JsonParser();
@@ -76,30 +76,30 @@ public class SacOcorrenciaServlet extends GenericServlet {
 						Integer totalRegistros = 0;		
 
 						if (auxiliar.jsFiltros != null) {
-							
+
 							SacOcorrenciaFilter filter = new SacOcorrenciaFilter(auxiliar.jsFiltros);
 							ocorrencias = sacFacade.obter(filter);
 							totalRegistros = ocorrencias.size();
 
-//							String tipoFiltro = null;
-//							String valorFiltro = null;
-//							try {
-//								JsonArray filters = (auxiliar.jsFiltros);
-//								JsonObject objetoJson = (JsonObject) filters.get(0);
-//								tipoFiltro = objetoJson.get("property").getAsString();
-//								valorFiltro = objetoJson.get("value").getAsString();
-//							} catch (Exception e) {
-//								e.printStackTrace();
-//								auxiliar.setMensagemRetorno("Falha: " + e.getCause().getMessage() + ".");
-//							}
-//
-//							//TODO criar SACOcorrenciaFilter
-//
-//							if (tipoFiltro != null && tipoFiltro.equalsIgnoreCase("id") && valorFiltro != null) {							
-//								SacOcorrencia ocorrencia = (SacOcorrencia) genericFacade.pesquisar(SacOcorrencia.class,(Integer.parseInt(valorFiltro)));						
-//								ocorrencias.add(ocorrencia);
-//								totalRegistros = ocorrencias.size();							
-//							}						
+							//							String tipoFiltro = null;
+							//							String valorFiltro = null;
+							//							try {
+							//								JsonArray filters = (auxiliar.jsFiltros);
+							//								JsonObject objetoJson = (JsonObject) filters.get(0);
+							//								tipoFiltro = objetoJson.get("property").getAsString();
+							//								valorFiltro = objetoJson.get("value").getAsString();
+							//							} catch (Exception e) {
+							//								e.printStackTrace();
+							//								auxiliar.setMensagemRetorno("Falha: " + e.getCause().getMessage() + ".");
+							//							}
+							//
+							//							//TODO criar SACOcorrenciaFilter
+							//
+							//							if (tipoFiltro != null && tipoFiltro.equalsIgnoreCase("id") && valorFiltro != null) {							
+							//								SacOcorrencia ocorrencia = (SacOcorrencia) genericFacade.pesquisar(SacOcorrencia.class,(Integer.parseInt(valorFiltro)));						
+							//								ocorrencias.add(ocorrencia);
+							//								totalRegistros = ocorrencias.size();							
+							//							}						
 
 						}else{
 							ocorrencias = genericFacade.pesquisar(SacOcorrencia.class, position, max);
@@ -131,7 +131,7 @@ public class SacOcorrenciaServlet extends GenericServlet {
 								ocorrencia = (SacOcorrencia) genericFacade.pesquisar(SacOcorrencia.class, objetoJson.get("id").getAsInt()); //recarrega o objeto
 
 								auxiliar.setMensagemRetorno("Ocorrência atualizada com sucesso!");
-								
+
 								SacOcorrenciaDTO ocorrenciaDTO = new SacOcorrenciaDTO();								
 								objetoJsonResposta = (JsonObject) jsonParser.parse(gson.toJson(ocorrenciaDTO.convertToDTO(ocorrencia)));										
 
@@ -155,7 +155,29 @@ public class SacOcorrenciaServlet extends GenericServlet {
 					}
 					retorno.add("data", dados);	
 					auxiliar.setSuccess(true);
-				break;
+					break;
+				case 7:
+
+					if(arrayDados != null && arrayDados.size() >0) {
+						try {
+							JsonArray ids = arrayDados.get(0).getAsJsonObject().get("ids").getAsJsonArray();
+							String numeroVersao = arrayDados.get(0).getAsJsonObject().get("numeroVersao").getAsString();
+							if (ids != null && numeroVersao != null) {
+								for (int i = 0; i < ids.size(); i++) {
+									Integer id  = ids.get(i).getAsInt();
+									sacFacade.liberarVersao(id, numeroVersao);
+								}
+							}
+							//gravar follow up
+							//mensagem slack
+							
+							auxiliar.setSuccess(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+					System.out.println(auxiliar.jsRecebido);
+					break;
 				default:
 					break;
 				}
@@ -164,13 +186,13 @@ public class SacOcorrenciaServlet extends GenericServlet {
 			} catch (ObjetoNaoEncontradoException e) {
 				e.printStackTrace();
 			}
-			
+
 		} catch (Exception e) {
-			
+
 		}
-		
+
 		auxiliar.despachaResposta(response, retorno);	
-		
+
 	}
 
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

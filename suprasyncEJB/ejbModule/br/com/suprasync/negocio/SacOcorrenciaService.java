@@ -103,5 +103,9 @@ public class SacOcorrenciaService implements ISacOcorrenciaServiceLocal {
 			throw new SacOcorrenciaNaoEncontradaException();
 		}
 	}
+	
+	public boolean liberarVersao (Integer id, String numeroVersao) {
+		return sacOcorrenciaDao.liberarVersao(id, numeroVersao);
+	}
 
 }
