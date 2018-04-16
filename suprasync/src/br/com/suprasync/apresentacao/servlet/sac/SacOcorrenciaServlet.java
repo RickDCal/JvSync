@@ -170,8 +170,12 @@ public class SacOcorrenciaServlet extends GenericServlet {
 							}
 							//gravar follow up
 							//mensagem slack
-							
+							JsonObject msg = new JsonObject();
+							msg.addProperty("retorno", "Versão " + numeroVersao + " liberada. \n" + ids.size() + " ocorrências foram redirecionadas para o atendente de origem \n com situação Feedback Pendente.");
+							dados.add(msg);
+							retorno.add("data", dados);	
 							auxiliar.setSuccess(true);
+							
 						} catch (Exception e) {
 							e.printStackTrace();
 						}

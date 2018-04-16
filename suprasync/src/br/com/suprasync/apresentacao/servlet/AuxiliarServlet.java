@@ -88,8 +88,12 @@ public class AuxiliarServlet {
 			        sb.append(str);
 			    } 
 			    if (!sb.toString().isEmpty()) {
-			    	objetoJson = (JsonObject) jparser.parse(sb.toString());
-				    arrayDados.add(objetoJson);
+			    	try {
+						objetoJson = (JsonObject) jparser.parse(sb.toString());
+						arrayDados.add(objetoJson);
+					} catch (Exception e) {
+						arrayDados = (JsonArray) jparser.parse(sb.toString());
+					}
 			    }	
 			}
 			
