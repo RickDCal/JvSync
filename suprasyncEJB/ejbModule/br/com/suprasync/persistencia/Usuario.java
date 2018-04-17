@@ -17,6 +17,7 @@ public class Usuario {
 	private Integer idFuncionario;
 	private Date dataExclusao;
 	private Integer idPerfil;
+	private String usuarioSlack;
 	
 			
 	public Usuario() {
@@ -77,6 +78,15 @@ public class Usuario {
 
 	public void setIdPerfil(Integer idPerfil) {
 		this.idPerfil = idPerfil;
+	}
+
+	@Column(name = "usuario_slack", columnDefinition="nvarchar")
+	public String getUsuarioSlack() {
+		return usuarioSlack;
+	}
+
+	public void setUsuarioSlack(String usuarioSlack) {
+		this.usuarioSlack = usuarioSlack;
 	}
 	
 }

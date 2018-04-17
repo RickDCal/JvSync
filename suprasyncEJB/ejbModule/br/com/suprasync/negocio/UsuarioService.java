@@ -50,6 +50,10 @@ public class UsuarioService implements IUsuarioServiceLocal {
 		}		
 
 	}
+	
+	public List<Usuario> obterPorIdFuncionario(Integer id) {
+		return usuarioDao.obterPorIdFuncionario(id);
+	}
 
 
 }

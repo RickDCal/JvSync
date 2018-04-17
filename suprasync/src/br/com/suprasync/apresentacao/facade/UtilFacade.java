@@ -1,5 +1,6 @@
 package br.com.suprasync.apresentacao.facade;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Properties;
@@ -130,4 +131,7 @@ public class UtilFacade {
 		return service.dataYYYY_MM_DD(data);
 	}	
 	
+	public String enviaMensagemSlack(String usuarioSlack, String mensagem, String webHook) throws ParseException, IOException {
+		return service.enviaMensagemSlack(usuarioSlack, mensagem, webHook);
+	}
 }

@@ -15,6 +15,7 @@ public interface IUsuarioDAO {
 	public Usuario obter(int id) throws UsuarioNaoEncontradoException;
 	
 	public List<Usuario> obter(Integer position, Integer max) throws UsuarioNaoEncontradoException;
-		
+	
+	public List<Usuario> obterPorIdFuncionario(Integer id);		
 
 }

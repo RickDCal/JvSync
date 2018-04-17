@@ -15,12 +15,16 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import br.com.suprasync.apresentacao.facade.GenericFacade;
+import br.com.suprasync.apresentacao.facade.UtilFacade;
+import br.com.suprasync.apresentacao.facade.cadastro.UsuarioFacade;
 import br.com.suprasync.apresentacao.facade.sac.SacOcorrenciaFacade;
 import br.com.suprasync.apresentacao.servlet.AuxiliarServlet;
 import br.com.suprasync.apresentacao.servlet.estaticos.GenericServlet;
 import br.com.suprasync.negocio.dto.SacOcorrenciaDTO;
+import br.com.suprasync.persistencia.ParametroSlack;
 import br.com.suprasync.persistencia.SacEtapa;
 import br.com.suprasync.persistencia.SacOcorrencia;
+import br.com.suprasync.persistencia.Usuario;
 import br.com.suprasync.persistencia.dao.exception.ObjetoNaoEncontradoException;
 import br.com.suprasync.persistencia.filter.SacOcorrenciaFilter;;
 
@@ -53,6 +57,7 @@ public class SacOcorrenciaServlet extends GenericServlet {
 
 			GenericFacade genericFacade = new GenericFacade();
 			SacOcorrenciaFacade sacFacade = new SacOcorrenciaFacade();
+			UtilFacade utilFacade = new UtilFacade();
 			JsonParser jsonParser = new JsonParser();
 			Gson gson = new Gson();
 
@@ -157,8 +162,9 @@ public class SacOcorrenciaServlet extends GenericServlet {
 					auxiliar.setSuccess(true);
 					break;
 				case 7:
-
+					
 					if(arrayDados != null && arrayDados.size() >0) {
+						ParametroSlack parametroSlack = (ParametroSlack) genericFacade.pesquisar(ParametroSlack.class, 0, 1);
 						try {
 							JsonArray ids = arrayDados.get(0).getAsJsonObject().get("ids").getAsJsonArray();
 							String numeroVersao = arrayDados.get(0).getAsJsonObject().get("numeroVersao").getAsString();
@@ -169,13 +175,27 @@ public class SacOcorrenciaServlet extends GenericServlet {
 								}
 							}
 							//gravar follow up
+							
+							
 							//mensagem slack
+							for (int j = 0; j < ids.size(); j++) {
+								Integer id  = ids.get(j).getAsInt();
+								SacOcorrencia ocorrencia = sacFacade.pesquisar(id);
+								UsuarioFacade usuarioFacade = new UsuarioFacade();
+								if (ocorrencia != null && ocorrencia.getFuncionarioCadastro() != null) {
+									Usuario usuario = usuarioFacade.obterPorIdFuncionario(ocorrencia.getFuncionarioCadastro().getId()).get(0);
+									if (usuario != null && usuario.getUsuarioSlack() != null) {
+										utilFacade.enviaMensagemSlack(usuario.getUsuarioSlack(), "A ocorrência N° " + id + " cadastrada por você foi liberada na versão " + numeroVersao + " e aguarda feedback.", parametroSlack.getWebHookSlack());
+									}
+								}														
+							}
+
 							JsonObject msg = new JsonObject();
-							msg.addProperty("retorno", "Versão " + numeroVersao + " liberada. \n" + ids.size() + " ocorrências foram redirecionadas para o atendente de origem \n com situação Feedback Pendente.");
+							msg.addProperty("retorno", "Versão " + numeroVersao + " liberada. \n" + ids.size() + " ocorrências foram redirecionadas para os atendentes de origem \n com situação Feedback Pendente.");
 							dados.add(msg);
 							retorno.add("data", dados);	
 							auxiliar.setSuccess(true);
-							
+
 						} catch (Exception e) {
 							e.printStackTrace();
 						}

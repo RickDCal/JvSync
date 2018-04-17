@@ -15,6 +15,7 @@ public interface IUsuarioServiceLocal {
 	public Usuario pesquisar(int id) throws UsuarioInexistenteException;
 	
 	public List<Usuario> pesquisar(Integer position, Integer max) throws UsuarioInexistenteException;
-			
+	
+	public List<Usuario> obterPorIdFuncionario(Integer id);			
 
 }

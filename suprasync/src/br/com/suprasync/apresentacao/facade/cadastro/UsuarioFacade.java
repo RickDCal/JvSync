@@ -38,5 +38,8 @@ public class UsuarioFacade {
 		return service.pesquisar(position, max);
 	}
 
+	public List<Usuario> obterPorIdFuncionario(Integer id) {
+		return service.obterPorIdFuncionario(id);
+	}
 
 }

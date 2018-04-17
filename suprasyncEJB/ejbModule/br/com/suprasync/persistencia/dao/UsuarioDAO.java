@@ -80,6 +80,18 @@ public class UsuarioDAO extends GenericDAO implements IUsuarioDAO {
 		return usuarios;		
 
 	}	
+	
+	public List<Usuario> obterPorIdFuncionario(Integer id) {
+
+		String consulta =  "select u from Usuario u where u.id is not null and u.idFuncionario = :id";		
+		Query query = entityManager.createQuery(consulta);
+		query.setParameter("id", id);
+
+		List<Usuario> usuarios = query.getResultList();
+
+		return usuarios;		
+
+	}
 
 
 }

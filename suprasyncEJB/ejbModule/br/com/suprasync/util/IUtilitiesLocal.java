@@ -1,5 +1,6 @@
 package br.com.suprasync.util;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
 
@@ -53,5 +54,7 @@ public interface IUtilitiesLocal {
 	public Date dataDDIMMIYYYY (String data) throws ParseException, FalhaAoConverterDataException; // I = barra
 	
 	public Date dataYYYY_MM_DD (String data) throws ParseException, FalhaAoConverterDataException; // _ = -
+	
+	public String enviaMensagemSlack(String usuarioSlack, String mensagem, String webHook) throws ParseException, IOException;
 
 }
