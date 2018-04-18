@@ -26,7 +26,7 @@ public class SacOcorrenciaFilter {
 	private Integer estimativa;
 	private String descricaoDesenvolvimento;
 	private String comentarioDesenvolvimento;
-	private List<Integer> ListIdUsuario;
+	private List<Integer> ListIdFuncionario;
 	private Date dataInicioPrevisaoTermino;
 	private Date dataFimPrevisaoTermino;
 	private Integer position;
@@ -137,12 +137,12 @@ public class SacOcorrenciaFilter {
 		this.comentarioDesenvolvimento = comentarioDesenvolvimento;
 	}
 
-	public List<Integer> getListIdUsuario() {
-		return ListIdUsuario;
+	public List<Integer> getListIdFuncionario() {
+		return ListIdFuncionario;
 	}
 
-	public void setListIdUsuario(List<Integer> listIdUsuario) {
-		ListIdUsuario = listIdUsuario;
+	public void setListIdFuncionario(List<Integer> listIdFuncionario) {
+		ListIdFuncionario = listIdFuncionario;
 	}
 
 	public Date getDataInicioPrevisaoTermino() {
@@ -250,14 +250,14 @@ public class SacOcorrenciaFilter {
 				
 				break;
 				
-				case "idusuario" : ListIdUsuario = new ArrayList<Integer>();
+				case "idfuncionario" : ListIdFuncionario = new ArrayList<Integer>();
 				if(valores != null) {
 					try {
 						for (int j = 0; j < valores.size(); j++) {
-							ListIdUsuario.add(valores.get(j).getAsInt());						
+							ListIdFuncionario.add(valores.get(j).getAsInt());						
 						}
 					} catch (Exception e) {						
-						ListIdUsuario.add(Integer.parseInt(valor));
+						ListIdFuncionario.add(Integer.parseInt(valor));
 					}
 				} else {
 					ListIdEtapa.add(Integer.parseInt(valor));

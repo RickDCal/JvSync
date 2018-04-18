@@ -91,9 +91,9 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 			parametros.put("comentario", "%" + filter.getComentarioDesenvolvimento() +"%");
 		}
 		
-		if (filter.getListIdUsuario() != null) {
-			consulta.append(" and o.usuario.id in :listEtapa ");
-			parametros.put("listUsuario", filter.getListIdUsuario());
+		if (filter.getListIdFuncionario() != null) {
+			consulta.append(" and COALESCE(o.funcionarioRedirecionamento.id,o.funcionarioCadastro.id) in :listFuncionario ");
+			parametros.put("listFuncionario", filter.getListIdFuncionario());
 		}
 		
 		if (filter.getDataInicioPrevisaoTermino() != null) {
