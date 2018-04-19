@@ -110,7 +110,7 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 			consulta.append(" and o.situacaoOcorrencia not in :listSituacaoInuteis ");
 			List<SACOcorrenciaEnum> listSituacoes = new ArrayList<SACOcorrenciaEnum>();
 			listSituacoes.add(SACOcorrenciaEnum.AGRUPADA);
-			listSituacoes.add(SACOcorrenciaEnum.FEEDBACK);
+			//listSituacoes.add(SACOcorrenciaEnum.FEEDBACK);
 			listSituacoes.add(SACOcorrenciaEnum.SOLUCIONADA);
 			listSituacoes.add(SACOcorrenciaEnum.REMOVIDA);
 			
