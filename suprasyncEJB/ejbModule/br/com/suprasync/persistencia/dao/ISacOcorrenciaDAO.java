@@ -27,5 +27,7 @@ public List<SacOcorrencia> obter(SacOcorrenciaFilter filter) throws SacOcorrenci
 
 public boolean liberarVersao (Integer id, String numeroVersao);
 
+public boolean followUp(int id, int idUsuarioSupraMais, String mensagem);
+
 
 }

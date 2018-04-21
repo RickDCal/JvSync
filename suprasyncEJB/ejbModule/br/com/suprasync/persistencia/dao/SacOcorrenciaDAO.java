@@ -152,5 +152,22 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 		}
 		return false;
 	}
+	
+	public boolean followUp(int id, int idUsuarioSupraMais, String mensagem) {
+		try {
+			StringBuilder consulta = new StringBuilder("insert into sac_follow_up (ocor_codigo, codigo, data, usu_codigo, historico) ")
+					.append("values(:id, isnull((select max(codigo) from sac_follow_up where ocor_codigo = :id),0)+1, ")
+					.append("getdate(), :idUsuario, :mensagem)");
+			Query query = entityManager.createNativeQuery(consulta.toString());
+			query.setParameter("id", id);
+			query.setParameter("idUsuario", idUsuarioSupraMais);
+			query.setParameter("mensagem", mensagem);
+			query.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+		return false;		
+	}
 
 }

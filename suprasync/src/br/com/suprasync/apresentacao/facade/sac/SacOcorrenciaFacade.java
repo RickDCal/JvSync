@@ -54,6 +54,10 @@ public class SacOcorrenciaFacade {
 	public boolean liberarVersao (Integer id, String numeroVersao) {
 		return service.liberarVersao(id, numeroVersao);
 	}
+	
+	public boolean followUp(int id, int idUsuarioSupraMais, String mensagem) {
+		return service.followUp(id, idUsuarioSupraMais, mensagem);
+	}
 		
 	
 }

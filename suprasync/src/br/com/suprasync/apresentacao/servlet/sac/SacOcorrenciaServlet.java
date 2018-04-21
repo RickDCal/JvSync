@@ -164,28 +164,34 @@ public class SacOcorrenciaServlet extends GenericServlet {
 				case 7:
 					
 					if(arrayDados != null && arrayDados.size() >0) {
-						ParametroSlack parametroSlack = (ParametroSlack) genericFacade.pesquisar(ParametroSlack.class, 0, 1);
+						ParametroSlack parametroSlack = (ParametroSlack) genericFacade.pesquisar(ParametroSlack.class, 0, 1).get(0);
 						try {
+							Integer idUsuarioSupraMais = Integer.parseInt(request.getParameter("idUsuarioSupraMais"));
 							JsonArray ids = arrayDados.get(0).getAsJsonObject().get("ids").getAsJsonArray();
 							String numeroVersao = arrayDados.get(0).getAsJsonObject().get("numeroVersao").getAsString();
 							if (ids != null && numeroVersao != null) {
 								for (int i = 0; i < ids.size(); i++) {
 									Integer id  = ids.get(i).getAsInt();
 									sacFacade.liberarVersao(id, numeroVersao);
+									sacFacade.followUp(id, idUsuarioSupraMais, "Liberado em versão Nº " + numeroVersao); //follow up
 								}
-							}
-							//gravar follow up
-							
-							
-							//mensagem slack
+							}														
+							//mensagem slack somente depois de finalizar o procedimento no BD. Obs: até aqui ainda há chance de rollback.
 							for (int j = 0; j < ids.size(); j++) {
 								Integer id  = ids.get(j).getAsInt();
 								SacOcorrencia ocorrencia = sacFacade.pesquisar(id);
-								UsuarioFacade usuarioFacade = new UsuarioFacade();
+								UsuarioFacade usuarioFacade = new UsuarioFacade();								
 								if (ocorrencia != null && ocorrencia.getFuncionarioCadastro() != null) {
 									Usuario usuario = usuarioFacade.obterPorIdFuncionario(ocorrencia.getFuncionarioCadastro().getId()).get(0);
 									if (usuario != null && usuario.getUsuarioSlack() != null) {
-										utilFacade.enviaMensagemSlack(usuario.getUsuarioSlack(), "A ocorrência N° " + id + " cadastrada por você foi liberada na versão " + numeroVersao + " e aguarda feedback.", parametroSlack.getWebHookSlack());
+										StringBuilder mensagem = new StringBuilder("A ocorrência Nº ")
+										.append(id)
+										.append(" cadastrada por você foi liberada na versão ")
+										.append(numeroVersao)
+										.append(" e aguarda feedback.").append("\n")
+										.append("Assunto: ").append(ocorrencia.getAssunto() != null ? ocorrencia.getAssunto() : "").append("\n")
+										.append("Cliente: ").append(ocorrencia.getCliente() != null && ocorrencia.getCliente().getNome() != null ? ocorrencia.getCliente().getNome() : "").append(".");
+										utilFacade.enviaMensagemSlack(usuario.getUsuarioSlack(), mensagem.toString(), parametroSlack.getWebHookSlack());
 									}
 								}														
 							}

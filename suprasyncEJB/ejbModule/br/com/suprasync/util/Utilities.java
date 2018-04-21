@@ -298,8 +298,8 @@ public class Utilities implements IUtilitiesLocal {
 		}
 
 		Gson gson = new Gson();
-		//StringEntity entity = new StringEntity(gson.toJson(jObject), "utf-8");
-		StringEntity entity = new StringEntity(gson.toJson(jObject), "iso-8859-1"); // tem que ser igual ao encoding desta classe (ver nas propriedades) senão distorce. 
+		StringEntity entity = new StringEntity(gson.toJson(jObject), "utf-8");
+		//StringEntity entity = new StringEntity(gson.toJson(jObject), "iso-8859-1"); // tem que ser igual ao encoding desta classe (ver nas propriedades) senão distorce. 
 
 		HttpPost post = new HttpPost(webHook);
 		post.addHeader(HTTP.CONTENT_TYPE, "application/json");

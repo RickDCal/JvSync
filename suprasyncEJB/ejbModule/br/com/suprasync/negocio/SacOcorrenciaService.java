@@ -107,5 +107,9 @@ public class SacOcorrenciaService implements ISacOcorrenciaServiceLocal {
 	public boolean liberarVersao (Integer id, String numeroVersao) {
 		return sacOcorrenciaDao.liberarVersao(id, numeroVersao);
 	}
+	
+	public boolean followUp(int id, int idUsuarioSupraMais, String mensagem) {
+		return sacOcorrenciaDao.followUp(id, idUsuarioSupraMais, mensagem);
+	}
 
 }
