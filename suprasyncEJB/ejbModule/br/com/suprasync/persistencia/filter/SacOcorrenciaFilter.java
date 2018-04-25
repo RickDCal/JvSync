@@ -32,6 +32,7 @@ public class SacOcorrenciaFilter {
 	private Integer position;
 	private Integer max;
 	private boolean uteis;
+	private Integer idInicial;
 
 	public SacOcorrenciaFilter() {
 
@@ -183,6 +184,14 @@ public class SacOcorrenciaFilter {
 
 	public void setUteis(boolean uteis) {
 		this.uteis = uteis;
+	}
+
+	public Integer getIdInicial() {
+		return idInicial;
+	}
+
+	public void setIdInicial(Integer idInicial) {
+		this.idInicial = idInicial;
 	}
 
 	private void montaFilterJson(JsonArray filterJson) throws ParseException, FalhaAoConverterDataException {

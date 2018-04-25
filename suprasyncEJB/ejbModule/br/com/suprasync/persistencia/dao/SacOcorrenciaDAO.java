@@ -106,6 +106,11 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 			parametros.put("dataFimPrevisao", filter.getDataFimPrevisaoTermino());
 		}
 		
+		if (filter.getIdInicial() != null) {
+			consulta.append(" and o.id > :idInicial ");
+			parametros.put("idInicial", filter.getIdInicial());
+		}
+		
 		if (filter.isUteis()) {
 			consulta.append(" and o.situacaoOcorrencia not in :listSituacaoInuteis ");
 			List<SACOcorrenciaEnum> listSituacoes = new ArrayList<SACOcorrenciaEnum>();

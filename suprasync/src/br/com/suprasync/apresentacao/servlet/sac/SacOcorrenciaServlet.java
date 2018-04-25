@@ -86,26 +86,6 @@ public class SacOcorrenciaServlet extends GenericServlet {
 							ocorrencias = sacFacade.obter(filter);
 							totalRegistros = ocorrencias.size();
 
-							//							String tipoFiltro = null;
-							//							String valorFiltro = null;
-							//							try {
-							//								JsonArray filters = (auxiliar.jsFiltros);
-							//								JsonObject objetoJson = (JsonObject) filters.get(0);
-							//								tipoFiltro = objetoJson.get("property").getAsString();
-							//								valorFiltro = objetoJson.get("value").getAsString();
-							//							} catch (Exception e) {
-							//								e.printStackTrace();
-							//								auxiliar.setMensagemRetorno("Falha: " + e.getCause().getMessage() + ".");
-							//							}
-							//
-							//							//TODO criar SACOcorrenciaFilter
-							//
-							//							if (tipoFiltro != null && tipoFiltro.equalsIgnoreCase("id") && valorFiltro != null) {							
-							//								SacOcorrencia ocorrencia = (SacOcorrencia) genericFacade.pesquisar(SacOcorrencia.class,(Integer.parseInt(valorFiltro)));						
-							//								ocorrencias.add(ocorrencia);
-							//								totalRegistros = ocorrencias.size();							
-							//							}						
-
 						}else{
 							ocorrencias = genericFacade.pesquisar(SacOcorrencia.class, position, max);
 						}
@@ -123,33 +103,33 @@ public class SacOcorrenciaServlet extends GenericServlet {
 					break;
 
 				case 3:				
-					try {
-						for (int i = 0; i < arrayDados.size(); i++) {
-							JsonObject objetoJson = (JsonObject) arrayDados.get(i);
-							if(objetoJson.get("id").getAsInt() > 0) {
-
-								JsonObject objetoJsonResposta = new JsonObject();
-
-								SacOcorrencia ocorrencia = gson.fromJson(objetoJson, SacOcorrencia.class);
-
-								genericFacade.atualizar(ocorrencia);
-								ocorrencia = (SacOcorrencia) genericFacade.pesquisar(SacOcorrencia.class, objetoJson.get("id").getAsInt()); //recarrega o objeto
-
-								auxiliar.setMensagemRetorno("Ocorrência atualizada com sucesso!");
-
-								SacOcorrenciaDTO ocorrenciaDTO = new SacOcorrenciaDTO();								
-								objetoJsonResposta = (JsonObject) jsonParser.parse(gson.toJson(ocorrenciaDTO.convertToDTO(ocorrencia)));										
-
-								dados.add(objetoJsonResposta);
-								retorno.add("data", dados);
-							}
-						}
-
-						auxiliar.setSuccess(true); 
-					} catch (Exception e) {
-						e.printStackTrace();
-						auxiliar.setMensagemRetorno("Falha: " + e.getCause().getMessage() + ".");
-					}				
+//					try {
+//						for (int i = 0; i < arrayDados.size(); i++) {
+//							JsonObject objetoJson = (JsonObject) arrayDados.get(i);
+//							if(objetoJson.get("id").getAsInt() > 0) {
+//
+//								JsonObject objetoJsonResposta = new JsonObject();
+//
+//								SacOcorrencia ocorrencia = gson.fromJson(objetoJson, SacOcorrencia.class);
+//
+//								genericFacade.atualizar(ocorrencia);
+//								ocorrencia = (SacOcorrencia) genericFacade.pesquisar(SacOcorrencia.class, objetoJson.get("id").getAsInt()); //recarrega o objeto
+//
+//								auxiliar.setMensagemRetorno("Ocorrência atualizada com sucesso!");
+//
+//								SacOcorrenciaDTO ocorrenciaDTO = new SacOcorrenciaDTO();								
+//								objetoJsonResposta = (JsonObject) jsonParser.parse(gson.toJson(ocorrenciaDTO.convertToDTO(ocorrencia)));										
+//
+//								dados.add(objetoJsonResposta);
+//								retorno.add("data", dados);
+//							}
+//						}
+//
+//						auxiliar.setSuccess(true); 
+//					} catch (Exception e) {
+//						e.printStackTrace();
+//						auxiliar.setMensagemRetorno("Falha: " + e.getCause().getMessage() + ".");
+//					}				
 					break;
 				case 6: 
 					List<SacEtapa>etapas = genericFacade.pesquisar(SacEtapa.class, position, max);
