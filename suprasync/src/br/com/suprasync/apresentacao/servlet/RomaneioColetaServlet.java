@@ -42,22 +42,21 @@ public class RomaneioColetaServlet extends GenericServlet {
 		int inicial = 3;
 		int i = 0;
 		int j = 0;
-		int k = 0;
+		int k = 1;
 		int l = 0;
 		
 		int blocos = (total / (bloco -(inicial - 1)));
-		int resto = total % (bloco - (inicial-1));
-		
+		int resto = total % (bloco - (inicial-1));	
 		
 		int pg = bloco - inicial;
 		
-		while (i < 20) {
+		while (i <= 20) {
 			//j= (j > l) ?0:j; 
-			j = (j > pg) ? 0 : j;
-			k = (j > pg) ? k++ : k;		
-			l = (k > blocos)?resto:bloco;
+			k = (j > pg) ? k+1 : k;
+			j = (j > pg) ? 0 : j;					
+			l = (k > blocos)?resto+inicial:bloco;
 			
-			System.out.println("Pág " + (inicial +j) +" de " + l);
+			System.out.println("Pág " + (inicial +j) +" de " + l + "total " + (i + 1) + " de " + total);
 			i ++; j++;
 		}
 	}
