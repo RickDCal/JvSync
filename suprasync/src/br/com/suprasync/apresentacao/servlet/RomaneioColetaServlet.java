@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import br.com.suprasync.apresentacao.servlet.estaticos.GenericServlet;;
@@ -37,28 +38,43 @@ public class RomaneioColetaServlet extends GenericServlet {
 //			e.printStackTrace();
 //		}	
 		
-		int bloco = 8;
-		int total = 20;
-		int inicial = 3;
-		int i = 0;
+		request.getParameter("bloco");
+		
+		//As três variáveis que vem da tela
+		int bloco = 10;// Integer.parseInt(request.getParameter("bloco")); //500
+		int total = 5;//Integer.parseInt(request.getParameter("total")); //1716
+		int inicial = 2;// Integer.parseInt(request.getParameter("total")); //3
+		
+		
+		int pagina = 0;
 		int j = 0;
 		int k = 1;
 		int l = 0;
 		
-		int blocos = (total / (bloco -(inicial - 1)));
-		int resto = total % (bloco - (inicial-1));	
+		int blocos = (total / (bloco -(inicial - 1))); //quantidade de blocos inteiros
+		int resto = (total % (bloco - (inicial-1)))-1;	//páginas do ultimo bloco fracionado		
+		int pgBloco = bloco - inicial; //páginas por bloco regular
 		
-		int pg = bloco - inicial;
+		JsonArray dados = new JsonArray();	// para testes apenas
 		
-		while (i <= 20) {
-			//j= (j > l) ?0:j; 
-			k = (j > pg) ? k+1 : k;
-			j = (j > pg) ? 0 : j;					
-			l = (k > blocos)?resto+inicial:bloco;
+		while (pagina < total) {
+			k = (j > pgBloco) ? k+1 : k;
+			j = (j > pgBloco) ? 0 : j;					
+			l = (k > blocos) ? resto + inicial : bloco;
 			
-			System.out.println("Pág " + (inicial +j) +" de " + l + "total " + (i + 1) + " de " + total);
-			i ++; j++;
+			//if (inicial + j > 492 || inicial +j < 6 || l < bloco ) { //somente para os testes
+				
+				System.out.println("Pág " + (inicial +j) +" de " + l + " total " + (pagina + 1) + " de " + total + " bloco " + k); //resultado
+				
+				JsonObject jo = new JsonObject(); //somente para os testes
+				jo.addProperty("Linha", "Pág " + (inicial +j) +" de " + l + " total " + (pagina + 1) + " de " + total + " bloco " + k); ///somente para os testes
+				dados.add(jo);//somente para os testes
+			//}		//somente para os testes	
+			pagina ++; j++;
 		}
+		
+		retorno.add("data", dados);	//somente para os testes
+		auxiliar.despachaResposta(response, retorno); //somente para os testes
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

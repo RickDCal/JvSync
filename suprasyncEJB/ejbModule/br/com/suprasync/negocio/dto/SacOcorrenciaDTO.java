@@ -15,6 +15,8 @@ public class SacOcorrenciaDTO {
 	private String assunto;
 	private Integer idEtapa;
 	private String solicitacao;
+	private String solucao;
+	private String comentario;
 	private Integer estimativa;
 	private String descricaoDesenvolvimento;
 	private String comentarioDesenvolvimento;
@@ -97,6 +99,22 @@ public class SacOcorrenciaDTO {
 	public void setSolicitacao(String solicitacao) {
 		this.solicitacao = solicitacao;
 	}
+	
+	public String getSolucao() {
+		return solucao;
+	}
+
+	public void setSolucao(String solucao) {
+		this.solucao = solucao;
+	}
+
+	public String getComentario() {
+		return comentario;
+	}
+
+	public void setComentario(String comentario) {
+		this.comentario = comentario;
+	}
 
 	public Integer getEstimativa() {
 		return estimativa;
@@ -156,6 +174,8 @@ public class SacOcorrenciaDTO {
 		setAssunto(ocorrencia.getAssunto());
 		setIdEtapa(ocorrencia.getEtapa() != null ? ocorrencia.getEtapa().getId():null);
 		setSolicitacao(ocorrencia.getSolicitacao());
+		setSolucao(ocorrencia.getSolucao());
+		setComentario(ocorrencia.getComentario());
 		setEstimativa(ocorrencia.getEstimativa());
 		setDescricaoDesenvolvimento(ocorrencia.getDescricaoDesenvolvimento());
 		setComentarioDesenvolvimento(ocorrencia.getComentarioDesenvolvimento());

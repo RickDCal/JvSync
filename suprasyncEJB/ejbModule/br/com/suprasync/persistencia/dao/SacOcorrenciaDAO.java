@@ -74,21 +74,31 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 		if (filter.getSolicitacao() != null) {
 			consulta.append(" and o.solicitacao like :solicitacao ");
 			parametros.put("solicitacao", "%" + filter.getSolicitacao() +"%");
-		}
+		}		
 		
-		if (filter.getEstimativa() != null) {
-			consulta.append(" and o.estimativa = :estimativa ");
-			parametros.put("estimativa", filter.getEstimativa());
-		}
+		if (filter.getSolucao() != null) {
+			consulta.append(" and o.solucao like :solucao ");
+			parametros.put("solucao", "%" + filter.getSolucao() +"%");
+		}		
 		
 		if (filter.getDescricaoDesenvolvimento() != null) {
-			consulta.append(" and o.descricaoDesenvolvimento like descricao ");
+			consulta.append(" and (o.descricaoDesenvolvimento like :descricao )");
 			parametros.put("descricao", "%" + filter.getDescricaoDesenvolvimento() +"%");
 		}
 		
 		if (filter.getComentarioDesenvolvimento() != null) {
-			consulta.append(" and o.comentarioDesenvolvimento like descricao ");
+			consulta.append(" and (o.comentarioDesenvolvimento like :comentario )");
 			parametros.put("comentario", "%" + filter.getComentarioDesenvolvimento() +"%");
+		}
+		
+		if (filter.getComentario() != null) {
+			consulta.append(" and (o.comentario like :comentario  or o.solucao like :comentario or o.descricaoDesenvolvimento like :comentario or o.comentarioDesenvolvimento like :comentario) ");
+			parametros.put("comentario", "%" + filter.getComentario() +"%");
+		}	
+		
+		if (filter.getEstimativa() != null) {
+			consulta.append(" and o.estimativa = :estimativa ");
+			parametros.put("estimativa", filter.getEstimativa());
 		}
 		
 		if (filter.getListIdFuncionario() != null) {
@@ -104,11 +114,6 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 		if (filter.getDataFimPrevisaoTermino() != null) {
 			consulta.append(" and o.dataPrevisaoTermino <= :dataFimPrevisao ");
 			parametros.put("dataFimPrevisao", filter.getDataFimPrevisaoTermino());
-		}
-		
-		if (filter.getIdInicial() != null) {
-			consulta.append(" and o.id > :idInicial ");
-			parametros.put("idInicial", filter.getIdInicial());
 		}
 		
 		if (filter.isUteis()) {

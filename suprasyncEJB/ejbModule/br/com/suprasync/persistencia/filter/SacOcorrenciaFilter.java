@@ -23,6 +23,8 @@ public class SacOcorrenciaFilter {
 	private String assunto;
 	private List<Integer> ListIdEtapa;
 	private String solicitacao;
+	private String solucao;
+	private String comentario;
 	private Integer estimativa;
 	private String descricaoDesenvolvimento;
 	private String comentarioDesenvolvimento;
@@ -112,6 +114,22 @@ public class SacOcorrenciaFilter {
 
 	public void setSolicitacao(String solicitacao) {
 		this.solicitacao = solicitacao;
+	}
+	
+	public String getSolucao() {
+		return solucao;
+	}
+
+	public void setSolucao(String solucao) {
+		this.solucao = solucao;
+	}
+
+	public String getComentario() {
+		return comentario;
+	}
+
+	public void setComentario(String comentario) {
+		this.comentario = comentario;
 	}
 
 	public Integer getEstimativa() {
@@ -220,6 +238,8 @@ public class SacOcorrenciaFilter {
 				case "datainiciocadastro" : setDataInicioCadastro(util.dataDDIMMIYYYY(valor));break; // TODO: adicionar 23:59
 				case "datafimcadastro" : setDataFimCadastro(util.dataDDIMMIYYYY(valor));break;	
 				case "assunto" : setAssunto(valor);break;
+				case "solucao" : setSolucao(valor);break;
+				case "comentario" : setComentario(valor); break;
 				case "solicitacao" : setSolicitacao(valor);break;
 				case "estimativa" : setEstimativa(Integer.parseInt(valor));break;
 				case "descricaodesenvolvimento" : setDescricaoDesenvolvimento(valor);break;

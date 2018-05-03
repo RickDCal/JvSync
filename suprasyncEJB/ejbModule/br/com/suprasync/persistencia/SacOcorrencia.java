@@ -24,6 +24,8 @@ public class SacOcorrencia {
 	private String assunto;
 	private SacEtapa etapa;
 	private String solicitacao;
+	private String solucao;
+	private String comentario;
 	private Integer estimativa;
 	private String descricaoDesenvolvimento;
 	private String comentarioDesenvolvimento;
@@ -97,6 +99,24 @@ public class SacOcorrencia {
 	}
 	public void setSolicitacao(String solicitacao) {
 		this.solicitacao = solicitacao;
+	}
+	
+	@Column(name="descricao_solucao", columnDefinition="ntext")
+	public String getSolucao() {
+		return solucao;
+	}
+
+	public void setSolucao(String solucao) {
+		this.solucao = solucao;
+	}
+
+	@Column(name="comentario", columnDefinition="ntext")
+	public String getComentario() {
+		return comentario;
+	}
+
+	public void setComentario(String comentario) {
+		this.comentario = comentario;
 	}
 
 	@Column(name="tempo_estimado_desenv", columnDefinition="int")
