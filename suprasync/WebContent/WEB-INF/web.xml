@@ -51,4 +51,5 @@
     <description>Quando usuario estiver logado</description>
     <role-name>LOGADO</role-name>
   </security-role>
+
 </web-app>
