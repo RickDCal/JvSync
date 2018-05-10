@@ -23,11 +23,12 @@ public class SacOcorrenciaDTO {
 	private Date dataUltimoRedirecionamento; 
 	private Date dataPrevisaoTermino;
 	private String numeroVersao;
+	private Integer prioridade;
 			
 	public SacOcorrenciaDTO() {
 		
 	}
-
+	
 	public int getId() {
 		return id;
 	}
@@ -163,30 +164,19 @@ public class SacOcorrenciaDTO {
 	public void setNumeroVersao(String numeroVersao) {
 		this.numeroVersao = numeroVersao;
 	}
+	
+	public Integer getPrioridade() {
+		return prioridade;
+	}
+
+	public void setPrioridade(Integer prioridade) {
+		this.prioridade = prioridade;
+	}
 
 	public SacOcorrenciaDTO convertToDTO (SacOcorrencia ocorrencia) {
+		return ocorrencia.getOcorrenciaDTO(null);		
+	}
+
 		
-		setId(ocorrencia.getId());
-		setIdCliente(ocorrencia.getCliente() != null ? ocorrencia.getCliente().getId():null);
-		setNomeCliente(ocorrencia.getCliente() != null ? ocorrencia.getCliente().getNome():null);
-		setDataCadastro(ocorrencia.getDataCadastro());
-		setIdSituacao(ocorrencia.getSituacaoOcorrencia() != null ? ocorrencia.getSituacaoOcorrencia().getCode():null);
-		setAssunto(ocorrencia.getAssunto());
-		setIdEtapa(ocorrencia.getEtapa() != null ? ocorrencia.getEtapa().getId():null);
-		setSolicitacao(ocorrencia.getSolicitacao());
-		setSolucao(ocorrencia.getSolucao());
-		setComentario(ocorrencia.getComentario());
-		setEstimativa(ocorrencia.getEstimativa());
-		setDescricaoDesenvolvimento(ocorrencia.getDescricaoDesenvolvimento());
-		setComentarioDesenvolvimento(ocorrencia.getComentarioDesenvolvimento());
-		setDataUltimoRedirecionamento(ocorrencia.getDataUltimoRedirecionamento());
-		setIdFuncionario(
-				ocorrencia.getFuncionarioRedirecionamento() != null ? ocorrencia.getFuncionarioRedirecionamento().getId(): 
-				ocorrencia.getFuncionarioCadastro() != null ? ocorrencia.getFuncionarioCadastro().getId() : null 				
-		);
-		setDataPrevisaoTermino(ocorrencia.getDataPrevisaoTermino());	
-		setNumeroVersao(ocorrencia.getNumeroVersao());
-		return this;		
-	}	
 	
 }

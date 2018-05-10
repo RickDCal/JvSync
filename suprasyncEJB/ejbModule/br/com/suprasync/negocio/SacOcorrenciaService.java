@@ -28,9 +28,7 @@ public class SacOcorrenciaService implements ISacOcorrenciaServiceLocal {
 
 	public SacOcorrenciaService() {
 
-	}	
-
-
+	}
 
 	public SacOcorrencia pesquisar (int id) throws  SacOcorrenciaNaoEncontradaException {
 
@@ -77,6 +75,9 @@ public class SacOcorrenciaService implements ISacOcorrenciaServiceLocal {
 		if (ocorrenciaDTO.getIdFuncionario() != null) {
 			ocorrencia.setFuncionarioCadastro((Funcionario) genericDao.obter(Funcionario.class, ocorrenciaDTO.getIdFuncionario()));
 		}
+		ocorrencia.setSolucao(ocorrenciaDTO.getSolucao());
+		ocorrencia.setComentario(ocorrenciaDTO.getComentario());
+		ocorrencia.setPrioridade(ocorrenciaDTO.getPrioridade());
 		return ocorrencia;
 	}
 

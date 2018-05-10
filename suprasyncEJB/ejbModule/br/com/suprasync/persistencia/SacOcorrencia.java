@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import br.com.suprasync.negocio.dto.SacOcorrenciaDTO;
 import br.com.suprasync.persistencia.enumerate.SACOcorrenciaEnum;
 
 @Entity  
@@ -34,6 +35,7 @@ public class SacOcorrencia {
 	private Funcionario funcionarioRedirecionamento;
 	private Date dataPrevisaoTermino;
 	private String numeroVersao;
+	private Integer prioridade;
 			
 	public SacOcorrencia() {
 		
@@ -186,6 +188,44 @@ public class SacOcorrencia {
 
 	public void setNumeroVersao(String numeroVersao) {
 		this.numeroVersao = numeroVersao;
+	}
+
+	@Column(name="rrc", columnDefinition="nvarchar")
+	public Integer getPrioridade() {
+		return prioridade;
+	}
+
+	public void setPrioridade(Integer prioridade) {
+		this.prioridade = prioridade;
+	}
+	
+	public SacOcorrenciaDTO getOcorrenciaDTO(SacOcorrenciaDTO dto) {
+		if (dto == null) {
+			dto = new SacOcorrenciaDTO();
+		}		
+		dto.setId(this.getId());
+		dto.setIdCliente(this.getCliente() != null ? this.getCliente().getId():null);
+		dto.setNomeCliente(this.getCliente() != null ? this.getCliente().getNome():null);
+		dto.setDataCadastro(this.getDataCadastro());
+		dto.setIdSituacao(this.getSituacaoOcorrencia() != null ? this.getSituacaoOcorrencia().getCode():null);
+		dto.setAssunto(this.getAssunto());
+		dto.setIdEtapa(this.getEtapa() != null ? this.getEtapa().getId():null);
+		dto.setSolicitacao(this.getSolicitacao());
+		dto.setSolucao(this.getSolucao());
+		dto.setComentario(this.getComentario());
+		dto.setEstimativa(this.getEstimativa());
+		dto.setDescricaoDesenvolvimento(this.getDescricaoDesenvolvimento());
+		dto.setComentarioDesenvolvimento(this.getComentarioDesenvolvimento());
+		dto.setDataUltimoRedirecionamento(this.getDataUltimoRedirecionamento());
+		if (this.getFuncionarioRedirecionamento() != null ) {
+			dto.setIdFuncionario(this.getFuncionarioRedirecionamento().getId());
+		} else if (this.getFuncionarioCadastro() != null) {
+			dto.setIdFuncionario(this.getFuncionarioCadastro().getId());
+		}
+		dto.setDataPrevisaoTermino(this.getDataPrevisaoTermino());	
+		dto.setNumeroVersao(this.getNumeroVersao());
+		dto.setPrioridade(this.getPrioridade());
+		return dto;		
 	}
 	
 }
