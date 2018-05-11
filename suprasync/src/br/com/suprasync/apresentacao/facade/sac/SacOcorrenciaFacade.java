@@ -56,7 +56,7 @@ public class SacOcorrenciaFacade {
 		return service.liberarVersao(id, numeroVersao);
 	}
 	
-	public Map<Integer, Integer> followUp(int id, int idUsuarioSupraMais, String mensagem) {
+	public List<Integer> followUp(int id, int idUsuarioSupraMais, String mensagem) {
 		return service.followUp(id, idUsuarioSupraMais, mensagem);
 	}
 		

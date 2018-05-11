@@ -28,6 +28,6 @@ public interface ISacOcorrenciaServiceLocal {
 	
 	public boolean liberarVersao (Integer id, String numeroVersao);
 	
-	public Map<Integer, Integer> followUp(int id, int idUsuarioSupraMais, String mensagem);
+	public List<Integer> followUp(int id, int idUsuarioSupraMais, String mensagem);
 
 }

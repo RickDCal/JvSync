@@ -173,30 +173,30 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 		return false;
 	}
 	
-	public Map<Integer, Integer> followUp(int id, int idUsuarioSupraMais, String mensagem) {
+	public List<Integer> followUp(int id, int idUsuarioSupraMais, String mensagem) {
 		
-		Map<Integer,Integer> idIdUsuario = new HashMap<Integer, Integer>();
-		Map<Integer,Integer> registrados = new HashMap<Integer, Integer>();
+		List<Integer> idIdUsuario = new ArrayList<Integer>();
+		List<Integer> registrados = new ArrayList<Integer>();
 		
-		StringBuilder consultaInicial = new StringBuilder("select codigo, func_codigo_solicitacao from sac_ocorrencia where codigo = ")
+		StringBuilder consultaInicial = new StringBuilder("select codigo from sac_ocorrencia where codigo = ")
 				.append(id).append(" or sacocor_codigo_similar = ").append(id);
 		Query queryInicial = entityManager.createNativeQuery(consultaInicial.toString());
-		idIdUsuario = (Map<Integer, Integer>) queryInicial.getResultList();
+		idIdUsuario = queryInicial.getResultList();
 		
 		if (idIdUsuario.size() > 0) {
 			
-			for (Map.Entry<Integer, Integer> entry : idIdUsuario.entrySet()) {
+			for (Integer codigo : idIdUsuario) {
 			
 				try {
 					StringBuilder consulta = new StringBuilder("insert into sac_follow_up (ocor_codigo, codigo, data, usu_codigo, historico) ")
 							.append("values(:id, isnull((select max(codigo) from sac_follow_up where ocor_codigo = :id),0)+1, ")
 							.append("getdate(), :idUsuario, :mensagem)");
 					Query query = entityManager.createNativeQuery(consulta.toString());
-					query.setParameter("id", entry.getKey());
+					query.setParameter("id", codigo);
 					query.setParameter("idUsuario", idUsuarioSupraMais);
 					query.setParameter("mensagem", mensagem);
 					query.executeUpdate();
-					registrados.put(entry.getKey(), entry.getValue());
+					registrados.add(codigo);
 				} catch (Exception e) {
 					e.printStackTrace();
 					return registrados;

@@ -110,7 +110,7 @@ public class SacOcorrenciaService implements ISacOcorrenciaServiceLocal {
 		return sacOcorrenciaDao.liberarVersao(id, numeroVersao);
 	}
 	
-	public Map<Integer, Integer> followUp(int id, int idUsuarioSupraMais, String mensagem) {
+	public List<Integer> followUp(int id, int idUsuarioSupraMais, String mensagem) {
 		return sacOcorrenciaDao.followUp(id, idUsuarioSupraMais, mensagem);
 	}
 
