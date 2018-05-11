@@ -159,7 +159,9 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 		try {
 			StringBuilder consulta = new StringBuilder("update sac_ocorrencia set versao_atualizador = :numeroVersao ")
 					.append(" , func_codigo_redirecionamento = func_codigo_solicitacao, id_situacao = 5")
-					.append(" where codigo = :id");
+					.append(" , sacetapa_codigo = isnull((select top(1) codigo from sac_etapa_atendimento where id_situacao_inicio = 5), sacetapa_codigo)")
+					.append(" where codigo = :id")
+					.append(" or sacocor_codigo_similar = :id ");
 			Query query = entityManager.createNativeQuery(consulta.toString());
 			query.setParameter("numeroVersao", numeroVersao);
 			query.setParameter("id", id);			
@@ -171,21 +173,36 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 		return false;
 	}
 	
-	public boolean followUp(int id, int idUsuarioSupraMais, String mensagem) {
-		try {
-			StringBuilder consulta = new StringBuilder("insert into sac_follow_up (ocor_codigo, codigo, data, usu_codigo, historico) ")
-					.append("values(:id, isnull((select max(codigo) from sac_follow_up where ocor_codigo = :id),0)+1, ")
-					.append("getdate(), :idUsuario, :mensagem)");
-			Query query = entityManager.createNativeQuery(consulta.toString());
-			query.setParameter("id", id);
-			query.setParameter("idUsuario", idUsuarioSupraMais);
-			query.setParameter("mensagem", mensagem);
-			query.executeUpdate();
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}		
-		return false;		
+	public Map<Integer, Integer> followUp(int id, int idUsuarioSupraMais, String mensagem) {
+		
+		Map<Integer,Integer> idIdUsuario = new HashMap<Integer, Integer>();
+		Map<Integer,Integer> registrados = new HashMap<Integer, Integer>();
+		
+		StringBuilder consultaInicial = new StringBuilder("select codigo, func_codigo_solicitacao from sac_ocorrencia where codigo = ")
+				.append(id).append(" or sacocor_codigo_similar = ").append(id);
+		Query queryInicial = entityManager.createNativeQuery(consultaInicial.toString());
+		idIdUsuario = (Map<Integer, Integer>) queryInicial.getResultList();
+		
+		if (idIdUsuario.size() > 0) {
+			
+			for (Map.Entry<Integer, Integer> entry : idIdUsuario.entrySet()) {
+			
+				try {
+					StringBuilder consulta = new StringBuilder("insert into sac_follow_up (ocor_codigo, codigo, data, usu_codigo, historico) ")
+							.append("values(:id, isnull((select max(codigo) from sac_follow_up where ocor_codigo = :id),0)+1, ")
+							.append("getdate(), :idUsuario, :mensagem)");
+					Query query = entityManager.createNativeQuery(consulta.toString());
+					query.setParameter("id", entry.getKey());
+					query.setParameter("idUsuario", idUsuarioSupraMais);
+					query.setParameter("mensagem", mensagem);
+					query.executeUpdate();
+					registrados.put(entry.getKey(), entry.getValue());
+				} catch (Exception e) {
+					e.printStackTrace();
+					return registrados;
+				}
+			}
+		}
+		return registrados;		
 	}
-
 }

@@ -1,6 +1,7 @@
 package br.com.suprasync.apresentacao.facade.sac;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.naming.Context;
@@ -55,7 +56,7 @@ public class SacOcorrenciaFacade {
 		return service.liberarVersao(id, numeroVersao);
 	}
 	
-	public boolean followUp(int id, int idUsuarioSupraMais, String mensagem) {
+	public Map<Integer, Integer> followUp(int id, int idUsuarioSupraMais, String mensagem) {
 		return service.followUp(id, idUsuarioSupraMais, mensagem);
 	}
 		

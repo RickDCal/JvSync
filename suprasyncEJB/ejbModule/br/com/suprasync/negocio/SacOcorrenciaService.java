@@ -1,6 +1,7 @@
 package br.com.suprasync.negocio;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -109,7 +110,7 @@ public class SacOcorrenciaService implements ISacOcorrenciaServiceLocal {
 		return sacOcorrenciaDao.liberarVersao(id, numeroVersao);
 	}
 	
-	public boolean followUp(int id, int idUsuarioSupraMais, String mensagem) {
+	public Map<Integer, Integer> followUp(int id, int idUsuarioSupraMais, String mensagem) {
 		return sacOcorrenciaDao.followUp(id, idUsuarioSupraMais, mensagem);
 	}
 

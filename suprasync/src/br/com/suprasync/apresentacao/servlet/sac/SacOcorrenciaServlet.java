@@ -2,7 +2,9 @@ package br.com.suprasync.apresentacao.servlet.sac;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -145,6 +147,7 @@ public class SacOcorrenciaServlet extends GenericServlet {
 					
 					if(arrayDados != null && arrayDados.size() >0) {
 						ParametroSlack parametroSlack = (ParametroSlack) genericFacade.pesquisar(ParametroSlack.class, 0, 1).get(0);
+						Map<Integer, Integer> idsMensagens = new HashMap<Integer, Integer>();
 						try {
 							Integer idUsuarioSupraMais = Integer.parseInt(request.getParameter("idUsuarioSupraMais"));
 							JsonArray ids = arrayDados.get(0).getAsJsonObject().get("ids").getAsJsonArray();
@@ -153,17 +156,17 @@ public class SacOcorrenciaServlet extends GenericServlet {
 								for (int i = 0; i < ids.size(); i++) {
 									Integer id  = ids.get(i).getAsInt();
 									sacFacade.liberarVersao(id, numeroVersao);
-									sacFacade.followUp(id, idUsuarioSupraMais, "Liberado em versão Nº " + numeroVersao); //follow up
+									idsMensagens.putAll(sacFacade.followUp(id, idUsuarioSupraMais, "Liberado em versão Nº " + numeroVersao)); //follow up
 								}
 							}														
 							//mensagem slack somente depois de finalizar o procedimento no BD. Obs: até aqui ainda há chance de rollback.
-							for (int j = 0; j < ids.size(); j++) {
-								Integer id  = ids.get(j).getAsInt();
-								SacOcorrencia ocorrencia = sacFacade.pesquisar(id);
-								UsuarioFacade usuarioFacade = new UsuarioFacade();								
-								if (ocorrencia != null && ocorrencia.getFuncionarioCadastro() != null) {
-									Usuario usuario = usuarioFacade.obterPorIdFuncionario(ocorrencia.getFuncionarioCadastro().getId()).get(0);
+							for (Map.Entry<Integer, Integer> entry : idsMensagens.entrySet()) {
+								Integer id  = entry.getKey();																
+								if (entry.getKey() != null && entry.getValue() != null) {
+									UsuarioFacade usuarioFacade = new UsuarioFacade();
+									Usuario usuario = usuarioFacade.obterPorIdFuncionario(entry.getValue()).get(0);
 									if (usuario != null && usuario.getUsuarioSlack() != null) {
+										SacOcorrencia ocorrencia = sacFacade.pesquisar(id);
 										StringBuilder mensagem = new StringBuilder("A ocorrência Nº ")
 										.append(id)
 										.append(" cadastrada por você foi liberada na versão ")
