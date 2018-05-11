@@ -127,7 +127,15 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 			parametros.put("listSituacaoInuteis", listSituacoes);
 		}
 			
-		consulta.append(" order by o.id desc ");
+		if (filter.isPrioridade()) {
+			consulta.append(" and o.prioridade is not null ");
+		}
+		
+		if (filter.isPrioridade()) {
+			consulta.append(" order by o.prioridade asc");
+		} else {
+			consulta.append(" order by o.id desc ");
+		}
 
 		/** seta os parâmetros na query */
 		Query query = entityManager.createQuery(consulta.toString());

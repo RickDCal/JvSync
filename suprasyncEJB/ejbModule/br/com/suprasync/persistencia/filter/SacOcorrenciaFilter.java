@@ -35,6 +35,7 @@ public class SacOcorrenciaFilter {
 	private Integer max;
 	private boolean uteis;
 	private Integer idInicial;
+	private boolean isPrioridade;
 
 	public SacOcorrenciaFilter() {
 
@@ -210,6 +211,14 @@ public class SacOcorrenciaFilter {
 
 	public void setIdInicial(Integer idInicial) {
 		this.idInicial = idInicial;
+	}
+
+	public boolean isPrioridade() {
+		return isPrioridade;
+	}
+
+	public void setPrioridade(boolean isPrioridade) {
+		this.isPrioridade = isPrioridade;
 	}
 
 	private void montaFilterJson(JsonArray filterJson) throws ParseException, FalhaAoConverterDataException {

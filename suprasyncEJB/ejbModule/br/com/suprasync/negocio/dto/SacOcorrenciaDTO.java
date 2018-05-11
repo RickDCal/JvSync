@@ -2,6 +2,10 @@ package br.com.suprasync.negocio.dto;
 
 import java.util.Date;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import br.com.suprasync.persistencia.SacOcorrencia;
 
 public class SacOcorrenciaDTO {
@@ -176,7 +180,11 @@ public class SacOcorrenciaDTO {
 	public SacOcorrenciaDTO convertToDTO (SacOcorrencia ocorrencia) {
 		return ocorrencia.getOcorrenciaDTO(null);		
 	}
-
-		
+	
+	public JsonObject getAsJson() {
+		Gson gson = new Gson();
+		JsonParser jsonParser = new JsonParser();
+		return (JsonObject) jsonParser.parse(gson.toJson(this));		
+	}		
 	
 }
