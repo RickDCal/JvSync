@@ -205,4 +205,9 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 		}
 		return registrados;		
 	}
+	
+	public void consultaNativa (String consulta) {
+		Query query = entityManager.createNativeQuery(consulta);
+		query.executeUpdate();
+	}
 }

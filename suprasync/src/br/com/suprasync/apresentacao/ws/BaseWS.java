@@ -1,4 +1,4 @@
-package br.com.suprasync.apresentacao.servlet;
+package br.com.suprasync.apresentacao.ws;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;

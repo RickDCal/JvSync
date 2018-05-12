@@ -113,5 +113,9 @@ public class SacOcorrenciaService implements ISacOcorrenciaServiceLocal {
 	public List<Integer> followUp(int id, int idUsuarioSupraMais, String mensagem) {
 		return sacOcorrenciaDao.followUp(id, idUsuarioSupraMais, mensagem);
 	}
+	
+	public void consultaNativa (String consulta) {
+		sacOcorrenciaDao.consultaNativa(consulta);
+	}
 
 }

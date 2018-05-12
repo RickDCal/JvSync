@@ -1,7 +1,6 @@
 package br.com.suprasync.persistencia.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.ejb.Local;
 
@@ -29,6 +28,8 @@ public List<SacOcorrencia> obter(SacOcorrenciaFilter filter) throws SacOcorrenci
 public boolean liberarVersao (Integer id, String numeroVersao);
 
 public List<Integer> followUp(int id, int idUsuarioSupraMais, String mensagem);
+
+public void consultaNativa (String consulta);
 
 
 }

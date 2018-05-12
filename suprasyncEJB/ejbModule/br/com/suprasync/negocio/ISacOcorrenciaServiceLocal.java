@@ -1,7 +1,6 @@
 package br.com.suprasync.negocio;
 
 import java.util.List;
-import java.util.Map;
 
 import br.com.suprasync.negocio.dto.SacOcorrenciaDTO;
 import br.com.suprasync.persistencia.SacOcorrencia;
@@ -29,5 +28,7 @@ public interface ISacOcorrenciaServiceLocal {
 	public boolean liberarVersao (Integer id, String numeroVersao);
 	
 	public List<Integer> followUp(int id, int idUsuarioSupraMais, String mensagem);
+	
+	public void consultaNativa (String consulta);
 
 }
