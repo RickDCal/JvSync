@@ -91,8 +91,71 @@ public class AbcFarmaWS {
 					System.out.println(item.get("EAN")+ " " + "registro: " + k + "página " + j);
 					
 				}
+				
+				text = new StringBuilder();
+				String termo = "";
+				
+				for (int i = 0; i < lista.size(); i++) {
+					termo = new String(new char[136]).replace("\0", " ");
+					text.append(termo);
+					JsonObject item = (JsonObject) lista.get(i);
+					termo = ("" + item.get("PMC_18").getAsDouble() + "00000000000");
+					text.append(termo.substring(0, 11));
+					termo = ("" + item.get("PF_18").getAsDouble() + "00000000000");
+					text.append(termo.substring(0, 11));
+					text.append("00000000000");
+					termo = ("" + item.get("PMC_17").getAsDouble() + "00000000000");
+					text.append(termo.substring(0, 11));
+					termo = ("" + item.get("PF_17").getAsDouble() + "00000000000");
+					text.append(termo.substring(0, 11));
+					text.append("00000000000");
+					termo = ("" + item.get("PMC_12").getAsDouble() + "00000000000");
+					text.append(termo.substring(0, 11));
+					termo = ("" + item.get("PF_12").getAsDouble() + "00000000000");
+					text.append(termo.substring(0, 11));
+					text.append("00000000000");
+					termo = new String(new char[28]).replace("\0", " "); 
+					text.append(termo);
+					termo = ("" + new BigInteger(item.get("EAN").getAsString().replace(" ", "")) + "             ").substring(0,13);
+					text.append(termo);
+					text.append("000");
+					switch (item.get("ID_LCCT").getAsString()) {
+					case "+": text.append(1); break;
+					case "-": text.append(2); break;
+					case "N": text.append(3); break;
+					case "O": text.append(4); break;
+					default: break;
+					}
+					termo = new String(new char[130]).replace("\0", " "); 
+					text.append(termo);
+					termo = ("" + item.get("PMC_20").getAsDouble() + "00000000000");
+					text.append(termo.substring(0, 11));
+					termo = ("" + item.get("PF_20").getAsDouble() + "00000000000");
+					text.append(termo.substring(0, 11));
+					termo = new String(new char[44]).replace("\0", " ");
+					text.append(termo);
+					termo = ("" + item.get("PMC_0").getAsDouble() + "00000000000");
+					text.append(termo.substring(0, 11));
+					termo = ("" + item.get("PF_0").getAsDouble() + "00000000000");
+					text.append(termo.substring(0, 11));
+					text.append("00000000000");
+					text.append((""+item.get("REGISTRO_ANVISA") +"             ").substring(0,13));					
+					text.append(System.getProperty("line.separator"));
+					k++;
+					
+					
+					
+//					if (k>1000) {						
+//						k=0;
+//						gravaArquivo("ABCFarma_pag" + j + "_" + totalPaginas + "_" + new Date().getTime() +".txt", text.toString());
+//						j++;
+//						text= new StringBuilder();
+//					}
+					System.out.println(item.get("EAN")+ " " + "registro: " + k + "página " + j);
+					
+				}
 
-				gravaArquivo("ABCFarma" + new Date().getTime() +".txt", text.toString());
+				gravaArquivo("ABCFarmaLayoutOficial" + new Date().getTime() +".txt", text.toString());
 				
 				
 				////////////////////////////////////////////////////////////////////////////
@@ -152,7 +215,7 @@ public class AbcFarmaWS {
 
 			} catch (Exception e1) {
 				e1.printStackTrace();
-				return e1.getCause().toString();
+				return "Erro";
 			}
 		}
 		return null;
