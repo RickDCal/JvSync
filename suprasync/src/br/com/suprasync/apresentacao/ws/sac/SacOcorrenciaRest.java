@@ -1,9 +1,7 @@
 package br.com.suprasync.apresentacao.ws.sac;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import javax.naming.NamingException;
 import javax.ws.rs.Consumes;
@@ -17,17 +15,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 
-import br.com.suprasync.apresentacao.facade.GenericFacade;
 import br.com.suprasync.apresentacao.facade.sac.SacOcorrenciaFacade;
 import br.com.suprasync.negocio.dto.SacOcorrenciaDTO;
 import br.com.suprasync.persistencia.SacOcorrencia;
-import br.com.suprasync.persistencia.dao.exception.ObjetoNaoEncontradoException;
 import br.com.suprasync.persistencia.dao.exception.SacOcorrenciaNaoEncontradaException;
 import br.com.suprasync.persistencia.filter.SacOcorrenciaFilter;
 
@@ -113,46 +107,24 @@ public class SacOcorrenciaRest {
 		return retorno.toString();
 	}
 	
-//	@PUT
-//	@Path("/atualizarPrioridades")
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	@Produces(MediaType.APPLICATION_JSON)//@Produces("text/plain")
-//	public String atualizarPrioridadesSac(SacOcorrenciaDTO ocorrenciaDto ) {		
-//	//public String atualizarPrioridadesSac(@DefaultValue("") @QueryParam("id") String id, @QueryParam("data") String dados, @QueryParam("action") String action  ) {
-//	
-//		try {
-//			SacOcorrenciaFacade sacOcorrenciaFacade = new SacOcorrenciaFacade();
-//			SacOcorrencia ocorrencia = sacOcorrenciaFacade.pesquisar(ocorrenciaDto.getId());
-//			ocorrencia.setPrioridade(ocorrenciaDto.getPrioridade());
-//			sacOcorrenciaFacade.atualizar(ocorrencia);
-//			jdados.add(ocorrencia.getOcorrenciaDTO(null).getAsJson());			
-//		} catch (NamingException | SacOcorrenciaNaoEncontradaException e) {
-//			e.printStackTrace();
-//			return montaResposta();
-//		}		
-//		setSuccess(true);
-//		retorno.add("data", jdados);
-//		return retorno.toString();
-//	}
-	
 	@DELETE
+	@PUT
 	@Path("/removerPrioridades")
 	@Produces("text/plain")
-	public String removerPrioridadesSac(@DefaultValue("") @QueryParam("id") String id, @QueryParam("data") String dados, @QueryParam("action") String action  ) {
-		return null;
-//		try {
-//			GenericFacade genericFacade = new GenericFacade();
-//			List<SacPrioridade> prioridades = genericFacade.pesquisar(SacPrioridade.class, 0, 1000, null);
-//			JsonArray array = new JsonArray();
-//			for (Iterator<SacPrioridade> iterator = prioridades.iterator(); iterator.hasNext();) {
-//				SacPrioridade sacPrioridade = (SacPrioridade) iterator.next();
-//				array.add(sacPrioridade.prioridadeJson(sacPrioridade));	
-//			} 
-//			return array.toString();
-//		} catch (NamingException | ObjetoNaoEncontradoException e) {
-//			e.printStackTrace();
-//			return null;
-//		}	
+	public String removerPrioridadesSac(Integer id) {
+		if (id != null) {
+			try {
+				SacOcorrenciaFacade sacFacade = new SacOcorrenciaFacade();
+				sacFacade.consultaNativa("update sac_ocorrencia set rrc = null where codigo = " + id);
+				SacOcorrenciaDTO dto = sacFacade.pesquisar(id).getOcorrenciaDTO(null);
+				jdados.add(dto.getAsJson());
+				setSuccess(true);
+			} catch (NamingException | SacOcorrenciaNaoEncontradaException e) {
+				e.printStackTrace();
+			}			
+		}		
+		retorno.add("data", jdados);
+		return retorno.toString();		
 	}
 
 	public void setSuccess(boolean success) {
