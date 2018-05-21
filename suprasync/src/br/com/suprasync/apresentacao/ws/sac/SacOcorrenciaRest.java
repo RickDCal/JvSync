@@ -1,5 +1,6 @@
 package br.com.suprasync.apresentacao.ws.sac;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -15,50 +16,55 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import br.com.suprasync.apresentacao.facade.GenericFacade;
 import br.com.suprasync.apresentacao.facade.sac.SacOcorrenciaFacade;
 import br.com.suprasync.negocio.dto.SacOcorrenciaDTO;
+import br.com.suprasync.persistencia.Funcionario;
+import br.com.suprasync.persistencia.SacEtapa;
 import br.com.suprasync.persistencia.SacOcorrencia;
+import br.com.suprasync.persistencia.dao.exception.ObjetoNaoEncontradoException;
 import br.com.suprasync.persistencia.dao.exception.SacOcorrenciaNaoEncontradaException;
 import br.com.suprasync.persistencia.filter.SacOcorrenciaFilter;
 
 @Path("/sac")
 public class SacOcorrenciaRest {
-	
-//	Construtor com facades
-//	public LogUtilizacaoWS() throws NamingException {
-//		InitialContext context = new InitialContext();
-//		logUtilizacaoFacede = (LogUtilizacaoFacade) context.lookup("java:global/Suprasoft/Suprasoft-ejb/LogUtilizacaoFacade");	
-//	}
+
+	//	Construtor com facades
+	//	public LogUtilizacaoWS() throws NamingException {
+	//		InitialContext context = new InitialContext();
+	//		logUtilizacaoFacede = (LogUtilizacaoFacade) context.lookup("java:global/Suprasoft/Suprasoft-ejb/LogUtilizacaoFacade");	
+	//	}
 	private JsonObject retorno = new JsonObject();
 	private JsonArray jdados = new JsonArray();	
 	private boolean success = false;
 	private JsonParser parser = new JsonParser();
-	
+
 	@POST
 	@Path("/inserirPrioridades")
 	@Produces("text/plain")
 	//@Consumes("application/x-www-form-urlencoded")
 	public String inserirPrioridadesSac(@DefaultValue("") @QueryParam("id") String id, @QueryParam("data") String dados, @QueryParam("action") String action  ) {
 		return null;
-//		try {
-//			GenericFacade genericFacade = new GenericFacade();
-//			List<SacPrioridade> prioridades = genericFacade.pesquisar(SacPrioridade.class, 0, 1000, null);
-//			JsonArray array = new JsonArray();
-//			for (Iterator<SacPrioridade> iterator = prioridades.iterator(); iterator.hasNext();) {
-//				SacPrioridade sacPrioridade = (SacPrioridade) iterator.next();
-//				array.add(sacPrioridade.prioridadeJson(sacPrioridade));	
-//			} 
-//			return array.toString();
-//		} catch (NamingException | ObjetoNaoEncontradoException e) {
-//			e.printStackTrace();
-//			return null;
-//		}	
+		//		try {
+		//			GenericFacade genericFacade = new GenericFacade();
+		//			List<SacPrioridade> prioridades = genericFacade.pesquisar(SacPrioridade.class, 0, 1000, null);
+		//			JsonArray array = new JsonArray();
+		//			for (Iterator<SacPrioridade> iterator = prioridades.iterator(); iterator.hasNext();) {
+		//				SacPrioridade sacPrioridade = (SacPrioridade) iterator.next();
+		//				array.add(sacPrioridade.prioridadeJson(sacPrioridade));	
+		//			} 
+		//			return array.toString();
+		//		} catch (NamingException | ObjetoNaoEncontradoException e) {
+		//			e.printStackTrace();
+		//			return null;
+		//		}	
 	}
-	
+
 	@SuppressWarnings("finally")
 	@GET
 	@Path("/obterPrioridades")
@@ -83,16 +89,16 @@ public class SacOcorrenciaRest {
 		} finally {
 			return montaResposta();
 		}
-		
+
 	}
-	
+
 	@PUT
 	@Path("/atualizarOcorrencias")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)//@Produces("text/plain")
 	public String atualizarSacOcorrencia(String query) {		
-	//public String atualizarPrioridadesSac(@DefaultValue("") @QueryParam("id") String id, @QueryParam("data") String dados, @QueryParam("action") String action  ) {
-			
+		//public String atualizarPrioridadesSac(@DefaultValue("") @QueryParam("id") String id, @QueryParam("data") String dados, @QueryParam("action") String action  ) {
+
 		try {
 			//JsonObject json = (JsonObject) parser.parse(jsonObject);
 			//String consulta = json.get("query").getAsString();			
@@ -106,7 +112,7 @@ public class SacOcorrenciaRest {
 		retorno.add("data", jdados);
 		return retorno.toString();
 	}
-	
+
 	@DELETE
 	@PUT
 	@Path("/removerPrioridades")
@@ -130,13 +136,49 @@ public class SacOcorrenciaRest {
 	public void setSuccess(boolean success) {
 		this.success = success;
 	}
-	
+
 	public String montaResposta() {
 		retorno.addProperty("success", success);
 		retorno.add("data", jdados);
 		return retorno.toString();
 	}
-	
-	
+
+	@GET
+	@Path("/obterFuncionarios")
+	@Produces(MediaType.APPLICATION_JSON)//@Produces("text/plain")
+	public String obterFuncionarios(@DefaultValue("") @QueryParam("id") String id, @QueryParam("data") String dados, @QueryParam("action") String action  ) {
+		setSuccess(false);
+		Gson gson = new Gson();
+		try {
+			GenericFacade genericFacade = new GenericFacade();
+			List<Funcionario> funcionarios = genericFacade.pesquisar(Funcionario.class, null, null);
+			for (Iterator<Funcionario> iterator = funcionarios.iterator(); iterator.hasNext();) {
+				Funcionario funcionario = (Funcionario) iterator.next();
+				if(funcionario.getDataExclusao() == null && funcionario.isAtivoSac()) {
+					List<SacEtapa> etapas = new ArrayList<>();
+					if (funcionario.getEtapas() != null) {
+						
+						for (SacEtapa etapa : funcionario.getEtapas()) {
+							if (null == etapa.getDataExclusao()) {
+								etapas.add(etapa);
+							}
+						}
+						funcionario.setEtapas(etapas);
+					}
+					jdados.add(parser.parse(gson.toJson(funcionario)));	
+				}
+			}							
+			setSuccess(true);			
+		} catch (NamingException e) {
+			e.printStackTrace();			
+		} catch (ObjetoNaoEncontradoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return montaResposta();
+
+	}
+
+
 
 }
