@@ -179,24 +179,37 @@ public class SacOcorrenciaRest {
 
 	}
 	
+	@GET
+	@Path("/obterTreeFuncionarios")
+	@Produces(MediaType.APPLICATION_JSON)//@Produces("text/plain")
 	public String obterTreeFuncionario() {
-		String dados = obterFuncionarios(null, null);
-		JsonObject jo = (JsonObject) parser.parse(dados);
-		JsonArray ja = jo.getAsJsonArray("data");
-		for (int i = 0; i < ja.size(); i++) {
-			JsonObject jfunc = (JsonObject) ja.get(i);
-			if (jfunc.get("etapas") != null) {
-				JsonArray jetapas = jfunc.get("etapas").getAsJsonArray();
-				for (int j = 0; j < jetapas.size(); j++) {
-					JsonObject jetapa = (JsonObject) jetapas.get(i);
-					jetapa.addProperty("leaf", true);
-					jetapa.remove("dataExclusao");
+		obterFuncionarios(null,  null);
+		//String dados = obterFuncionarios(null, null);
+		//JsonObject jo = (JsonObject) parser.parse(dados);
+		//JsonArray ja = jo.getAsJsonArray("data");
+		if (jdados != null) {
+			for (int i = 0; i < jdados.size(); i++) {
+				JsonObject jfunc = (JsonObject) jdados.get(i);
+				jfunc.remove("efetuarAnalise");
+				jfunc.remove("providenciarSolucao");
+				jfunc.remove("executarSolucao");
+				jfunc.remove("providenciarFeedback");
+				jfunc.remove("ativoSac");
+				jfunc.remove("dataExclusao");
+								
+				if (jfunc.get("etapas") != null) {
+					JsonArray jetapas = jfunc.get("etapas").getAsJsonArray();
+					for (int j = 0; j < jetapas.size(); j++) {
+						JsonObject jetapa = (JsonObject) jetapas.get(j);
+						jetapa.addProperty("leaf", true);
+						jetapa.remove("dataExclusao");
+						jetapa.remove("situacaoInicial");						
+					}
 				}
+				
 			}
-			
-		}
-		
-		return null;
+		}				
+		return montaResposta();
 	}
 
 
