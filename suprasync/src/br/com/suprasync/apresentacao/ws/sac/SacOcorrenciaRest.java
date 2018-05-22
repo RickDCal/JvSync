@@ -146,7 +146,7 @@ public class SacOcorrenciaRest {
 	@GET
 	@Path("/obterFuncionarios")
 	@Produces(MediaType.APPLICATION_JSON)//@Produces("text/plain")
-	public String obterFuncionarios(@DefaultValue("") @QueryParam("id") String id, @QueryParam("data") String dados, @QueryParam("action") String action  ) {
+	public String obterFuncionarios(@DefaultValue("") @QueryParam("id") String id, @QueryParam("data") String dados) {
 		setSuccess(false);
 		Gson gson = new Gson();
 		try {
@@ -177,6 +177,26 @@ public class SacOcorrenciaRest {
 		}
 		return montaResposta();
 
+	}
+	
+	public String obterTreeFuncionario() {
+		String dados = obterFuncionarios(null, null);
+		JsonObject jo = (JsonObject) parser.parse(dados);
+		JsonArray ja = jo.getAsJsonArray("data");
+		for (int i = 0; i < ja.size(); i++) {
+			JsonObject jfunc = (JsonObject) ja.get(i);
+			if (jfunc.get("etapas") != null) {
+				JsonArray jetapas = jfunc.get("etapas").getAsJsonArray();
+				for (int j = 0; j < jetapas.size(); j++) {
+					JsonObject jetapa = (JsonObject) jetapas.get(i);
+					jetapa.addProperty("leaf", true);
+					jetapa.remove("dataExclusao");
+				}
+			}
+			
+		}
+		
+		return null;
 	}
 
 
