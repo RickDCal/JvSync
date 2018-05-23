@@ -1,13 +1,6 @@
 package br.com.suprasync.persistencia.dao;
 
-import java.util.List;
-
 import javax.ejb.Stateless;
-import javax.persistence.Query;
-
-import br.com.suprasync.persistencia.Funcionario;
-import br.com.suprasync.persistencia.dao.exception.ObjetoNaoEncontradoException;
-import br.com.suprasync.persistencia.dao.exception.UsuarioNaoEncontradoException;
 
 @Stateless
 public class BaseDAO extends GenericDAO implements IGenericDAO {

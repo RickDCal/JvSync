@@ -190,6 +190,12 @@ public class SacOcorrenciaRest {
 		if (jdados != null) {
 			for (int i = 0; i < jdados.size(); i++) {
 				JsonObject jfunc = (JsonObject) jdados.get(i);
+				
+				jfunc.addProperty("text", jfunc.get("nome").getAsString());
+				jfunc.addProperty("expanded", true);
+				jfunc.add("children", jfunc.get("etapas"));
+				jfunc.remove("nome");
+				jfunc.remove("etapas");
 				jfunc.remove("efetuarAnalise");
 				jfunc.remove("providenciarSolucao");
 				jfunc.remove("executarSolucao");
@@ -197,10 +203,12 @@ public class SacOcorrenciaRest {
 				jfunc.remove("ativoSac");
 				jfunc.remove("dataExclusao");
 								
-				if (jfunc.get("etapas") != null) {
-					JsonArray jetapas = jfunc.get("etapas").getAsJsonArray();
+				if (jfunc.get("children") != null) {
+					JsonArray jetapas = jfunc.get("children").getAsJsonArray();
 					for (int j = 0; j < jetapas.size(); j++) {
 						JsonObject jetapa = (JsonObject) jetapas.get(j);
+						jetapa.addProperty("text", jetapa.get("nome").getAsString());
+						jetapa.remove("nome");
 						jetapa.addProperty("leaf", true);
 						jetapa.remove("dataExclusao");
 						jetapa.remove("situacaoInicial");						
