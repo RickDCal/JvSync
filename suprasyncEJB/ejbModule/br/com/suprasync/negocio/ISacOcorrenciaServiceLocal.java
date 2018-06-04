@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.com.suprasync.negocio.dto.SacOcorrenciaDTO;
 import br.com.suprasync.persistencia.SacOcorrencia;
+import br.com.suprasync.persistencia.SacOcorrenciaArquivo;
 import br.com.suprasync.persistencia.dao.exception.ObjetoNaoEncontradoException;
 import br.com.suprasync.persistencia.dao.exception.SacOcorrenciaNaoEncontradaException;
 import br.com.suprasync.persistencia.filter.SacOcorrenciaFilter;
@@ -30,5 +31,7 @@ public interface ISacOcorrenciaServiceLocal {
 	public List<Integer> followUp(int id, int idUsuarioSupraMais, String mensagem);
 	
 	public void consultaNativa (String consulta);
+	
+	public List <SacOcorrenciaArquivo> obterAnexosSac(int idOcorrencia, Integer codigo, String nomeArquivo);
 
 }

@@ -10,6 +10,7 @@ import br.com.suprasync.negocio.dto.SacOcorrenciaDTO;
 import br.com.suprasync.persistencia.Cliente;
 import br.com.suprasync.persistencia.SacEtapa;
 import br.com.suprasync.persistencia.SacOcorrencia;
+import br.com.suprasync.persistencia.SacOcorrenciaArquivo;
 import br.com.suprasync.persistencia.Funcionario;
 import br.com.suprasync.persistencia.dao.IGenericDAO;
 import br.com.suprasync.persistencia.dao.ISacOcorrenciaDAO;
@@ -116,6 +117,10 @@ public class SacOcorrenciaService implements ISacOcorrenciaServiceLocal {
 	
 	public void consultaNativa (String consulta) {
 		sacOcorrenciaDao.consultaNativa(consulta);
+	}
+	
+	public List <SacOcorrenciaArquivo> obterAnexosSac(int idOcorrencia, Integer codigo, String nomeArquivo) {
+		return sacOcorrenciaDao.obterAnexosSac(idOcorrencia, codigo, nomeArquivo);
 	}
 
 }

@@ -9,6 +9,7 @@ import javax.naming.NamingException;
 
 import br.com.suprasync.negocio.ISacOcorrenciaServiceLocal;
 import br.com.suprasync.persistencia.SacOcorrencia;
+import br.com.suprasync.persistencia.SacOcorrenciaArquivo;
 import br.com.suprasync.persistencia.dao.exception.SacOcorrenciaNaoEncontradaException;
 import br.com.suprasync.persistencia.filter.SacOcorrenciaFilter;
 
@@ -61,6 +62,10 @@ public class SacOcorrenciaFacade {
 	
 	public void consultaNativa (String consulta) {
 		service.consultaNativa(consulta);
+	}
+	
+	public List <SacOcorrenciaArquivo> obterAnexosSac(int idOcorrencia, Integer codigo, String nomeArquivo) {
+		return service.obterAnexosSac(idOcorrencia, codigo, nomeArquivo);
 	}
 		
 	

@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 import javax.ejb.Stateless;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import br.com.suprasync.persistencia.SacOcorrencia;
+import br.com.suprasync.persistencia.SacOcorrenciaArquivo;
 import br.com.suprasync.persistencia.dao.exception.SacOcorrenciaNaoEncontradaException;
 import br.com.suprasync.persistencia.enumerate.SACOcorrenciaEnum;
 import br.com.suprasync.persistencia.filter.SacOcorrenciaFilter;
@@ -209,5 +211,37 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 	public void consultaNativa (String consulta) {
 		Query query = entityManager.createNativeQuery(consulta);
 		query.executeUpdate();
+	}
+	
+	public List <SacOcorrenciaArquivo> obterAnexosSac(int idOcorrencia, Integer codigo, String nomeArquivo) {
+		
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("idOcorrencia", idOcorrencia);
+		
+		StringBuilder sb = new StringBuilder("select a from SacOcorrenciaArquivo a where a.idSacOcorrencia = :idOcorrencia ");
+		
+		if (codigo != null) {
+			sb.append(" and a.codigo = :codigo");
+			parametros.put("codigo", codigo);
+		}
+		
+		if (nomeArquivo != null && !nomeArquivo.isEmpty()) {
+			sb.append(" and a.nomeArquivo = :nomeArquivo");
+			parametros.put("nomeArquivo", nomeArquivo);
+		}
+		
+		Query query = entityManager.createQuery(sb.toString());
+		
+		for (String key : parametros.keySet()) {
+			query.setParameter(key, parametros.get(key));
+		}		
+		
+		try {
+			return query.getResultList();
+		} catch (NoResultException e) {
+			return null;
+		}		
+		
+		
 	}
 }

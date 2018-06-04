@@ -17,9 +17,11 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 
 import br.com.suprasync.apresentacao.facade.GenericFacade;
 import br.com.suprasync.apresentacao.facade.sac.SacOcorrenciaFacade;
@@ -27,6 +29,7 @@ import br.com.suprasync.negocio.dto.SacOcorrenciaDTO;
 import br.com.suprasync.persistencia.Funcionario;
 import br.com.suprasync.persistencia.SacEtapa;
 import br.com.suprasync.persistencia.SacOcorrencia;
+import br.com.suprasync.persistencia.SacOcorrenciaArquivo;
 import br.com.suprasync.persistencia.dao.exception.ObjetoNaoEncontradoException;
 import br.com.suprasync.persistencia.dao.exception.SacOcorrenciaNaoEncontradaException;
 import br.com.suprasync.persistencia.filter.SacOcorrenciaFilter;
@@ -157,7 +160,7 @@ public class SacOcorrenciaRest {
 				if(funcionario.getDataExclusao() == null && funcionario.isAtivoSac()) {
 					List<SacEtapa> etapas = new ArrayList<>();
 					if (funcionario.getEtapas() != null) {
-						
+
 						for (SacEtapa etapa : funcionario.getEtapas()) {
 							if (null == etapa.getDataExclusao()) {
 								etapas.add(etapa);
@@ -178,7 +181,7 @@ public class SacOcorrenciaRest {
 		return montaResposta();
 
 	}
-	
+
 	@GET
 	@Path("/obterTreeFuncionarios")
 	@Produces(MediaType.APPLICATION_JSON)//@Produces("text/plain")
@@ -190,7 +193,7 @@ public class SacOcorrenciaRest {
 		if (jdados != null) {
 			for (int i = 0; i < jdados.size(); i++) {
 				JsonObject jfunc = (JsonObject) jdados.get(i);
-				
+
 				jfunc.addProperty("text", jfunc.get("nome").getAsString());
 				jfunc.addProperty("expanded", true);
 				jfunc.add("children", jfunc.get("etapas"));
@@ -202,7 +205,7 @@ public class SacOcorrenciaRest {
 				jfunc.remove("providenciarFeedback");
 				jfunc.remove("ativoSac");
 				jfunc.remove("dataExclusao");
-								
+
 				if (jfunc.get("children") != null) {
 					JsonArray jetapas = jfunc.get("children").getAsJsonArray();
 					for (int j = 0; j < jetapas.size(); j++) {
@@ -214,12 +217,35 @@ public class SacOcorrenciaRest {
 						jetapa.remove("situacaoInicial");						
 					}
 				}
-				
+
 			}
 		}				
 		return montaResposta();
 	}
 
+	@GET
+	@Path("/obterListaAnexosSac")
+	@Produces(MediaType.APPLICATION_JSON)//@Produces("text/plain")
+	public String obterAnexosSac(@DefaultValue("") @QueryParam("idOcorrencia") String idOcorrencia, @QueryParam("codigo") String codigo, @QueryParam("nomeArquivo") String nomeArquivo) {
 
+		try {
+			SacOcorrenciaFacade sacFacade = new SacOcorrenciaFacade();
+			List<SacOcorrenciaArquivo> arquivos = sacFacade.obterAnexosSac(71046, null, null);
 
+			GsonBuilder gb = new GsonBuilder();
+			gb.excludeFieldsWithoutExposeAnnotation();
+			Gson gson = gb.create();
+
+			//String array = gson.toJson(arquivos);
+
+			for (SacOcorrenciaArquivo arquivo : arquivos) {
+				jdados.add((JsonObject) parser.parse(gson.toJson(arquivo)));				
+			}			
+			setSuccess(true);
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return montaResposta();
+	}
 }

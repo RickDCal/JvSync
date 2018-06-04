@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 import br.com.suprasync.persistencia.SacOcorrencia;
+import br.com.suprasync.persistencia.SacOcorrenciaArquivo;
 import br.com.suprasync.persistencia.dao.exception.SacOcorrenciaNaoEncontradaException;
 import br.com.suprasync.persistencia.filter.SacOcorrenciaFilter;
 
@@ -30,6 +31,8 @@ public boolean liberarVersao (Integer id, String numeroVersao);
 public List<Integer> followUp(int id, int idUsuarioSupraMais, String mensagem);
 
 public void consultaNativa (String consulta);
+
+public List <SacOcorrenciaArquivo> obterAnexosSac(int idOcorrencia, Integer codigo, String nomeArquivo);
 
 
 }
