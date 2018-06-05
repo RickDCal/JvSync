@@ -7,6 +7,10 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
+
 import br.com.suprasync.negocio.ISacOcorrenciaServiceLocal;
 import br.com.suprasync.persistencia.SacOcorrencia;
 import br.com.suprasync.persistencia.SacOcorrenciaArquivo;
@@ -66,6 +70,19 @@ public class SacOcorrenciaFacade {
 	
 	public List <SacOcorrenciaArquivo> obterAnexosSac(int idOcorrencia, Integer codigo, String nomeArquivo) {
 		return service.obterAnexosSac(idOcorrencia, codigo, nomeArquivo);
+	}
+	
+	public JsonArray listAnexosJson (int idOcorrencia, Integer codigo, String nomeArquivo) {
+		List <SacOcorrenciaArquivo> anexos = service.obterAnexosSac(idOcorrencia, codigo, nomeArquivo);
+		if (anexos != null && anexos.size() > 0) {
+			Gson gson = new Gson();
+			JsonParser parser = new JsonParser();
+			for (SacOcorrenciaArquivo anexo : anexos) {
+				anexo.setArquivo(null);				
+			}
+			return (JsonArray) parser.parse(gson.toJson(anexos));
+		}
+		return null;
 	}
 		
 	
