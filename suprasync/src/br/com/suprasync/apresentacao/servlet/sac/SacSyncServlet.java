@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -21,6 +22,7 @@ import br.com.suprasync.apresentacao.servlet.estaticos.GenericServlet;
 import br.com.suprasync.negocio.dto.SacOcorrenciaDTO;
 import br.com.suprasync.persistencia.SacEtapa;
 import br.com.suprasync.persistencia.SacOcorrencia;
+import br.com.suprasync.persistencia.SacOcorrenciaArquivo;
 import br.com.suprasync.persistencia.dao.exception.ObjetoNaoEncontradoException;
 import br.com.suprasync.persistencia.filter.SacOcorrenciaFilter;;
 
@@ -73,10 +75,17 @@ public class SacSyncServlet extends GenericServlet {
 						Integer totalRegistros = 0;	
 						ocorrencias = sacFacade.obter(filter);
 						totalRegistros = ocorrencias.size();
+						
+						GsonBuilder builder = new GsonBuilder();
+						builder.excludeFieldsWithoutExposeAnnotation();
+						Gson gison = builder.create();
+						JsonParser parser = new JsonParser();
 
 						for (SacOcorrencia ocorrencia : ocorrencias) {	
 							SacOcorrenciaDTO ocorrenciaDTO = new SacOcorrenciaDTO();
 							JsonObject objetoJson = (JsonObject) jsonParser.parse(gson.toJson(ocorrenciaDTO.convertToDTO(ocorrencia)));
+							List<SacOcorrenciaArquivo> anexos = sacFacade.obterAnexosSac(ocorrencia.getId(), null, null);
+							objetoJson.add("anexos", (JsonArray)parser.parse(gison.toJson(anexos)));
 							dados.add(objetoJson);											
 						} 
 						auxiliar.setSuccess(true);
