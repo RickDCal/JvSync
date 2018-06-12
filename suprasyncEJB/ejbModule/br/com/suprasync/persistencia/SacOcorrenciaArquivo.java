@@ -35,7 +35,8 @@ public class SacOcorrenciaArquivo {
 	private Date data;
 	
 	@Column(name = "imagem", columnDefinition="image")
-	private Blob arquivo;	
+	private byte[] arquivo;
+	//private Blob arquivo;	
 
 	public SacOcorrenciaArquivo() {
 		// TODO Auto-generated constructor stub
@@ -73,13 +74,21 @@ public class SacOcorrenciaArquivo {
 		this.data = data;
 	}
 
-	public Blob getArquivo() {
+	public byte[] getArquivo() {
 		return arquivo;
 	}
 
-	public void setArquivo(Blob arquivo) {
+	public void setArquivo(byte[] arquivo) {
 		this.arquivo = arquivo;
 	}
+
+//	public Blob getArquivo() {
+//		return arquivo;
+//	}
+//
+//	public void setArquivo(Blob arquivo) {
+//		this.arquivo = arquivo;
+//	}
 	
 
 }
