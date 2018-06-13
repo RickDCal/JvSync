@@ -16,6 +16,8 @@ public interface IUtilitiesLocal {
 	public void salvarArquivoDisco(Part parte, String caminhoArquivo, String nomeArquivo) throws FalhaAoSalvarArquivoException;
 	
 	public void salvarArquivoDisco(String caminhoArquivo, String nomeArquivo, String conteudoString) throws FalhaAoSalvarArquivoException;
+	
+	public void salvarArquivoDisco(String caminhoArquivo, String nomeArquivo, byte[] arquivo) throws FalhaAoSalvarArquivoException;
 
 	public void removerArquivoDisco(String caminhoArquivo, String nomeArquivo) throws FalhaAoRemoverArquivoException;
 	

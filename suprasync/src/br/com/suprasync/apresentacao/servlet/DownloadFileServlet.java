@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.com.suprasync.apresentacao.facade.UtilFacade;
 import br.com.suprasync.apresentacao.facade.sac.SacOcorrenciaFacade;
 import br.com.suprasync.persistencia.SacOcorrenciaArquivo;
 
@@ -42,19 +43,23 @@ public class DownloadFileServlet extends HttpServlet {
 //			Blob anexo = arquivo.getArquivo();
 			byte[] anexo = arquivo.getArquivo();
 			
-			FileOutputStream fileOuputStream = new FileOutputStream("filename"); 
-			try { 
-			    
-			    fileOuputStream.write(anexo);
-			   
-			 } finally {
-				 fileOuputStream.close();
-			 }
+			UtilFacade util = new UtilFacade();
+			String filePath = "C:/Sevensys"+arquivo.getNomeArquivo();
+			util.salvarArquivoDisco("C:/Sevensys", arquivo.getNomeArquivo(), anexo);
 			
 			
 			
+//			FileOutputStream fileOuputStream = new FileOutputStream(filePath); 
+//			try { 
+//			    fileOuputStream.write(anexo);			   
+//			 } finally {
+//				 fileOuputStream.close();
+//			 }
+//			
 			
 			
+			
+			File downloadFile = new File(arquivo.getNomeArquivo());
 //			File downloadFile = new File(arquivo.getNomeArquivo());
 //			FileOutputStream fos = new FileOutputStream(downloadFile);
 //
@@ -68,7 +73,7 @@ public class DownloadFileServlet extends HttpServlet {
 //                }
 //				
 //
-//			String filePath = "C:/Sevensys/"+arquivo.getNomeArquivo();
+//			
 //			FileInputStream inStream = new FileInputStream(downloadFile);
 //			
 //			System.out.println("Mime Type of " + downloadFile.getName() + " is " +
@@ -77,31 +82,31 @@ public class DownloadFileServlet extends HttpServlet {
 //			
 //			
 //
-//			String relativePath = getServletContext().getRealPath("");
-//			System.out.println("relativePath = " + relativePath);
-//
-//			ServletContext context = getServletContext();
-//
-//			String mimeType = context.getMimeType(filePath);
-//			
-//			if (arquivo.getNomeArquivo().endsWith(".docx") || arquivo.getNomeArquivo().endsWith(".doc")) {
-//				//mimeType = "application/msword";
-//				mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-//			}			
-//			
-//			if (mimeType == null) {
-//				mimeType = "application/octet-stream";
-//			}
-//			System.out.println("MIME type: " + mimeType);
-//			// modifies response
-//			response.setContentType(mimeType);
-//			response.setContentLength((int) downloadFile.length());
-//			// forces download
-//			String headerKey = "Content-Disposition";
-//			String headerValue = String.format("attachment; filename=\"%s\"", downloadFile.getName());
-//			response.setHeader(headerKey, headerValue);
-//			// obtains response's output stream
-//
+			String relativePath = getServletContext().getRealPath("");
+			System.out.println("relativePath = " + relativePath);
+
+			ServletContext context = getServletContext();
+
+			String mimeType = context.getMimeType(filePath);
+			
+			if (arquivo.getNomeArquivo().endsWith(".docx") || arquivo.getNomeArquivo().endsWith(".doc")) {
+				//mimeType = "application/msword";
+				mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+			}			
+			
+			if (mimeType == null) {
+				mimeType = "application/octet-stream";
+			}
+			System.out.println("MIME type: " + mimeType);
+			// modifies response
+			response.setContentType(mimeType);
+			response.setContentLength((int) downloadFile.length());
+			// forces download
+			String headerKey = "Content-Disposition";
+			String headerValue = String.format("attachment; filename=\"%s\"", downloadFile.getName());
+			response.setHeader(headerKey, headerValue);
+			// obtains response's output stream
+
 //			
 //                
 //             

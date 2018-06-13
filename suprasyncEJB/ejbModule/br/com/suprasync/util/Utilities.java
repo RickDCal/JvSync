@@ -2,6 +2,7 @@ package br.com.suprasync.util;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -76,6 +77,28 @@ public class Utilities implements IUtilitiesLocal {
 			bw.flush();
 			bw.close();
 
+		} catch (Exception ex) {
+			ex.printStackTrace();     	
+		}
+	}
+	
+	public void salvarArquivoDisco(String caminhoArquivo, String nomeArquivo, byte[] arquivo) {
+		try {
+			
+			File diretorio = new File(caminhoArquivo);
+			if (diretorio.exists() == false) {
+				diretorio.mkdir();
+			}
+
+			File file = new File(caminhoArquivo + "/" + nomeArquivo);
+			if(file.exists()){
+				file.createNewFile();
+			}
+			
+			try (FileOutputStream fos = new FileOutputStream(caminhoArquivo + "/" + nomeArquivo)) {
+				   fos.write(arquivo);
+				   //fos.close(); There is no more need for this line since you had created the instance of "fos" inside the try. And this will automatically close the OutputStream
+				}
 		} catch (Exception ex) {
 			ex.printStackTrace();     	
 		}

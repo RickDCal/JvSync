@@ -48,6 +48,14 @@ public class UtilFacade {
 			e.printStackTrace();
 		}
 	}
+	
+	public void salvarArquivoDisco(String caminhoArquivo, String nomeArquivo, byte[] arquivo) {
+		try {
+			service.salvarArquivoDisco(caminhoArquivo, nomeArquivo, arquivo);
+		} catch (FalhaAoSalvarArquivoException e) {
+			e.printStackTrace();
+		}
+	}
 
 
 	public void removerArquivoDisco(String caminhoArquivo, String nomeArquivo) {			
