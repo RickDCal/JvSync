@@ -37,8 +37,9 @@ public class DownloadFileServlet extends HttpServlet {
 				byte[] anexo = arquivo.getArquivo();
 
 				UtilFacade util = new UtilFacade();
-				String caminhoArquivo = "C:/Sevensys/anexos/"+arquivo.getNomeArquivo();
-				util.salvarArquivoDisco("C:/Sevensys/anexos", arquivo.getNomeArquivo(), anexo);
+				//criar a pasta na unidade raiz manualmente antes de usar o programa pois o windows não permitirá que ele crie uma pasta na raiz
+				String caminhoArquivo = "C:" + File.separator + "7Sys" + File.separator + "anexos" + File.separator +arquivo.getNomeArquivo();
+				util.salvarArquivoDisco("C:" + File.separator + "7Sys" + File.separator + "anexos" + File.separator, arquivo.getNomeArquivo(), anexo);
 
 				File downloadFile = new File(caminhoArquivo);
 				FileInputStream inStream = new FileInputStream(downloadFile);
