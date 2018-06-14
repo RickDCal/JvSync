@@ -38,10 +38,10 @@ public class DownloadFileServlet extends HttpServlet {
 
 				UtilFacade util = new UtilFacade();
 				//criar a pasta na unidade raiz manualmente antes de usar o programa pois o windows não permitirá que ele crie uma pasta na raiz
-				String caminhoArquivo = "C:" + File.separator + "7Sys" + File.separator + "anexos" + File.separator +arquivo.getNomeArquivo();
-				util.salvarArquivoDisco("C:" + File.separator + "7Sys" + File.separator + "anexos" + File.separator, arquivo.getNomeArquivo(), anexo);
+				String caminhoArquivo = "C:" + File.separator + "7Sys" + File.separator + "anexos" + File.separator;
+				util.salvarArquivoDisco(caminhoArquivo, arquivo.getNomeArquivo(), anexo);
 
-				File downloadFile = new File(caminhoArquivo);
+				File downloadFile = new File(caminhoArquivo + arquivo.getNomeArquivo());
 				FileInputStream inStream = new FileInputStream(downloadFile);
 				/** if you want to use a relative path to context root:
 				String relativePath = getServletContext().getRealPath("");
@@ -51,7 +51,7 @@ public class DownloadFileServlet extends HttpServlet {
 				ServletContext context = getServletContext();
 
 				// gets MIME type of the file
-				String mimeType = context.getMimeType(caminhoArquivo);
+				String mimeType = context.getMimeType(caminhoArquivo + arquivo.getNomeArquivo());
 				if (mimeType == null) {
 
 					// set to binary type if MIME mapping not found
@@ -76,7 +76,7 @@ public class DownloadFileServlet extends HttpServlet {
 				}
 				inStream.close();
 				outStream.close();	
-				util.removerArquivoDisco("C:/Sevensys/anexos", arquivo.getNomeArquivo());
+				util.removerArquivoDisco(caminhoArquivo, arquivo.getNomeArquivo());
 			}			
 
 		} catch (NamingException e) {
