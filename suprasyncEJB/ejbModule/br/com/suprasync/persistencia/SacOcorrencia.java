@@ -36,6 +36,7 @@ public class SacOcorrencia {
 	private Date dataPrevisaoTermino;
 	private String numeroVersao;
 	private Integer prioridade;
+	private String ready;
 			
 	public SacOcorrencia() {
 		
@@ -199,6 +200,20 @@ public class SacOcorrencia {
 		this.prioridade = prioridade;
 	}
 	
+	@Column(name="ddd_distribuidor", columnDefinition="nvarchar")
+	public String getReady() {
+		if(ready == null || ready.equalsIgnoreCase("0")) {
+			ready = "0";
+		} else {
+			ready = "1";
+		}
+		return ready;
+	}
+
+	public void setReady(String ready) {
+		this.ready = ready;
+	}
+	
 	public SacOcorrenciaDTO getOcorrenciaDTO(SacOcorrenciaDTO dto) {
 		if (dto == null) {
 			dto = new SacOcorrenciaDTO();
@@ -225,6 +240,7 @@ public class SacOcorrencia {
 		dto.setDataPrevisaoTermino(this.getDataPrevisaoTermino());	
 		dto.setNumeroVersao(this.getNumeroVersao());
 		dto.setPrioridade(this.getPrioridade());
+		dto.setReady((this.getReady().equalsIgnoreCase("1")) ? true : false);
 		return dto;		
 	}
 	

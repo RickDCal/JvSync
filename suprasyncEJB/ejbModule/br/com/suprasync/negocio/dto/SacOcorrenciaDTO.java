@@ -28,6 +28,7 @@ public class SacOcorrenciaDTO {
 	private Date dataPrevisaoTermino;
 	private String numeroVersao;
 	private Integer prioridade;
+	private boolean ready;
 			
 	public SacOcorrenciaDTO() {
 		
@@ -175,6 +176,14 @@ public class SacOcorrenciaDTO {
 
 	public void setPrioridade(Integer prioridade) {
 		this.prioridade = prioridade;
+	}
+
+	public boolean isReady() {
+		return ready;
+	}
+
+	public void setReady(boolean ready) {
+		this.ready = ready;
 	}
 
 	public SacOcorrenciaDTO convertToDTO (SacOcorrencia ocorrencia) {

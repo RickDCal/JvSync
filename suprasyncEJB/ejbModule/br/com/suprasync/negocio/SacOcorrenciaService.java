@@ -1,17 +1,16 @@
 package br.com.suprasync.negocio;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import br.com.suprasync.negocio.dto.SacOcorrenciaDTO;
 import br.com.suprasync.persistencia.Cliente;
+import br.com.suprasync.persistencia.Funcionario;
 import br.com.suprasync.persistencia.SacEtapa;
 import br.com.suprasync.persistencia.SacOcorrencia;
 import br.com.suprasync.persistencia.SacOcorrenciaArquivo;
-import br.com.suprasync.persistencia.Funcionario;
 import br.com.suprasync.persistencia.dao.IGenericDAO;
 import br.com.suprasync.persistencia.dao.ISacOcorrenciaDAO;
 import br.com.suprasync.persistencia.dao.exception.ObjetoNaoEncontradoException;
@@ -80,6 +79,7 @@ public class SacOcorrenciaService implements ISacOcorrenciaServiceLocal {
 		ocorrencia.setSolucao(ocorrenciaDTO.getSolucao());
 		ocorrencia.setComentario(ocorrenciaDTO.getComentario());
 		ocorrencia.setPrioridade(ocorrenciaDTO.getPrioridade());
+		ocorrencia.setReady(ocorrenciaDTO.isReady() ? "1" : "0");
 		return ocorrencia;
 	}
 
