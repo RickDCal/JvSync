@@ -89,8 +89,8 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 		}
 		
 		if (filter.getComentarioDesenvolvimento() != null) {
-			consulta.append(" and (o.comentarioDesenvolvimento like :comentario )");
-			parametros.put("comentario", "%" + filter.getComentarioDesenvolvimento() +"%");
+			consulta.append(" and (o.comentarioDesenvolvimento like :comentarioDes )");
+			parametros.put("comentarioDes", "%" + filter.getComentarioDesenvolvimento() +"%");
 		}
 		
 		if (filter.getComentario() != null) {
