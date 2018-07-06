@@ -2,6 +2,7 @@ package br.com.suprasync.apresentacao.servlet.sac;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -133,6 +134,7 @@ public class SacOcorrenciaServlet extends GenericServlet {
 					break;
 				case 6: 
 					List<SacEtapa>etapas = genericFacade.pesquisar(SacEtapa.class, position, max);
+					etapas.sort(Comparator.comparing(o -> o.getNome()));
 					for (SacEtapa sacEtapa : etapas) {
 						if (sacEtapa.getDataExclusao() == null) {
 							dados.add(genericFacade.objetoJson(sacEtapa));
