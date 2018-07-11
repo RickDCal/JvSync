@@ -33,5 +33,9 @@ public interface ISacOcorrenciaServiceLocal {
 	public void consultaNativa (String consulta);
 	
 	public List <SacOcorrenciaArquivo> obterAnexosSac(int idOcorrencia, Integer codigo, String nomeArquivo);
+	
+	public List<Integer> usuariosSemSacIniciadoNoDia ();
+
+	public List<Integer> usuariosComSacIniciadoNaoPausado ();
 
 }

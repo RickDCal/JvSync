@@ -122,5 +122,13 @@ public class SacOcorrenciaService implements ISacOcorrenciaServiceLocal {
 	public List <SacOcorrenciaArquivo> obterAnexosSac(int idOcorrencia, Integer codigo, String nomeArquivo) {
 		return sacOcorrenciaDao.obterAnexosSac(idOcorrencia, codigo, nomeArquivo);
 	}
+	
+	public List<Integer> usuariosSemSacIniciadoNoDia () {
+		return sacOcorrenciaDao.usuariosSemSacIniciadoNoDia();
+	}
+
+	public List<Integer> usuariosComSacIniciadoNaoPausado () {
+		return sacOcorrenciaDao.usuariosSemSacIniciadoNoDia();
+	}
 
 }

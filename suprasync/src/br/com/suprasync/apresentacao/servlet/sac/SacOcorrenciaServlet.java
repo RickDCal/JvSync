@@ -16,7 +16,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import br.com.suprasync.apresentacao.facade.GenericFacade;
-import br.com.suprasync.apresentacao.facade.UtilFacade;
 import br.com.suprasync.apresentacao.facade.cadastro.UsuarioFacade;
 import br.com.suprasync.apresentacao.facade.sac.SacOcorrenciaFacade;
 import br.com.suprasync.apresentacao.servlet.AuxiliarServlet;
@@ -27,7 +26,8 @@ import br.com.suprasync.persistencia.SacEtapa;
 import br.com.suprasync.persistencia.SacOcorrencia;
 import br.com.suprasync.persistencia.Usuario;
 import br.com.suprasync.persistencia.dao.exception.ObjetoNaoEncontradoException;
-import br.com.suprasync.persistencia.filter.SacOcorrenciaFilter;;
+import br.com.suprasync.persistencia.filter.SacOcorrenciaFilter;
+import br.com.suprasync.util.Utilities;;
 
 @WebServlet("/ocorrenciaServlet")
 
@@ -58,7 +58,6 @@ public class SacOcorrenciaServlet extends GenericServlet {
 
 			GenericFacade genericFacade = new GenericFacade();
 			SacOcorrenciaFacade sacFacade = new SacOcorrenciaFacade();
-			UtilFacade utilFacade = new UtilFacade();
 			JsonParser jsonParser = new JsonParser();
 			Gson gson = new Gson();
 
@@ -174,7 +173,7 @@ public class SacOcorrenciaServlet extends GenericServlet {
 										.append(" e aguarda feedback.").append("\n")
 										.append("Assunto: ").append(ocorrencia.getAssunto() != null ? ocorrencia.getAssunto() : "").append("\n")
 										.append("Cliente: ").append(ocorrencia.getCliente() != null && ocorrencia.getCliente().getNome() != null ? ocorrencia.getCliente().getNome() : "").append(".");
-										utilFacade.enviaMensagemSlack(usuario.getUsuarioSlack(), mensagem.toString(), parametroSlack.getWebHookSlack());
+										Utilities.enviaMensagemSlack(usuario.getUsuarioSlack(), mensagem.toString(), parametroSlack.getWebHookSlack());
 									}
 								}														
 							}

@@ -34,7 +34,8 @@ import br.com.suprasync.negocio.exception.FalhaAoSalvarArquivoException;
 import br.com.suprasync.persistencia.dao.IUsuarioDAO;
 
 @Stateless
-public class Utilities implements IUtilitiesLocal {
+public class Utilities { 
+	//removi as interfaces e facades para esta classe e coloquei todos os métodos estáticos em 11/07/2018
 
 	@EJB
 	private IUsuarioDAO usuarioDao;
@@ -46,10 +47,10 @@ public class Utilities implements IUtilitiesLocal {
 
 	}	
 
-	public void salvarArquivoDisco(Part parte, String caminhoArquivo, String nomeArquivo) throws FalhaAoSalvarArquivoException {
+	public static void salvarArquivoDisco(Part parte, String caminhoArquivo, String nomeArquivo) throws FalhaAoSalvarArquivoException {
 
 		if (parte != null && nomeArquivo == null) {
-			nomeArquivo = this.obterNomeArquivo(parte);
+			nomeArquivo = obterNomeArquivo(parte);
 		}
 
 		File arquivo = new File(caminhoArquivo + "/" + nomeArquivo );
@@ -60,7 +61,7 @@ public class Utilities implements IUtilitiesLocal {
 		}	
 	} 
 
-	public void salvarArquivoDisco(String caminhoArquivo, String nomeArquivo, String conteudoString) {
+	public static void salvarArquivoDisco(String caminhoArquivo, String nomeArquivo, String conteudoString) {
 		try {
 
 			File diretorio = new File(caminhoArquivo);
@@ -82,7 +83,7 @@ public class Utilities implements IUtilitiesLocal {
 		}
 	}
 	
-	public void salvarArquivoDisco(String caminhoArquivo, String nomeArquivo, byte[] arquivo) {
+	public static void salvarArquivoDisco(String caminhoArquivo, String nomeArquivo, byte[] arquivo) {
 		try {
 			
 			File diretorio = new File(caminhoArquivo);
@@ -104,13 +105,13 @@ public class Utilities implements IUtilitiesLocal {
 		}
 	}
 
-	public void removerArquivoDisco(String caminhoArquivo, String nomeArquivo) throws FalhaAoRemoverArquivoException {
+	public static void removerArquivoDisco(String caminhoArquivo, String nomeArquivo) throws FalhaAoRemoverArquivoException {
 
 		File arquivo = new File(caminhoArquivo + "/" + nomeArquivo );
 		arquivo.delete();	
 	}
 
-	public String obterNomeArquivo (Part parte) {
+	public static String obterNomeArquivo (Part parte) {
 		String nome = null;
 		Collection<String> header = parte.getHeaders("content-disposition");
 		for (String texto : header) {			
@@ -139,7 +140,7 @@ public class Utilities implements IUtilitiesLocal {
 	 * @param chave numero de saltos
 	 * @return mensagem codificada
 	 */
-	public String encriptarCesar(int chave, String texto)  {
+	public static String encriptarCesar(int chave, String texto)  {
 
 		StringBuilder textoCifrado = new StringBuilder();
 		int tamanhoTexto = texto.length();
@@ -153,7 +154,7 @@ public class Utilities implements IUtilitiesLocal {
 		return textoCifrado.toString();
 	}
 
-	public String criptografiaSenha(String senha) {
+	public static String criptografiaSenha(String senha) {
 
 		int salto = 7907;    		        
 
@@ -175,7 +176,7 @@ public class Utilities implements IUtilitiesLocal {
 		return senhaCriptografada;
 	}
 	
-	public String criptografiaSenhaSupraMais(String value) {
+	public static String criptografiaSenhaSupraMais(String value) {
 		Integer startKey = 673;
 		String result = "";
 		int letra;
@@ -202,7 +203,7 @@ public class Utilities implements IUtilitiesLocal {
 		return result;
 	}
 
-	public String removeAcentos(final String texto) {
+	public static String removeAcentos(final String texto) {
 		String textoSemAcentos = Normalizer.normalize(texto, Normalizer.Form.NFD);
 		textoSemAcentos = textoSemAcentos.replaceAll("[^\\p{ASCII}]", "");
 		return textoSemAcentos;
@@ -210,7 +211,7 @@ public class Utilities implements IUtilitiesLocal {
 		 * https://ldiasrs.wordpress.com/2014/07/09/java-como-remover-acentos-e-caracteres-especiais*/ 
 	}
 
-	public String bytesToHex(byte[] bytes) {
+	public static String bytesToHex(byte[] bytes) {
 		char[] hexArray = "0123456789ABCDEF".toCharArray();
 		char[] hexChars = new char[bytes.length * 2];
 		for ( int j = 0; j < bytes.length; j++ ) {
@@ -223,43 +224,43 @@ public class Utilities implements IUtilitiesLocal {
 
 	/*datas para String*/
 
-	public String dataYYYY_MM_DD(Date data) {		
+	public static String dataYYYY_MM_DD(Date data) {		
 		SimpleDateFormat dataFormat = new SimpleDateFormat("YYYY-MM-dd");		
 		String date = dataFormat.format(data.getTime());
 		return date;		
 	}
 
-	public String dataYYYYMMDD(Date data) {		
+	public static String dataYYYYMMDD(Date data) {		
 		SimpleDateFormat dataFormat = new SimpleDateFormat("YYYYMMdd");
 		String date = dataFormat.format(data.getTime());		
 		return date;		
 	}
 
-	public String dataDD_MM_YYYY(Date data) {		
+	public static String dataDD_MM_YYYY(Date data) {		
 		SimpleDateFormat dataFormat = new SimpleDateFormat("dd-MM-YYYY");
 		String date = dataFormat.format(data.getTime());		
 		return date;		
 	}
 
-	public String dataMM_DD_YYYY(Date data) {		
+	public static String dataMM_DD_YYYY(Date data) {		
 		SimpleDateFormat dataFormat = new SimpleDateFormat("MM-dd-YYYY");
 		String date = dataFormat.format(data.getTime());		
 		return date;		
 	}
 
-	public String dataDDMMYYYY(Date data) {		
+	public static String dataDDMMYYYY(Date data) {		
 		SimpleDateFormat dataFormat = new SimpleDateFormat("ddMMYYYY");
 		String date = dataFormat.format(data.getTime());		
 		return date;		
 	}
 
-	public String dataDDIMMIYYYY(Date data) {		
+	public static String dataDDIMMIYYYY(Date data) {		
 		SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/YYYY");
 		String date = dataFormat.format(data.getTime());		
 		return date;		
 	}	
 
-	public String dataYYYY_MM_DDeHHppmmppss(Date data) {	//e = espaço pp= :
+	public static String dataYYYY_MM_DDeHHppmmppss(Date data) {	//e = espaço pp= :
 		SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");		
 		String date = dataFormat.format(data.getTime());
 		return date;		
@@ -267,42 +268,42 @@ public class Utilities implements IUtilitiesLocal {
 
 	/*inteiro para Date*/
 
-	public Date IntegerToDate(int numero) throws FalhaAoConverterDataException{		
+	public static Date IntegerToDate(int numero) throws FalhaAoConverterDataException{		
 
 		Date data = new Date(numero *1000L);		
 		return data;		
 	}
 
 	/*String para Date*/	
-	public Date dataYYYY_MM_DDeHHppmmppss(String data) throws ParseException, FalhaAoConverterDataException {	//e = espaço pp= :
+	public static Date dataYYYY_MM_DDeHHppmmppss(String data) throws ParseException, FalhaAoConverterDataException {	//e = espaço pp= :
 		Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(data);
 		return date;
 	}
 
-	public Date dataYYYY_MM_DDTHHppmmppss(String data) throws ParseException, FalhaAoConverterDataException {	//e = espaço pp= :
+	public static Date dataYYYY_MM_DDTHHppmmppss(String data) throws ParseException, FalhaAoConverterDataException {	//e = espaço pp= :
 		data = data.replace("T"," ");
 		Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(data);
 		return date;
 	}
 
-	public Date dataDD_MM_YYYY (String data) throws ParseException, FalhaAoConverterDataException {
+	public static Date dataDD_MM_YYYY (String data) throws ParseException, FalhaAoConverterDataException {
 		Date date = new SimpleDateFormat("dd-MM-yyyy").parse(data);
 		return date;
 	}
 
-	public Date dataDDIMMIYYYY (String data) throws ParseException, FalhaAoConverterDataException { // I = barra
+	public static Date dataDDIMMIYYYY (String data) throws ParseException, FalhaAoConverterDataException { // I = barra
 		Date date = new SimpleDateFormat("dd/MM/yyyy").parse(data);
 		return date;
 	}
 
-	public Date dataYYYY_MM_DD (String data) throws ParseException, FalhaAoConverterDataException { // _ = -
+	public static Date dataYYYY_MM_DD (String data) throws ParseException, FalhaAoConverterDataException { // _ = -
 		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(data);
 		return date;
 	}
 
 	
 
-	public String enviaMensagemSlack(String usuarioSlack, String mensagem, String webHook) throws ParseException, IOException {
+	public static String enviaMensagemSlack(String usuarioSlack, String mensagem, String webHook) throws ParseException, IOException {
 		/***Ricardo Dias 06/03/2018
 		 * Observação importante:
 		 * No final de fevereiro de 2018 o certificado SSL do Slack foi atualizado e a cadeia de certificados que vem no glassfish 3 ficou desatualizada

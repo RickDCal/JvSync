@@ -244,4 +244,32 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 		
 		
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Integer> usuariosSemSacIniciadoNoDia (){
+		StringBuilder sb = new StringBuilder();
+		sb.append("select distinct usuario.codigo from usuario")
+		.append(" join sac_ocorrencia_desenvolvimento sod on sod.usu_codigo = usuario.codigo")
+		.append(" where not exists (select 1 from sac_ocorrencia_desenvolvimento sod2 where sod2.usu_codigo = sod.usu_codigo")
+		.append(" and convert(date,data_hora_inicio) = convert(date,getdate())) and usuario.data_exclusao is null");
+		
+		Query query = entityManager.createNativeQuery(sb.toString());
+
+		return query.getResultList();	
+	
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Integer> usuariosComSacIniciadoNaoPausado (){
+		StringBuilder sb = new StringBuilder();
+		sb.append("select distinct usuario.codigo from usuario")
+		.append(" join sac_ocorrencia_desenvolvimento sod on sod.usu_codigo = usuario.codigo")
+		.append(" where")
+		.append(" usuario.data_exclusao is null and data_hora_fim is null");
+		
+		Query query = entityManager.createNativeQuery(sb.toString());
+
+		return query.getResultList();	
+	
+	}
 }

@@ -84,6 +84,14 @@ public class SacOcorrenciaFacade {
 		}
 		return null;
 	}
+	
+	public List<Integer> usuariosSemSacIniciadoNoDia () {
+		return service.usuariosSemSacIniciadoNoDia();
+	}
+
+	public List<Integer> usuariosComSacIniciadoNaoPausado () {
+		return service.usuariosSemSacIniciadoNoDia();
+	}
 		
 	
 }

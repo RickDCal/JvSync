@@ -13,9 +13,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.suprasync.apresentacao.facade.UtilFacade;
 import br.com.suprasync.apresentacao.facade.sac.SacOcorrenciaFacade;
+import br.com.suprasync.negocio.exception.FalhaAoRemoverArquivoException;
 import br.com.suprasync.persistencia.SacOcorrenciaArquivo;
+import br.com.suprasync.util.Utilities;
 
 @WebServlet("/downloadFileServlet")
 public class DownloadFileServlet extends HttpServlet {
@@ -36,10 +37,9 @@ public class DownloadFileServlet extends HttpServlet {
 				SacOcorrenciaArquivo arquivo = sacFacade.obterAnexosSac(Integer.parseInt(idOcorrencia), Integer.parseInt(codigo), null).get(0);
 				byte[] anexo = arquivo.getArquivo();
 
-				UtilFacade util = new UtilFacade();
 				//criar a pasta na unidade raiz manualmente antes de usar o programa pois o windows não permitirá que ele crie uma pasta na raiz
 				String caminhoArquivo = "C:" + File.separator + "7Sys" + File.separator + "anexos" + File.separator;
-				util.salvarArquivoDisco(caminhoArquivo, arquivo.getNomeArquivo(), anexo);
+				Utilities.salvarArquivoDisco(caminhoArquivo, arquivo.getNomeArquivo(), anexo);
 
 				File downloadFile = new File(caminhoArquivo + arquivo.getNomeArquivo());
 				FileInputStream inStream = new FileInputStream(downloadFile);
@@ -76,10 +76,13 @@ public class DownloadFileServlet extends HttpServlet {
 				}
 				inStream.close();
 				outStream.close();	
-				util.removerArquivoDisco(caminhoArquivo, arquivo.getNomeArquivo());
+				Utilities.removerArquivoDisco(caminhoArquivo, arquivo.getNomeArquivo());
 			}			
 
 		} catch (NamingException e) {
+			e.printStackTrace();
+		} catch (FalhaAoRemoverArquivoException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
