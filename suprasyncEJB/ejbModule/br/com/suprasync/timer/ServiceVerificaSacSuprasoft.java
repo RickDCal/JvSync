@@ -72,7 +72,7 @@ public class ServiceVerificaSacSuprasoft {
 	}
 	
 	//@Schedule(hour = "*", minute="*/2", persistent=false) // testes
-	@Schedule(hour="09-18", minute="0", persistent=false)	
+	@Schedule(hour="09-17", minute="0", persistent=false)	
 	public void avisaIniciarSacExpediente() throws RemoteException, Exception {
 		try {
 			avisaIniciarSac();
@@ -93,4 +93,14 @@ public class ServiceVerificaSacSuprasoft {
 		}
 	}
 	
+	//@Schedule(hour = "*", minute="*/2", persistent=false) // testes
+	@Schedule(hour="07", minute="0", persistent=false)
+	public void finalizaSacNaoPausado () throws RemoteException, Exception {
+		try {
+			ocorrenciaService.finalizaSacNaoPausado();
+		} catch (Exception e) {
+			System.out.println("Falha ao finalizar Sac não pausado.");
+			e.printStackTrace();
+		}
+	}	
 }

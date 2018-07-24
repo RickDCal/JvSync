@@ -38,5 +38,7 @@ public List<Integer> usuariosSemSacIniciadoNoDia ();
 
 public List<Integer> usuariosComSacIniciadoNaoPausado ();
 
+public void finalizaSacNaoPausado ();
+
 
 }

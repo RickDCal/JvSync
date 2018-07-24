@@ -130,5 +130,9 @@ public class SacOcorrenciaService implements ISacOcorrenciaServiceLocal {
 	public List<Integer> usuariosComSacIniciadoNaoPausado () {
 		return sacOcorrenciaDao.usuariosSemSacIniciadoNoDia();
 	}
+	
+	public void finalizaSacNaoPausado (){
+		sacOcorrenciaDao.finalizaSacNaoPausado();
+	}
 
 }

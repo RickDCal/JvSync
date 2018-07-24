@@ -92,6 +92,10 @@ public class SacOcorrenciaFacade {
 	public List<Integer> usuariosComSacIniciadoNaoPausado () {
 		return service.usuariosSemSacIniciadoNoDia();
 	}
+	
+	public void finalizaSacNaoPausado (){
+		service.finalizaSacNaoPausado();
+	}
 		
 	
 }

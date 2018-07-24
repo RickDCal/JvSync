@@ -272,4 +272,24 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 		return query.getResultList();	
 	
 	}
+	
+	public void finalizaSacNaoPausado (){
+		StringBuilder sb = new StringBuilder();
+		sb.append("if exists (select 1 from sac_ocorrencia_desenvolvimento where")
+		.append(" convert(date, sac_ocorrencia_desenvolvimento.data_hora_inicio) < convert(date,getdate())")
+		.append(" and sac_ocorrencia_desenvolvimento.data_hora_fim is null)")		
+		.append(" update sac_ocorrencia_desenvolvimento")
+		.append(" set sac_ocorrencia_desenvolvimento.data_hora_fim = dateadd(hour,18,convert(datetime,convert(date, data_hora_inicio)))")
+		.append(" , sac_ocorrencia_desenvolvimento.tempo_gasto =")
+		.append(" datediff(minute, sac_ocorrencia_desenvolvimento.data_hora_inicio, dateadd(hour,18,convert(datetime,convert(date, data_hora_inicio))))")
+		.append(" where")
+		.append(" convert(date, sac_ocorrencia_desenvolvimento.data_hora_inicio) < convert(date,getdate())")
+		.append(" and sac_ocorrencia_desenvolvimento.data_hora_fim is null");		
+				
+		Query query = entityManager.createNativeQuery(sb.toString());
+
+		System.out.println("Ocorrencias esquecidas finalizadas automaticamente: " + query.executeUpdate());
+		//return query.getResultList();		
+	}
+	
 }
