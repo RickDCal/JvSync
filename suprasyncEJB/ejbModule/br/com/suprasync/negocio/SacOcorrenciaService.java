@@ -8,6 +8,7 @@ import javax.ejb.Stateless;
 import br.com.suprasync.negocio.dto.SacOcorrenciaDTO;
 import br.com.suprasync.persistencia.Cliente;
 import br.com.suprasync.persistencia.Funcionario;
+import br.com.suprasync.persistencia.SacDesenvolvimento;
 import br.com.suprasync.persistencia.SacEtapa;
 import br.com.suprasync.persistencia.SacOcorrencia;
 import br.com.suprasync.persistencia.SacOcorrenciaArquivo;
@@ -133,6 +134,22 @@ public class SacOcorrenciaService implements ISacOcorrenciaServiceLocal {
 	
 	public void finalizaSacNaoPausado (){
 		sacOcorrenciaDao.finalizaSacNaoPausado();
+	}
+	
+	public List<SacDesenvolvimento> obterSacDesenvolvimento(SacOcorrenciaFilter filter) {
+		return sacOcorrenciaDao.obterSacDesenvolvimento(filter);
+	}
+
+	public List<SacOcorrencia> obterSacToDo(SacOcorrenciaFilter filter) {
+		return sacOcorrenciaDao.obterSacToDo(filter);
+	}
+	
+	public List<SacOcorrencia> obterSacDoing(SacOcorrenciaFilter filter) {
+		return sacOcorrenciaDao.obterSacDoing(filter);
+	}
+	
+	public List<SacOcorrencia> obterSacDone(SacOcorrenciaFilter filter) {
+		return sacOcorrenciaDao.obterSacDone(filter);
 	}
 
 }

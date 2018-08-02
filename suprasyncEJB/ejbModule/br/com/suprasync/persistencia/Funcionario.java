@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -27,6 +29,8 @@ public class Funcionario {
 	private boolean executarSolucao;
 	private boolean providenciarFeedback;
 	private boolean ativoSac;
+	private List<SacDesenvolvimento> sacDesenvolvimento;
+	private Funcao funcao; 
 	//private List<Usuario> usuarios;
 	
 			
@@ -121,6 +125,25 @@ public class Funcionario {
 
 	public void setAtivoSac(boolean ativoSac) {
 		this.ativoSac = ativoSac;
+	}
+
+	@OneToMany(mappedBy = "funcionario")
+	public List<SacDesenvolvimento> getSacDesenvolvimento() {
+		return sacDesenvolvimento;
+	}
+
+	public void setSacDesenvolvimento(List<SacDesenvolvimento> sacDesenvolvimento) {
+		this.sacDesenvolvimento = sacDesenvolvimento;
+	}
+
+	@OneToOne
+	@JoinColumn(name = "funfun_codigo")
+	public Funcao getFuncao() {
+		return funcao;
+	}
+
+	public void setFuncao(Funcao funcao) {
+		this.funcao = funcao;
 	}
 	
 }

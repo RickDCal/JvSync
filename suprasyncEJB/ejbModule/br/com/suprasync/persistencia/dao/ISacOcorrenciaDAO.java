@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import br.com.suprasync.persistencia.SacDesenvolvimento;
 import br.com.suprasync.persistencia.SacOcorrencia;
 import br.com.suprasync.persistencia.SacOcorrenciaArquivo;
 import br.com.suprasync.persistencia.dao.exception.SacOcorrenciaNaoEncontradaException;
@@ -40,5 +41,12 @@ public List<Integer> usuariosComSacIniciadoNaoPausado ();
 
 public void finalizaSacNaoPausado ();
 
+public List<SacDesenvolvimento> obterSacDesenvolvimento(SacOcorrenciaFilter filter);
+
+public List<SacOcorrencia> obterSacToDo(SacOcorrenciaFilter filter);
+
+public List<SacOcorrencia> obterSacDoing(SacOcorrenciaFilter filter);
+
+public List<SacOcorrencia> obterSacDone(SacOcorrenciaFilter filter);
 
 }

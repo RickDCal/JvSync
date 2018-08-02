@@ -1,6 +1,7 @@
 package br.com.suprasync.persistencia;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -37,6 +39,7 @@ public class SacOcorrencia {
 	private String numeroVersao;
 	private Integer prioridade;
 	private String ready;
+	private List<SacDesenvolvimento> sacDesenvolvimento;
 			
 	public SacOcorrencia() {
 		
@@ -214,6 +217,15 @@ public class SacOcorrencia {
 		this.ready = ready;
 	}
 	
+	@OneToMany(mappedBy = "sacOcorrencia")
+	public List<SacDesenvolvimento> getSacDesenvolvimento() {
+		return sacDesenvolvimento;
+	}
+
+	public void setSacDesenvolvimento(List<SacDesenvolvimento> sacDesenvolvimento) {
+		this.sacDesenvolvimento = sacDesenvolvimento;
+	}
+
 	public SacOcorrenciaDTO getOcorrenciaDTO(SacOcorrenciaDTO dto) {
 		if (dto == null) {
 			dto = new SacOcorrenciaDTO();

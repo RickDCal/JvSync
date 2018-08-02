@@ -16,12 +16,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.http.HttpRequest;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.gson.JsonPrimitive;
 
 import br.com.suprasync.apresentacao.facade.GenericFacade;
 import br.com.suprasync.apresentacao.facade.sac.SacOcorrenciaFacade;
@@ -247,5 +248,109 @@ public class SacOcorrenciaRest {
 			e.printStackTrace();
 		}
 		return montaResposta();
+	}
+	
+	@SuppressWarnings("finally")
+	@PUT
+	@Path("/obterOcorrenciasToDo")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String obterPrioridadesToDo(String filtro) {
+		setSuccess(false);
+		try {
+			SacOcorrenciaFacade ocorrenciaFacade = new SacOcorrenciaFacade();
+			Gson gson = new Gson();
+	
+			SacOcorrenciaFilter filter = new SacOcorrenciaFilter();
+			if (filtro != null) {
+				filter = gson.fromJson(filtro, SacOcorrenciaFilter.class);
+			}			
+					
+			List<SacOcorrencia> ocorrencias = ocorrenciaFacade.obterSacToDo(filter);
+			//ocorrencias.sort(Comparator.comparing(o -> o.getPrioridade() != null? o.getPrioridade() : 999)); // já filtrei na consulta
+			for (Iterator<SacOcorrencia> iterator = ocorrencias.iterator(); iterator.hasNext();) {
+				SacOcorrencia sac = (SacOcorrencia) iterator.next();
+				JsonObject jsac = sac.getOcorrenciaDTO(null).getAsJson();
+				//jsac.addProperty("sort", sac.getPrioridade() != null ? sac.getPrioridade() : 999);
+				jdados.add(jsac);	
+			}
+			setSuccess(true);
+
+		} catch (NamingException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		finally {			
+			return montaResposta();
+		}
+
+	}
+	
+	@SuppressWarnings("finally")
+	@PUT
+	@Path("/obterOcorrenciasDoing")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String obterPrioridadesDoing(String filtro) {
+		setSuccess(false);
+		try {
+			SacOcorrenciaFacade ocorrenciaFacade = new SacOcorrenciaFacade();
+			Gson gson = new Gson();
+	
+			SacOcorrenciaFilter filter = new SacOcorrenciaFilter();
+			if (filtro != null) {
+				filter = gson.fromJson(filtro, SacOcorrenciaFilter.class);
+			}			
+					
+			List<SacOcorrencia> ocorrencias = ocorrenciaFacade.obterSacDoing(filter);
+			for (Iterator<SacOcorrencia> iterator = ocorrencias.iterator(); iterator.hasNext();) {
+				SacOcorrencia sac = (SacOcorrencia) iterator.next();
+				JsonObject jsac = sac.getOcorrenciaDTO(null).getAsJson();
+				jdados.add(jsac);	
+			}
+			setSuccess(true);
+
+		} catch (NamingException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		finally {			
+			return montaResposta();
+		}
+
+	}
+	
+	@SuppressWarnings("finally")
+	@PUT
+	@Path("/obterOcorrenciasDone")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String obterPrioridadesDone(String filtro) {
+		setSuccess(false);
+		try {
+			SacOcorrenciaFacade ocorrenciaFacade = new SacOcorrenciaFacade();
+			Gson gson = new Gson();
+	
+			SacOcorrenciaFilter filter = new SacOcorrenciaFilter();
+			if (filtro != null) {
+				filter = gson.fromJson(filtro, SacOcorrenciaFilter.class);
+			}			
+					
+			List<SacOcorrencia> ocorrencias = ocorrenciaFacade.obterSacDone(filter);
+			for (Iterator<SacOcorrencia> iterator = ocorrencias.iterator(); iterator.hasNext();) {
+				SacOcorrencia sac = (SacOcorrencia) iterator.next();
+				JsonObject jsac = sac.getOcorrenciaDTO(null).getAsJson();
+				jdados.add(jsac);	
+			}
+			setSuccess(true);
+
+		} catch (NamingException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		finally {			
+			return montaResposta();
+		}
+
 	}
 }

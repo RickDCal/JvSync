@@ -12,6 +12,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 
 import br.com.suprasync.negocio.ISacOcorrenciaServiceLocal;
+import br.com.suprasync.persistencia.SacDesenvolvimento;
 import br.com.suprasync.persistencia.SacOcorrencia;
 import br.com.suprasync.persistencia.SacOcorrenciaArquivo;
 import br.com.suprasync.persistencia.dao.exception.SacOcorrenciaNaoEncontradaException;
@@ -96,6 +97,21 @@ public class SacOcorrenciaFacade {
 	public void finalizaSacNaoPausado (){
 		service.finalizaSacNaoPausado();
 	}
-		
+	
+	public List<SacDesenvolvimento> obterSacDesenvolvimento(SacOcorrenciaFilter filter) {
+		return service.obterSacDesenvolvimento(filter);
+	}
+
+	public List<SacOcorrencia> obterSacToDo(SacOcorrenciaFilter filter) {
+		return service.obterSacToDo(filter);
+	}	
+	
+	public List<SacOcorrencia> obterSacDoing(SacOcorrenciaFilter filter) {
+		return service.obterSacDoing(filter);
+	}
+	
+	public List<SacOcorrencia> obterSacDone(SacOcorrenciaFilter filter) {
+		return service.obterSacDone(filter);
+	}
 	
 }

@@ -1,10 +1,12 @@
 package br.com.suprasync.persistencia;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity  
@@ -18,6 +20,7 @@ public class Usuario {
 	private Date dataExclusao;
 	private Integer idPerfil;
 	private String usuarioSlack;
+	private List<SacDesenvolvimento> sacDesenvolvimento;
 	
 			
 	public Usuario() {
@@ -87,6 +90,15 @@ public class Usuario {
 
 	public void setUsuarioSlack(String usuarioSlack) {
 		this.usuarioSlack = usuarioSlack;
+	}
+
+	@OneToMany(mappedBy = "usuario")
+	public List<SacDesenvolvimento> getSacDesenvolvimento() {
+		return sacDesenvolvimento;
+	}
+
+	public void setSacDesenvolvimento(List<SacDesenvolvimento> sacDesenvolvimento) {
+		this.sacDesenvolvimento = sacDesenvolvimento;
 	}
 	
 }
