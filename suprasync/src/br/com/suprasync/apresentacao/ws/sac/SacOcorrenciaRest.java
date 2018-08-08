@@ -25,12 +25,15 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import br.com.suprasync.apresentacao.facade.GenericFacade;
+import br.com.suprasync.apresentacao.facade.cadastro.UsuarioFacade;
 import br.com.suprasync.apresentacao.facade.sac.SacOcorrenciaFacade;
 import br.com.suprasync.negocio.dto.SacOcorrenciaDTO;
+import br.com.suprasync.negocio.exception.UsuarioInexistenteException;
 import br.com.suprasync.persistencia.Funcionario;
 import br.com.suprasync.persistencia.SacEtapa;
 import br.com.suprasync.persistencia.SacOcorrencia;
 import br.com.suprasync.persistencia.SacOcorrenciaArquivo;
+import br.com.suprasync.persistencia.Usuario;
 import br.com.suprasync.persistencia.dao.exception.ObjetoNaoEncontradoException;
 import br.com.suprasync.persistencia.dao.exception.SacOcorrenciaNaoEncontradaException;
 import br.com.suprasync.persistencia.filter.SacOcorrenciaFilter;
@@ -352,5 +355,35 @@ public class SacOcorrenciaRest {
 			return montaResposta();
 		}
 
+	}
+	
+	@PUT
+	@Path("/gravaFollowUpSac")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public String atualizarPrioridadesSac(SacOcorrenciaDTO ocorrenciaDto ) {	
+		try {			
+			
+			SacOcorrenciaFacade sacFacade = new SacOcorrenciaFacade();
+			UsuarioFacade usuarioFacade = new UsuarioFacade();
+			Usuario usuario = null;
+			if (ocorrenciaDto.getIdFuncionario() != null) {
+				usuario = usuarioFacade.pesquisar(ocorrenciaDto.getIdFuncionario());
+			}
+			
+			if (usuario != null && ocorrenciaDto.getComentario() != null && !ocorrenciaDto.getComentario().isEmpty()) {
+				sacFacade.followUp(ocorrenciaDto.getId(), usuario.getId(), ocorrenciaDto.getComentario());
+			}
+				
+		} catch (NamingException e) {
+			e.printStackTrace();
+			return montaResposta();
+		} catch (UsuarioInexistenteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		setSuccess(true);
+		retorno.add("data", jdados);
+		return retorno.toString();
 	}
 }

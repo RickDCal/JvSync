@@ -182,17 +182,17 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 
 	public List<Integer> followUp(int id, int idUsuarioSupraMais, String mensagem) {
 
-		List<Integer> idIdUsuario = new ArrayList<Integer>();
+		List<Integer> ids = new ArrayList<Integer>();
 		List<Integer> registrados = new ArrayList<Integer>();
 
 		StringBuilder consultaInicial = new StringBuilder("select codigo from sac_ocorrencia where codigo = ")
 				.append(id).append(" or sacocor_codigo_similar = ").append(id);
 		Query queryInicial = entityManager.createNativeQuery(consultaInicial.toString());
-		idIdUsuario = queryInicial.getResultList();
+		ids = queryInicial.getResultList();
 
-		if (idIdUsuario.size() > 0) {
+		if (ids.size() > 0) {
 
-			for (Integer codigo : idIdUsuario) {
+			for (Integer codigo : ids) {
 
 				try {
 					StringBuilder consulta = new StringBuilder("insert into sac_follow_up (ocor_codigo, codigo, data, usu_codigo, historico) ")
