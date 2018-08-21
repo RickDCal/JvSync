@@ -48,5 +48,7 @@ public interface ISacOcorrenciaServiceLocal {
 	public List<SacOcorrencia> obterSacDoing(SacOcorrenciaFilter filter);
 	
 	public List<SacOcorrencia> obterSacDone(SacOcorrenciaFilter filter);
+	
+	public Integer TotalRegistros(SacOcorrenciaFilter filter);
 
 }

@@ -386,4 +386,36 @@ public class SacOcorrenciaRest {
 		retorno.add("data", jdados);
 		return retorno.toString();
 	}
+	
+	@SuppressWarnings("finally")
+	@PUT
+	@Path("/obterTotalRegistros")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String obterTotalRegistros(String filtro) {
+		setSuccess(false);
+		try {
+			SacOcorrenciaFacade ocorrenciaFacade = new SacOcorrenciaFacade();
+			Gson gson = new Gson();
+	
+			SacOcorrenciaFilter filter = new SacOcorrenciaFilter();
+			if (filtro != null) {
+				filter = gson.fromJson(filtro, SacOcorrenciaFilter.class);
+			}	
+			
+			Integer totalRegistros = ocorrenciaFacade.TotalRegistros(filter);
+					
+
+			retorno.addProperty("total",totalRegistros);
+			setSuccess(true);
+
+		} catch (NamingException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		finally {			
+			return montaResposta();
+		}
+
+	}
 }

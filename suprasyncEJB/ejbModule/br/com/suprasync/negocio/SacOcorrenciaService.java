@@ -151,5 +151,9 @@ public class SacOcorrenciaService implements ISacOcorrenciaServiceLocal {
 	public List<SacOcorrencia> obterSacDone(SacOcorrenciaFilter filter) {
 		return sacOcorrenciaDao.obterSacDone(filter);
 	}
+	
+	public Integer TotalRegistros(SacOcorrenciaFilter filter) {
+		return sacOcorrenciaDao.TotalRegistros(filter);
+	}
 
 }

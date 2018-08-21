@@ -114,4 +114,8 @@ public class SacOcorrenciaFacade {
 		return service.obterSacDone(filter);
 	}
 	
+	public Integer TotalRegistros(SacOcorrenciaFilter filter) {
+		return service.TotalRegistros(filter);
+	}
+	
 }
