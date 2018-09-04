@@ -6,7 +6,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import br.com.suprasync.negocio.dto.SacOcorrenciaFollowUpDTO;
 
 @Entity
 @Table (name="sac_follow_up")
@@ -23,9 +27,10 @@ public class SacOcorrenciaFollowUp {
 	
 	@Column(name = "data", columnDefinition="datetime")
 	private Date data;
-	
-	@Column(name = "usu_codigo", columnDefinition="int")
-	private int idUsuario;
+
+	@OneToOne
+	@JoinColumn(name = "usu_codigo", columnDefinition="int")
+	private Usuario usuario; 
 	
 	@Column(name = "historico", columnDefinition="nvarchar")
 	private String historico;	
@@ -56,14 +61,14 @@ public class SacOcorrenciaFollowUp {
 
 	public void setData(Date data) {
 		this.data = data;
-	}	
+	}
 	
-	public int getIdUsuario() {
-		return idUsuario;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setIdUsuario(int idUsuario) {
-		this.idUsuario = idUsuario;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public String getHistorico() {
@@ -73,5 +78,19 @@ public class SacOcorrenciaFollowUp {
 	public void setHistorico(String historico) {
 		this.historico = historico;
 	}
+	
+	public SacOcorrenciaFollowUpDTO getOcorrenciaFollowUpDTO(SacOcorrenciaFollowUpDTO dto) {
+		if (dto == null) {
+			dto = new SacOcorrenciaFollowUpDTO();
+		}
+		
+		dto.setIdSacOcorrencia(this.getIdSacOcorrencia());
+		dto.setIdUsuario(this.getUsuario().getId());
+		dto.setNomeUsuario(this.getUsuario().getNome());
+		dto.setData(this.getData());
+		dto.setHistorico(this.getHistorico());
+		return dto;
+	}
+		
 
 }

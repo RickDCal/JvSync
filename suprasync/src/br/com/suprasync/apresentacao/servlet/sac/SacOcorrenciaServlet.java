@@ -155,7 +155,7 @@ public class SacOcorrenciaServlet extends GenericServlet {
 								for (int i = 0; i < ids.size(); i++) {
 									Integer id  = ids.get(i).getAsInt();
 									sacFacade.liberarVersao(id, numeroVersao);
-									idsMensagens.addAll(sacFacade.followUp(id, idUsuarioSupraMais, "Liberado em versão Nº " + numeroVersao)); //follow up
+									idsMensagens.addAll(sacFacade.insereFollowUpComSimilares(id, idUsuarioSupraMais, "Liberado em versão Nº " + numeroVersao)); //follow up
 								}
 							}														
 							//mensagem slack somente depois de finalizar o procedimento no BD. Obs: até aqui ainda há chance de rollback.

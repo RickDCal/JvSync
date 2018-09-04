@@ -6,6 +6,7 @@ import br.com.suprasync.negocio.dto.SacOcorrenciaDTO;
 import br.com.suprasync.persistencia.SacDesenvolvimento;
 import br.com.suprasync.persistencia.SacOcorrencia;
 import br.com.suprasync.persistencia.SacOcorrenciaArquivo;
+import br.com.suprasync.persistencia.SacOcorrenciaFollowUp;
 import br.com.suprasync.persistencia.dao.exception.ObjetoNaoEncontradoException;
 import br.com.suprasync.persistencia.dao.exception.SacOcorrenciaNaoEncontradaException;
 import br.com.suprasync.persistencia.filter.SacOcorrenciaFilter;
@@ -29,7 +30,7 @@ public interface ISacOcorrenciaServiceLocal {
 	
 	public boolean liberarVersao (Integer id, String numeroVersao);
 	
-	public List<Integer> followUp(int id, int idUsuarioSupraMais, String mensagem);
+	public List<Integer> followUpComSimilares(int id, int idUsuarioSupraMais, String mensagem);
 	
 	public void consultaNativa (String consulta);
 	
@@ -50,5 +51,8 @@ public interface ISacOcorrenciaServiceLocal {
 	public List<SacOcorrencia> obterSacDone(SacOcorrenciaFilter filter);
 	
 	public Integer TotalRegistros(SacOcorrenciaFilter filter);
-
+	
+	public List<SacOcorrenciaFollowUp> obterFollowUp(SacOcorrenciaFilter filter);
+	
+	public boolean insereFollowUp(int id, int idUsuarioSupraMais, String mensagem);
 }

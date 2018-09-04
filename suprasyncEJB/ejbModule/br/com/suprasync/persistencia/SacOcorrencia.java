@@ -40,6 +40,7 @@ public class SacOcorrencia {
 	private Integer prioridade;
 	private String ready;
 	private List<SacDesenvolvimento> sacDesenvolvimento;
+	private List<SacOcorrenciaFollowUp> sacFollowUp;
 			
 	public SacOcorrencia() {
 		
@@ -224,6 +225,16 @@ public class SacOcorrencia {
 
 	public void setSacDesenvolvimento(List<SacDesenvolvimento> sacDesenvolvimento) {
 		this.sacDesenvolvimento = sacDesenvolvimento;
+	}
+
+	@OneToMany
+	@JoinColumn(name = "ocor_codigo")
+	public List<SacOcorrenciaFollowUp> getSacFollowUp() {
+		return sacFollowUp;
+	}
+
+	public void setSacFollowUp(List<SacOcorrenciaFollowUp> sacFollowUp) {
+		this.sacFollowUp = sacFollowUp;
 	}
 
 	public SacOcorrenciaDTO getOcorrenciaDTO(SacOcorrenciaDTO dto) {

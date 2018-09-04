@@ -12,6 +12,7 @@ import br.com.suprasync.persistencia.SacDesenvolvimento;
 import br.com.suprasync.persistencia.SacEtapa;
 import br.com.suprasync.persistencia.SacOcorrencia;
 import br.com.suprasync.persistencia.SacOcorrenciaArquivo;
+import br.com.suprasync.persistencia.SacOcorrenciaFollowUp;
 import br.com.suprasync.persistencia.dao.IGenericDAO;
 import br.com.suprasync.persistencia.dao.ISacOcorrenciaDAO;
 import br.com.suprasync.persistencia.dao.exception.ObjetoNaoEncontradoException;
@@ -112,8 +113,8 @@ public class SacOcorrenciaService implements ISacOcorrenciaServiceLocal {
 		return sacOcorrenciaDao.liberarVersao(id, numeroVersao);
 	}
 	
-	public List<Integer> followUp(int id, int idUsuarioSupraMais, String mensagem) {
-		return sacOcorrenciaDao.followUp(id, idUsuarioSupraMais, mensagem);
+	public List<Integer> followUpComSimilares(int id, int idUsuarioSupraMais, String mensagem) {
+		return sacOcorrenciaDao.followUpComSimilares(id, idUsuarioSupraMais, mensagem);
 	}
 	
 	public void consultaNativa (String consulta) {
@@ -154,6 +155,14 @@ public class SacOcorrenciaService implements ISacOcorrenciaServiceLocal {
 	
 	public Integer TotalRegistros(SacOcorrenciaFilter filter) {
 		return sacOcorrenciaDao.TotalRegistros(filter);
+	}
+	
+	public List<SacOcorrenciaFollowUp> obterFollowUp(SacOcorrenciaFilter filter) {
+		return sacOcorrenciaDao.obterFollowUp(filter);
+	}
+
+	public boolean insereFollowUp(int id, int idUsuarioSupraMais, String mensagem) {
+		return sacOcorrenciaDao.insereFollowUp(id, idUsuarioSupraMais, mensagem);
 	}
 
 }

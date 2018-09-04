@@ -12,6 +12,7 @@ import javax.persistence.Query;
 import br.com.suprasync.persistencia.SacDesenvolvimento;
 import br.com.suprasync.persistencia.SacOcorrencia;
 import br.com.suprasync.persistencia.SacOcorrenciaArquivo;
+import br.com.suprasync.persistencia.SacOcorrenciaFollowUp;
 import br.com.suprasync.persistencia.dao.exception.SacOcorrenciaNaoEncontradaException;
 import br.com.suprasync.persistencia.enumerate.SACOcorrenciaEnum;
 import br.com.suprasync.persistencia.filter.SacOcorrenciaFilter;
@@ -78,39 +79,6 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 			e.printStackTrace();
 		}
 		return false;
-	}
-
-	public List<Integer> followUp(int id, int idUsuarioSupraMais, String mensagem) {
-
-		List<Integer> ids = new ArrayList<Integer>();
-		List<Integer> registrados = new ArrayList<Integer>();
-
-		StringBuilder consultaInicial = new StringBuilder("select codigo from sac_ocorrencia where codigo = ")
-				.append(id).append(" or sacocor_codigo_similar = ").append(id);
-		Query queryInicial = entityManager.createNativeQuery(consultaInicial.toString());
-		ids = queryInicial.getResultList();
-
-		if (ids.size() > 0) {
-
-			for (Integer codigo : ids) {
-
-				try {
-					StringBuilder consulta = new StringBuilder("insert into sac_follow_up (ocor_codigo, codigo, data, usu_codigo, historico) ")
-							.append("values(:id, isnull((select max(codigo) from sac_follow_up where ocor_codigo = :id),0)+1, ")
-							.append("getdate(), :idUsuario, :mensagem)");
-					Query query = entityManager.createNativeQuery(consulta.toString());
-					query.setParameter("id", codigo);
-					query.setParameter("idUsuario", idUsuarioSupraMais);
-					query.setParameter("mensagem", mensagem);
-					query.executeUpdate();
-					registrados.add(codigo);
-				} catch (Exception e) {
-					e.printStackTrace();
-					return registrados;
-				}
-			}
-		}
-		return registrados;		
 	}
 
 	public void consultaNativa (String consulta) {
@@ -574,7 +542,67 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 
 		return consulta;
 
+	}
+	
+	public List<SacOcorrenciaFollowUp> obterFollowUp(SacOcorrenciaFilter filter) {
+		StringBuilder consulta = new StringBuilder("select f from SacOcorrenciaFollowUp f where f.idSacOcorrencia is not null ");
+		
+		if (filter.getId() != null) {
+			consulta.append(" and f.idSacOcorrencia = :id");
+			parametros.put("id", filter.getId());
+		}		
+		
+		Query query = entityManager.createQuery(consulta.toString());
+		for (String key : parametros.keySet()) {
+			query.setParameter(key, parametros.get(key));
+		}		
+		return query.getResultList();		
+	}
+	
+	public List<Integer> followUpComSimilares(int id, int idUsuarioSupraMais, String mensagem) {
 
+		List<Integer> ids = new ArrayList<Integer>();
+		List<Integer> registrados = new ArrayList<Integer>();
+
+		StringBuilder consultaInicial = new StringBuilder("select codigo from sac_ocorrencia where codigo = ")
+				.append(id).append(" or sacocor_codigo_similar = ").append(id);
+		Query queryInicial = entityManager.createNativeQuery(consultaInicial.toString());
+		ids = queryInicial.getResultList();
+
+		if (ids.size() > 0) {
+			for (Integer codigo : ids) {
+				try {
+					if (insereFollowUp(id, idUsuarioSupraMais, mensagem)) {
+						registrados.add(id);
+					};
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return registrados;		
+	}
+	
+	public boolean insereFollowUp(int id, int idUsuarioSupraMais, String mensagem) {
+		//existe outro mpetodo nesta classe que insere follow up também nas ocorrencias vinculadas / agrupadas
+		List<Integer> registrados = new ArrayList<Integer>();
+		
+		try {
+			StringBuilder consulta = new StringBuilder("insert into sac_follow_up (ocor_codigo, codigo, data, usu_codigo, historico) ")
+					.append("values(:id, isnull((select max(codigo) from sac_follow_up where ocor_codigo = :id),0)+1, ")
+					.append("getdate(), :idUsuario, :mensagem)");
+			Query query = entityManager.createNativeQuery(consulta.toString());
+			query.setParameter("id", id);
+			query.setParameter("idUsuario", idUsuarioSupraMais);
+			query.setParameter("mensagem", mensagem);
+			query.executeUpdate();
+			registrados.add(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+		return true;
 	}
 
 }

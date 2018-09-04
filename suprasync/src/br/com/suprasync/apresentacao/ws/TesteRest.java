@@ -1,5 +1,6 @@
 package br.com.suprasync.apresentacao.ws;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -55,14 +56,17 @@ public class TesteRest {
 	@Produces(MediaType.APPLICATION_JSON)//@Produces("text/plain")
 	public String obterPrioridadesSac(@DefaultValue("") @QueryParam("id") String id, @QueryParam("data") String dados, @QueryParam("action") String action  ) {
 		try {
+			
+			encodeMensagemUtfToIso("01150995902323441717033110622762");
 
-			SacOcorrenciaFacade sacFacade = new SacOcorrenciaFacade();
-			
-			List<SacOcorrenciaArquivo> arquivos = sacFacade.obterAnexosSac(71046, null, null);
-			
-			for (SacOcorrenciaArquivo arquivo : arquivos) {
-				System.out.println(arquivo.getNomeArquivo());
-			}
+			System.out.println("testes get");
+//			SacOcorrenciaFacade sacFacade = new SacOcorrenciaFacade();
+//			
+//			List<SacOcorrenciaArquivo> arquivos = sacFacade.obterAnexosSac(71046, null, null);
+//			
+//			for (SacOcorrenciaArquivo arquivo : arquivos) {
+//				System.out.println(arquivo.getNomeArquivo());
+//			}
 
 
 		} catch (Exception e) {
@@ -121,6 +125,12 @@ public class TesteRest {
 		retorno.addProperty("success", success);
 		retorno.add("data", jdados);
 		return retorno.toString();
+	}
+	
+	public static String encodeMensagemUtfToIso(String mensagem) throws UnsupportedEncodingException {
+		byte byteText[] = mensagem.getBytes("UTF-8");
+		mensagem = new String(byteText, "ISO_8859_1");
+		return mensagem;
 	}
 
 

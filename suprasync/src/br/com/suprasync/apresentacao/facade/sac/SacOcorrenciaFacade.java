@@ -15,6 +15,7 @@ import br.com.suprasync.negocio.ISacOcorrenciaServiceLocal;
 import br.com.suprasync.persistencia.SacDesenvolvimento;
 import br.com.suprasync.persistencia.SacOcorrencia;
 import br.com.suprasync.persistencia.SacOcorrenciaArquivo;
+import br.com.suprasync.persistencia.SacOcorrenciaFollowUp;
 import br.com.suprasync.persistencia.dao.exception.SacOcorrenciaNaoEncontradaException;
 import br.com.suprasync.persistencia.filter.SacOcorrenciaFilter;
 
@@ -59,10 +60,6 @@ public class SacOcorrenciaFacade {
 
 	public boolean liberarVersao (Integer id, String numeroVersao) {
 		return service.liberarVersao(id, numeroVersao);
-	}
-	
-	public List<Integer> followUp(int id, int idUsuarioSupraMais, String mensagem) {
-		return service.followUp(id, idUsuarioSupraMais, mensagem);
 	}
 	
 	public void consultaNativa (String consulta) {
@@ -116,6 +113,18 @@ public class SacOcorrenciaFacade {
 	
 	public Integer TotalRegistros(SacOcorrenciaFilter filter) {
 		return service.TotalRegistros(filter);
+	}
+	
+	public List<SacOcorrenciaFollowUp> obterFollowUp(SacOcorrenciaFilter filter) {
+		return service.obterFollowUp(filter);
+	}
+	
+	public List<Integer> insereFollowUpComSimilares(int id, int idUsuarioSupraMais, String mensagem) {
+		return service.followUpComSimilares(id, idUsuarioSupraMais, mensagem);
+	}
+
+	public boolean insereFollowUp(int id, int idUsuarioSupraMais, String mensagem) {
+		return service.insereFollowUp(id, idUsuarioSupraMais, mensagem);
 	}
 	
 }

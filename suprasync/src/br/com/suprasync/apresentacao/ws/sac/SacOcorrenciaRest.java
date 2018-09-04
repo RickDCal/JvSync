@@ -16,8 +16,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import org.apache.http.HttpRequest;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -28,11 +26,13 @@ import br.com.suprasync.apresentacao.facade.GenericFacade;
 import br.com.suprasync.apresentacao.facade.cadastro.UsuarioFacade;
 import br.com.suprasync.apresentacao.facade.sac.SacOcorrenciaFacade;
 import br.com.suprasync.negocio.dto.SacOcorrenciaDTO;
+import br.com.suprasync.negocio.dto.SacOcorrenciaFollowUpDTO;
 import br.com.suprasync.negocio.exception.UsuarioInexistenteException;
 import br.com.suprasync.persistencia.Funcionario;
 import br.com.suprasync.persistencia.SacEtapa;
 import br.com.suprasync.persistencia.SacOcorrencia;
 import br.com.suprasync.persistencia.SacOcorrenciaArquivo;
+import br.com.suprasync.persistencia.SacOcorrenciaFollowUp;
 import br.com.suprasync.persistencia.Usuario;
 import br.com.suprasync.persistencia.dao.exception.ObjetoNaoEncontradoException;
 import br.com.suprasync.persistencia.dao.exception.SacOcorrenciaNaoEncontradaException;
@@ -252,7 +252,7 @@ public class SacOcorrenciaRest {
 		}
 		return montaResposta();
 	}
-	
+
 	@SuppressWarnings("finally")
 	@PUT
 	@Path("/obterOcorrenciasToDo")
@@ -262,12 +262,12 @@ public class SacOcorrenciaRest {
 		try {
 			SacOcorrenciaFacade ocorrenciaFacade = new SacOcorrenciaFacade();
 			Gson gson = new Gson();
-	
+
 			SacOcorrenciaFilter filter = new SacOcorrenciaFilter();
 			if (filtro != null) {
 				filter = gson.fromJson(filtro, SacOcorrenciaFilter.class);
 			}			
-					
+
 			List<SacOcorrencia> ocorrencias = ocorrenciaFacade.obterSacToDo(filter);
 			//ocorrencias.sort(Comparator.comparing(o -> o.getPrioridade() != null? o.getPrioridade() : 999)); // já filtrei na consulta
 			for (Iterator<SacOcorrencia> iterator = ocorrencias.iterator(); iterator.hasNext();) {
@@ -288,7 +288,7 @@ public class SacOcorrenciaRest {
 		}
 
 	}
-	
+
 	@SuppressWarnings("finally")
 	@PUT
 	@Path("/obterOcorrenciasDoing")
@@ -298,12 +298,12 @@ public class SacOcorrenciaRest {
 		try {
 			SacOcorrenciaFacade ocorrenciaFacade = new SacOcorrenciaFacade();
 			Gson gson = new Gson();
-	
+
 			SacOcorrenciaFilter filter = new SacOcorrenciaFilter();
 			if (filtro != null) {
 				filter = gson.fromJson(filtro, SacOcorrenciaFilter.class);
 			}			
-					
+
 			List<SacOcorrencia> ocorrencias = ocorrenciaFacade.obterSacDoing(filter);
 			for (Iterator<SacOcorrencia> iterator = ocorrencias.iterator(); iterator.hasNext();) {
 				SacOcorrencia sac = (SacOcorrencia) iterator.next();
@@ -322,7 +322,7 @@ public class SacOcorrenciaRest {
 		}
 
 	}
-	
+
 	@SuppressWarnings("finally")
 	@PUT
 	@Path("/obterOcorrenciasDone")
@@ -332,12 +332,12 @@ public class SacOcorrenciaRest {
 		try {
 			SacOcorrenciaFacade ocorrenciaFacade = new SacOcorrenciaFacade();
 			Gson gson = new Gson();
-	
+
 			SacOcorrenciaFilter filter = new SacOcorrenciaFilter();
 			if (filtro != null) {
 				filter = gson.fromJson(filtro, SacOcorrenciaFilter.class);
 			}			
-					
+
 			List<SacOcorrencia> ocorrencias = ocorrenciaFacade.obterSacDone(filter);
 			for (Iterator<SacOcorrencia> iterator = ocorrencias.iterator(); iterator.hasNext();) {
 				SacOcorrencia sac = (SacOcorrencia) iterator.next();
@@ -356,37 +356,38 @@ public class SacOcorrenciaRest {
 		}
 
 	}
-	
+
 	@PUT
 	@Path("/gravaFollowUpSac")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public String atualizarPrioridadesSac(SacOcorrenciaDTO ocorrenciaDto ) {	
+	public String gravaFollowUpSac(SacOcorrenciaFollowUpDTO ocorrenciaDto ) {	
+		setSuccess(false);
 		try {			
-			
+
 			SacOcorrenciaFacade sacFacade = new SacOcorrenciaFacade();
 			UsuarioFacade usuarioFacade = new UsuarioFacade();
 			Usuario usuario = null;
-			if (ocorrenciaDto.getIdFuncionario() != null) {
-				usuario = usuarioFacade.pesquisar(ocorrenciaDto.getIdFuncionario());
+			if (ocorrenciaDto.getIdUsuario() != null) {
+				usuario = usuarioFacade.pesquisar(ocorrenciaDto.getIdUsuario());
 			}
-			
-			if (usuario != null && ocorrenciaDto.getComentario() != null && !ocorrenciaDto.getComentario().isEmpty()) {
-				sacFacade.followUp(ocorrenciaDto.getId(), usuario.getId(), ocorrenciaDto.getComentario());
+
+			if (usuario != null && ocorrenciaDto.getHistorico() != null && !ocorrenciaDto.getHistorico().isEmpty()) {
+				sacFacade.insereFollowUp(ocorrenciaDto.getIdSacOcorrencia(), usuario.getId(), ocorrenciaDto.getHistorico());
+				setSuccess(true);
 			}
-				
+
 		} catch (NamingException e) {
 			e.printStackTrace();
-			return montaResposta();
 		} catch (UsuarioInexistenteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
-		setSuccess(true);
+				
 		retorno.add("data", jdados);
-		return retorno.toString();
+		return montaResposta();
 	}
-	
+
 	@SuppressWarnings("finally")
 	@PUT
 	@Path("/obterTotalRegistros")
@@ -396,14 +397,14 @@ public class SacOcorrenciaRest {
 		try {
 			SacOcorrenciaFacade ocorrenciaFacade = new SacOcorrenciaFacade();
 			Gson gson = new Gson();
-	
+
 			SacOcorrenciaFilter filter = new SacOcorrenciaFilter();
 			if (filtro != null) {
 				filter = gson.fromJson(filtro, SacOcorrenciaFilter.class);
 			}	
-			
+
 			Integer totalRegistros = ocorrenciaFacade.TotalRegistros(filter);
-					
+
 
 			retorno.addProperty("total",totalRegistros);
 			setSuccess(true);
@@ -416,6 +417,43 @@ public class SacOcorrenciaRest {
 		finally {			
 			return montaResposta();
 		}
+
+	}
+
+	@PUT
+	@Path("/obterListaFollowUp")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String obterListaFollowUp(String filtro) {
+		setSuccess(false);
+		try {
+			SacOcorrenciaFacade ocorrenciaFacade = new SacOcorrenciaFacade();
+			Gson gson = new Gson();
+
+			SacOcorrenciaFilter filter = new SacOcorrenciaFilter();
+			if (filtro != null) {
+				filter = gson.fromJson(filtro, SacOcorrenciaFilter.class);
+			}
+
+			if (filter != null && filter.getId() != null) {
+				List<SacOcorrenciaFollowUp> followUps = new ArrayList<>();
+				followUps = ocorrenciaFacade.obterFollowUp(filter);
+
+				for (SacOcorrenciaFollowUp followUp : followUps) {
+					jdados.add(followUp.getOcorrenciaFollowUpDTO(null).getAsJson());
+				}
+			}
+
+			retorno.add("data", jdados);
+			retorno.addProperty("total",jdados.size());
+			setSuccess(true);
+
+		} catch (NamingException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+
+		return montaResposta();
 
 	}
 }
