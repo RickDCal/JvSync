@@ -8,7 +8,8 @@ import com.google.gson.JsonParser;
 
 public class SacOcorrenciaFollowUpDTO {
 
-	private int idSacOcorrencia;	
+	private int idSacOcorrencia;
+	private int sequencia;
 	private Integer idUsuario;
 	private String nomeUsuario;
 	private Date data;
@@ -26,6 +27,16 @@ public class SacOcorrenciaFollowUpDTO {
 
 	public void setIdSacOcorrencia(int idSacOcorrencia) {
 		this.idSacOcorrencia = idSacOcorrencia;
+	}
+
+
+	public int getSequencia() {
+		return sequencia;
+	}
+
+
+	public void setSequencia(int sequencia) {
+		this.sequencia = sequencia;
 	}
 
 

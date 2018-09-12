@@ -12,7 +12,7 @@ public class SacFollowUpPK implements Serializable {
 	private int idSacOcorrencia;
 
 	@Column(name = "codigo")
-	private int codigo;
+	private int sequencia;
 
 	public SacFollowUpPK() {
 		

@@ -23,7 +23,7 @@ public class SacOcorrenciaFollowUp {
 	
 	@Id
 	@Column(name = "codigo", columnDefinition="int")
-	private int codigo;
+	private int sequencia;
 	
 	@Column(name = "data", columnDefinition="datetime")
 	private Date data;
@@ -47,12 +47,12 @@ public class SacOcorrenciaFollowUp {
 		this.idSacOcorrencia = idSacOcorrencia;
 	}
 
-	public int getCodigo() {
-		return codigo;
+	public int getSequencia() {
+		return sequencia;
 	}
 
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
+	public void setSequencia(int sequencia) {
+		this.sequencia = sequencia;
 	}
 
 	public Date getData() {
@@ -85,6 +85,7 @@ public class SacOcorrenciaFollowUp {
 		}
 		
 		dto.setIdSacOcorrencia(this.getIdSacOcorrencia());
+		dto.setSequencia(this.sequencia);
 		dto.setIdUsuario(this.getUsuario().getId());
 		dto.setNomeUsuario(this.getUsuario().getNome());
 		dto.setData(this.getData());
