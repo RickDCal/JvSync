@@ -41,6 +41,7 @@ public class SacOcorrencia {
 	private String ready;
 	private List<SacDesenvolvimento> sacDesenvolvimento;
 	private List<SacOcorrenciaFollowUp> sacFollowUp;
+	private Date dataSolucao;
 			
 	public SacOcorrencia() {
 		
@@ -237,6 +238,15 @@ public class SacOcorrencia {
 		this.sacFollowUp = sacFollowUp;
 	}
 
+	@Column(name="data_solucao", columnDefinition="datetime")
+	public Date getDataSolucao() {
+		return dataSolucao;
+	}
+
+	public void setDataSolucao(Date dataSolucao) {
+		this.dataSolucao = dataSolucao;
+	}
+
 	public SacOcorrenciaDTO getOcorrenciaDTO(SacOcorrenciaDTO dto) {
 		if (dto == null) {
 			dto = new SacOcorrenciaDTO();
@@ -264,6 +274,7 @@ public class SacOcorrencia {
 		dto.setNumeroVersao(this.getNumeroVersao());
 		dto.setPrioridade(this.getPrioridade());
 		dto.setReady((this.getReady().equalsIgnoreCase("1")) ? true : false);
+		dto.setDataSolucao(this.getDataSolucao());
 		return dto;		
 	}
 	

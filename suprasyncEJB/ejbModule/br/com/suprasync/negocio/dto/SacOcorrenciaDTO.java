@@ -29,6 +29,7 @@ public class SacOcorrenciaDTO {
 	private String numeroVersao;
 	private Integer prioridade;
 	private boolean ready;
+	private Date dataSolucao;
 			
 	public SacOcorrenciaDTO() {
 		
@@ -184,6 +185,14 @@ public class SacOcorrenciaDTO {
 
 	public void setReady(boolean ready) {
 		this.ready = ready;
+	}
+
+	public Date getDataSolucao() {
+		return dataSolucao;
+	}
+
+	public void setDataSolucao(Date dataSolucao) {
+		this.dataSolucao = dataSolucao;
 	}
 
 	public SacOcorrenciaDTO convertToDTO (SacOcorrencia ocorrencia) {
