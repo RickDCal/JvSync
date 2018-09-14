@@ -460,6 +460,16 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 			consulta.append(" and o.dataCadastro <= :dataFimCadastro ");
 			parametros.put("dataFimCadastro", filter.getDataFimCadastro());
 		}
+		
+		if (filter.getDataInicioSolucao() != null) {
+			consulta.append(" and o.dataSolucao >= :dataInicioSolucao ");
+			parametros.put("dataInicioSolucao", filter.getDataInicioSolucao());
+		}
+
+		if (filter.getDataFimSolucao() != null) {
+			consulta.append(" and o.dataSolucao <= :dataFimSolucao ");
+			parametros.put("dataFimSolucao", filter.getDataFimSolucao());
+		}
 
 		if (filter.getListSituacaoEnum() != null) {
 			consulta.append(" and o.situacaoOcorrencia in :listSituacao ");

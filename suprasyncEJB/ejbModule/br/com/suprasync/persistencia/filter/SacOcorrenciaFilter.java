@@ -18,6 +18,8 @@ public class SacOcorrenciaFilter {
 	private String nomeCliente;
 	private Date dataInicioCadastro; // TODO: adicionar 23:59
 	private Date dataFimCadastro;	
+	private Date dataInicioSolucao; // TODO: adicionar 23:59
+	private Date dataFimSolucao;	
 //	private List<Integer> ListIdSituacao;
 	private List<SACOcorrenciaEnum> ListSituacaoEnum;
 	private String assunto;
@@ -80,6 +82,22 @@ public class SacOcorrenciaFilter {
 
 	public Date getDataFimCadastro() {
 		return dataFimCadastro;
+	}
+
+	public Date getDataInicioSolucao() {
+		return dataInicioSolucao;
+	}
+
+	public void setDataInicioSolucao(Date dataInicioSolucao) {
+		this.dataInicioSolucao = dataInicioSolucao;
+	}
+
+	public Date getDataFimSolucao() {
+		return dataFimSolucao;
+	}
+
+	public void setDataFimSolucao(Date dataFimSolucao) {
+		this.dataFimSolucao = dataFimSolucao;
 	}
 
 	public void setDataFimCadastro(Date dataFimCadastro) {
@@ -234,7 +252,6 @@ public class SacOcorrenciaFilter {
 
 		System.out.println(this.getClass().getDeclaredFields().toString());
 
-		Utilities util = new Utilities();
 		for (int i = 0; i < filterJson.size(); i++) {		
 
 			String parametro = filterJson.get(i).getAsJsonObject().get("property").getAsString();			
@@ -253,8 +270,10 @@ public class SacOcorrenciaFilter {
 				case "id": setId(Integer.parseInt(valor)); break;
 				case "idcliente" : setIdCliente(idCliente);break;
 				case "nomecliente" : setNomeCliente(valor);break;
-				case "datainiciocadastro" : setDataInicioCadastro(util.dataDDIMMIYYYY(valor));break; // TODO: adicionar 23:59
-				case "datafimcadastro" : setDataFimCadastro(util.dataDDIMMIYYYY(valor));break;	
+				case "datainiciocadastro" : setDataInicioCadastro(Utilities.dataDDIMMIYYYY(valor));break; // TODO: adicionar 23:59
+				case "datafimcadastro" : setDataFimCadastro(Utilities.dataDDIMMIYYYY(valor));break;
+				case "datainiciosolucao" : setDataInicioSolucao(Utilities.dataDDIMMIYYYY(valor));break; // TODO: adicionar 23:59
+				case "datafimsolucao" : setDataFimSolucao(Utilities.dataDDIMMIYYYY(valor));break;	
 				case "assunto" : setAssunto(valor);break;
 				case "solucao" : setSolucao(valor);break;
 				case "comentario" : setComentario(valor); break;
@@ -262,8 +281,8 @@ public class SacOcorrenciaFilter {
 				case "estimativa" : setEstimativa(Integer.parseInt(valor));break;
 				case "descricaodesenvolvimento" : setDescricaoDesenvolvimento(valor);break;
 				case "comentariodesenvolvimento" : setComentarioDesenvolvimento(valor);break;
-				case "datainicioprevisaopermino" : setDataInicioPrevisaoTermino(util.dataDDIMMIYYYY(valor));break;
-				case "datafimprevisaotermino" : setDataFimPrevisaoTermino(util.dataDDIMMIYYYY(valor));break;
+				case "datainicioprevisaopermino" : setDataInicioPrevisaoTermino(Utilities.dataDDIMMIYYYY(valor));break;
+				case "datafimprevisaotermino" : setDataFimPrevisaoTermino(Utilities.dataDDIMMIYYYY(valor));break;
 				case "position" : setPosition(Integer.parseInt(valor));break;
 				case "max" : setMax(Integer.parseInt(valor));break;
 				
