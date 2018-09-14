@@ -549,6 +549,10 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 		if (filter.isPrioridade()) {
 			consulta.append(" and o.prioridade is not null ");
 		}
+		
+		if (filter.isPassouDesenvolvimento()) {
+			consulta.append(" and o.id in (select d.sacOcorrencia.id from SacDesenvolvimento d) ");
+		}
 
 		return consulta;
 

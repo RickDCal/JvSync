@@ -39,6 +39,7 @@ public class SacOcorrenciaFilter {
 	private Integer idInicial;
 	private boolean isPrioridade;
 	private boolean ready;
+	private boolean passouDesenvolvimento;
 
 	public SacOcorrenciaFilter() {
 
@@ -246,6 +247,14 @@ public class SacOcorrenciaFilter {
 
 	public void setReady(boolean ready) {
 		this.ready = ready;
+	}
+
+	public boolean isPassouDesenvolvimento() {
+		return passouDesenvolvimento;
+	}
+
+	public void setPassouDesenvolvimento(boolean passouDesenvolvimento) {
+		this.passouDesenvolvimento = passouDesenvolvimento;
 	}
 
 	private void montaFilterJson(JsonArray filterJson) throws ParseException, FalhaAoConverterDataException {
