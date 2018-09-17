@@ -564,7 +564,9 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 		if (filter.getId() != null) {
 			consulta.append(" and f.idSacOcorrencia = :id");
 			parametros.put("id", filter.getId());
-		}		
+		}
+		
+		consulta.append(" order by f.sequencia desc ");
 		
 		Query query = entityManager.createQuery(consulta.toString());
 		for (String key : parametros.keySet()) {

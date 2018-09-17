@@ -1,6 +1,8 @@
 package br.com.suprasync.apresentacao.ws.sac;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -437,6 +439,10 @@ public class SacOcorrenciaRest {
 			if (filter != null && filter.getId() != null) {
 				List<SacOcorrenciaFollowUp> followUps = new ArrayList<>();
 				followUps = ocorrenciaFacade.obterFollowUp(filter);
+				
+//				followUps.sort(Comparator.comparing(o -> o.getSequencia()));
+//				Collections.reverse(followUps); 
+//				A ordenação foi tratada no DAO mesmo
 
 				for (SacOcorrenciaFollowUp followUp : followUps) {
 					jdados.add(followUp.getOcorrenciaFollowUpDTO(null).getAsJson());
