@@ -294,6 +294,7 @@ public class SacOcorrenciaFilter {
 				case "datafimprevisaotermino" : setDataFimPrevisaoTermino(Utilities.dataDDIMMIYYYY(valor));break;
 				case "position" : setPosition(Integer.parseInt(valor));break;
 				case "max" : setMax(Integer.parseInt(valor));break;
+				case "passoudesenvolvimento" : setPassouDesenvolvimento(valor.equalsIgnoreCase("true"));break;
 				
 				case "idsituacao" : ListSituacaoEnum = new ArrayList<SACOcorrenciaEnum>();				
 				if (valores != null) {
