@@ -620,5 +620,36 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 		
 		return true;
 	}
+	
+	
+	public List<SacOcorrencia> obterUltimosSacDesenvolvedor(int idUsuario, int quantidadeSacs) {
+
+		//Map<String, Object> parametros = new HashMap<String, Object>();
+		StringBuilder consulta = new StringBuilder();
+		consulta.append("select top(").append(quantidadeSacs).append(") maxCodigo from")
+		.append(" (select distinct usu_codigo, sacocor_codigo, max(codigo) as maxCodigo from sac_ocorrencia_desenvolvimento")
+		.append(" where usu_codigo = ").append(idUsuario).append(" group by usu_codigo, sacocor_codigo ) base  order by maxCodigo desc");
+		
+		List<Integer> listaSacDesenvolvimento =  new ArrayList<>();
+		Query query = entityManager.createNativeQuery(consulta.toString());
+		listaSacDesenvolvimento = query.getResultList();
+		
+		StringBuilder ids = new StringBuilder();
+		
+		for (Integer idSacDesenvolvimento : listaSacDesenvolvimento) {
+			ids.append(" ").append(idSacDesenvolvimento).append(", ");
+		}
+		ids.append(" 0 ");
+		
+		consulta = new StringBuilder();		
+
+		consulta.append("select d.sacOcorrencia from SacDesenvolvimento d where d.id in ( ").append(ids.toString()).append(")")
+		.append(" order by d.dataInicio desc ");
+		
+		Query query2 = entityManager.createQuery(consulta.toString());
+		
+		return query2.getResultList();
+
+	}
 
 }
