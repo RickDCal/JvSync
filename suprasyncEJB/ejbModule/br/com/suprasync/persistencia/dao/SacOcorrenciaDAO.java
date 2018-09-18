@@ -622,13 +622,28 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 	}
 	
 	
-	public List<SacOcorrencia> obterUltimosSacDesenvolvedor(int idUsuario, int quantidadeSacs) {
-
+	public List<SacDesenvolvimento> obterUltimosSacDesenvolvedores(int quantidadeSacs) {
+		StringBuilder consulta = new StringBuilder("select distinct d.funcionario.id from SacDesenvolvimento d ");
+		Query query = entityManager.createQuery(consulta.toString());
+		List<Integer> idFucionarios = new ArrayList<Integer>();
+		
+		idFucionarios = query.getResultList();
+		List<SacDesenvolvimento> ocorrencias = new ArrayList<SacDesenvolvimento>();
+		
+		for (Integer id : idFucionarios) {
+			ocorrencias.addAll(obterUltimosSacDesenvolvedor(id, quantidadeSacs));
+		}
+		return ocorrencias;			
+	}	
+	
+	public List<SacDesenvolvimento> obterUltimosSacDesenvolvedor(int idUsuario, int quantidadeSacs) {
+		
+		
 		//Map<String, Object> parametros = new HashMap<String, Object>();
 		StringBuilder consulta = new StringBuilder();
 		consulta.append("select top(").append(quantidadeSacs).append(") maxCodigo from")
-		.append(" (select distinct usu_codigo, sacocor_codigo, max(codigo) as maxCodigo from sac_ocorrencia_desenvolvimento")
-		.append(" where usu_codigo = ").append(idUsuario).append(" group by usu_codigo, sacocor_codigo ) base  order by maxCodigo desc");
+		.append(" (select distinct func_codigo, sacocor_codigo, max(codigo) as maxCodigo from sac_ocorrencia_desenvolvimento")
+		.append(" where func_codigo = ").append(idUsuario).append(" group by func_codigo, sacocor_codigo ) base  order by maxCodigo desc");
 		
 		List<Integer> listaSacDesenvolvimento =  new ArrayList<>();
 		Query query = entityManager.createNativeQuery(consulta.toString());
@@ -643,7 +658,7 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 		
 		consulta = new StringBuilder();		
 
-		consulta.append("select d.sacOcorrencia from SacDesenvolvimento d where d.id in ( ").append(ids.toString()).append(")")
+		consulta.append("select d from SacDesenvolvimento d where d.id in ( ").append(ids.toString()).append(")")
 		.append(" order by d.dataInicio desc ");
 		
 		Query query2 = entityManager.createQuery(consulta.toString());

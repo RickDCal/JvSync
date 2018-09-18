@@ -164,5 +164,13 @@ public class SacOcorrenciaService implements ISacOcorrenciaServiceLocal {
 	public boolean insereFollowUp(int id, int idUsuarioSupraMais, String mensagem) {
 		return sacOcorrenciaDao.insereFollowUp(id, idUsuarioSupraMais, mensagem);
 	}
+	
+	public List<SacDesenvolvimento> obterUltimosSacDesenvolvedores(int quantidadeSacs) {
+		return sacOcorrenciaDao.obterUltimosSacDesenvolvedores(quantidadeSacs);
+	}
+	
+	public List<SacDesenvolvimento> obterUltimosSacDesenvolvedor(int idUsuario, int quantidadeSacs) {
+		return sacOcorrenciaDao.obterUltimosSacDesenvolvedor(idUsuario, quantidadeSacs);
+	}
 
 }

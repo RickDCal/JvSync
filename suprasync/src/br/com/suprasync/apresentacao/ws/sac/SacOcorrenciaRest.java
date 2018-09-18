@@ -31,6 +31,7 @@ import br.com.suprasync.negocio.dto.SacOcorrenciaDTO;
 import br.com.suprasync.negocio.dto.SacOcorrenciaFollowUpDTO;
 import br.com.suprasync.negocio.exception.UsuarioInexistenteException;
 import br.com.suprasync.persistencia.Funcionario;
+import br.com.suprasync.persistencia.SacDesenvolvimento;
 import br.com.suprasync.persistencia.SacEtapa;
 import br.com.suprasync.persistencia.SacOcorrencia;
 import br.com.suprasync.persistencia.SacOcorrenciaArquivo;
@@ -462,4 +463,36 @@ public class SacOcorrenciaRest {
 		return montaResposta();
 
 	}
+	
+	@GET
+	@Path("/obterUltimosSacDesenvolvedor")
+	@Produces(MediaType.APPLICATION_JSON)//@Produces("text/plain")
+	public String obterUltimosSacDesenvolvedor(@QueryParam("idFuncionario") Integer idFuncionario, @DefaultValue("5") @QueryParam("quantidadeSacs") Integer quantidadeSacs) {
+
+		try {
+			SacOcorrenciaFacade sacFacade = new SacOcorrenciaFacade();
+			List<SacDesenvolvimento> ocorrencias = new ArrayList<SacDesenvolvimento>(); 
+			
+			if (idFuncionario != null) {
+				ocorrencias = sacFacade.obterUltimosSacDesenvolvedor(idFuncionario, quantidadeSacs);
+			} else {
+				ocorrencias = sacFacade.obterUltimosSacDesenvolvedores(quantidadeSacs);
+			}			
+
+			for (Iterator<SacDesenvolvimento> iterator = ocorrencias.iterator(); iterator.hasNext();) {
+				SacDesenvolvimento sac = (SacDesenvolvimento) iterator.next();
+				//montando o retorn com base em um model de ocorrencia, manipulando a ocorrencia original para mostrar os valores pretendidos
+				SacOcorrencia sacManipulado = sac.getSacOcorrencia();
+				sacManipulado.setDataCadastro(sac.getDataFim() != null ? sac.getDataFim() : sac.getDataInicio());
+				sacManipulado.setFuncionarioRedirecionamento(sac.getFuncionario());
+				JsonObject jsac = sac.getSacOcorrencia().getOcorrenciaDTO(null).getAsJson();
+				jdados.add(jsac);	
+			}
+			setSuccess(true);
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+		return montaResposta();
+	}
+
 }

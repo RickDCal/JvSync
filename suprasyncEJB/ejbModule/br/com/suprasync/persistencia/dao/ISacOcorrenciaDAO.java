@@ -56,4 +56,8 @@ public List<SacOcorrenciaFollowUp> obterFollowUp(SacOcorrenciaFilter filter);
 
 public boolean insereFollowUp(int id, int idUsuarioSupraMais, String mensagem);
 
+public List<SacDesenvolvimento> obterUltimosSacDesenvolvedores(int quantidadeSacs);
+
+public List<SacDesenvolvimento> obterUltimosSacDesenvolvedor(int idUsuario, int quantidadeSacs);
+
 }

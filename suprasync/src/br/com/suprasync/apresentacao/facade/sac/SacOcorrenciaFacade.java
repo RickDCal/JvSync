@@ -127,4 +127,12 @@ public class SacOcorrenciaFacade {
 		return service.insereFollowUp(id, idUsuarioSupraMais, mensagem);
 	}
 	
+	public List<SacDesenvolvimento> obterUltimosSacDesenvolvedores(int quantidadeSacs) {
+		return service.obterUltimosSacDesenvolvedores(quantidadeSacs);
+	}
+	
+	public List<SacDesenvolvimento> obterUltimosSacDesenvolvedor(int idUsuario, int quantidadeSacs) {
+		return service.obterUltimosSacDesenvolvedor(idUsuario, quantidadeSacs);
+	}
+	
 }

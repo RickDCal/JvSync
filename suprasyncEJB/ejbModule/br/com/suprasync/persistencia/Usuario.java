@@ -20,7 +20,7 @@ public class Usuario {
 	private Date dataExclusao;
 	private Integer idPerfil;
 	private String usuarioSlack;
-	private List<SacDesenvolvimento> sacDesenvolvimento;
+	//private List<SacDesenvolvimento> sacDesenvolvimento;
 	
 			
 	public Usuario() {
@@ -92,13 +92,13 @@ public class Usuario {
 		this.usuarioSlack = usuarioSlack;
 	}
 
-	@OneToMany(mappedBy = "usuario")
-	public List<SacDesenvolvimento> getSacDesenvolvimento() {
-		return sacDesenvolvimento;
-	}
-
-	public void setSacDesenvolvimento(List<SacDesenvolvimento> sacDesenvolvimento) {
-		this.sacDesenvolvimento = sacDesenvolvimento;
-	}
+//	@OneToMany(mappedBy = "usuario")
+//	public List<SacDesenvolvimento> getSacDesenvolvimento() {
+//		return sacDesenvolvimento;
+//	}
+//
+//	public void setSacDesenvolvimento(List<SacDesenvolvimento> sacDesenvolvimento) {
+//		this.sacDesenvolvimento = sacDesenvolvimento;
+//	}
 	
 }

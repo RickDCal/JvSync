@@ -17,7 +17,7 @@ public class SacDesenvolvimento {
 
 	private int id;	
 	private SacOcorrencia sacOcorrencia;	
-	private Usuario usuario;
+//	private Usuario usuario;
 	private Funcionario funcionario;
 	private Date dataInicio; 
 	private Date dataFim;
@@ -41,7 +41,7 @@ public class SacDesenvolvimento {
 	
 
 	@ManyToOne(cascade =
-	{CascadeType.ALL}, fetch = FetchType.LAZY)
+	{CascadeType.ALL})
 	@JoinColumn(name = "sacocor_codigo", columnDefinition= "int")
 	public SacOcorrencia getSacOcorrencia() {
 		return sacOcorrencia;
@@ -51,19 +51,19 @@ public class SacDesenvolvimento {
 		this.sacOcorrencia = sacOcorrencia;
 	}
 
-	@ManyToOne(cascade =
-		{CascadeType.ALL}, fetch = FetchType.LAZY)
-		@JoinColumn(name = "usu_codigo", columnDefinition= "int")
-	public Usuario getUsuario() {
-		return usuario;
-	}
+//	@ManyToOne(cascade =
+//		{CascadeType.ALL})
+//		@JoinColumn(name = "usu_codigo", columnDefinition= "int")
+//	public Usuario getUsuario() {
+//		return usuario;
+//	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
+//	public void setUsuario(Usuario usuario) {
+//		this.usuario = usuario;
+//	}
 
 	@ManyToOne(cascade =
-		{CascadeType.ALL}, fetch = FetchType.LAZY)
+		{CascadeType.ALL})
 		@JoinColumn(name = "func_codigo", columnDefinition= "int")
 	public Funcionario getFuncionario() {
 		return funcionario;
