@@ -494,7 +494,6 @@ public class SacOcorrenciaRest {
 		}
 		return montaResposta();
 	}
-
 	
 	@PUT
 	@Path("/redirecionarSac")
