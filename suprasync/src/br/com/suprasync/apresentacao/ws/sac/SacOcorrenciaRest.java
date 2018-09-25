@@ -499,7 +499,13 @@ public class SacOcorrenciaRest {
 	@Path("/redirecionarSac")
 	@Produces("text/plain")
 	public String redirecionarSac(SacOcorrenciaDTO ocorrenciaDto) {
-		System.out.println(ocorrenciaDto.getId());
+		
+		try {
+			SacOcorrenciaFacade sacFacade = new SacOcorrenciaFacade();
+			
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
 		return null;
 		
 	}

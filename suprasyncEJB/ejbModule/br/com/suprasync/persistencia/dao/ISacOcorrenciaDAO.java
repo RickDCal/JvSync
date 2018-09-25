@@ -4,10 +4,12 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import br.com.suprasync.negocio.dto.SacOcorrenciaDTO;
 import br.com.suprasync.persistencia.SacDesenvolvimento;
 import br.com.suprasync.persistencia.SacOcorrencia;
 import br.com.suprasync.persistencia.SacOcorrenciaArquivo;
 import br.com.suprasync.persistencia.SacOcorrenciaFollowUp;
+import br.com.suprasync.persistencia.dao.exception.ObjetoNaoEncontradoException;
 import br.com.suprasync.persistencia.dao.exception.SacOcorrenciaNaoEncontradaException;
 import br.com.suprasync.persistencia.filter.SacOcorrenciaFilter;
 
@@ -59,5 +61,7 @@ public boolean insereFollowUp(int id, int idUsuarioSupraMais, String mensagem);
 public List<SacDesenvolvimento> obterUltimosSacDesenvolvedores(int quantidadeSacs);
 
 public List<SacDesenvolvimento> obterUltimosSacDesenvolvedor(int idUsuario, int quantidadeSacs);
+
+public SacOcorrencia redirecionarOcorrencia(SacOcorrenciaDTO ocorrenciaDto) throws ObjetoNaoEncontradoException;
 
 }

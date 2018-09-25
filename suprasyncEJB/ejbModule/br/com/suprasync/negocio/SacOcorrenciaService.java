@@ -172,5 +172,9 @@ public class SacOcorrenciaService implements ISacOcorrenciaServiceLocal {
 	public List<SacDesenvolvimento> obterUltimosSacDesenvolvedor(int idUsuario, int quantidadeSacs) {
 		return sacOcorrenciaDao.obterUltimosSacDesenvolvedor(idUsuario, quantidadeSacs);
 	}
+	
+	public SacOcorrencia redirecionarOcorrencia(SacOcorrenciaDTO ocorrenciaDto) throws ObjetoNaoEncontradoException {
+		return sacOcorrenciaDao.redirecionarOcorrencia(ocorrenciaDto);
+	}
 
 }

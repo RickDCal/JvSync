@@ -12,10 +12,12 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 
 import br.com.suprasync.negocio.ISacOcorrenciaServiceLocal;
+import br.com.suprasync.negocio.dto.SacOcorrenciaDTO;
 import br.com.suprasync.persistencia.SacDesenvolvimento;
 import br.com.suprasync.persistencia.SacOcorrencia;
 import br.com.suprasync.persistencia.SacOcorrenciaArquivo;
 import br.com.suprasync.persistencia.SacOcorrenciaFollowUp;
+import br.com.suprasync.persistencia.dao.exception.ObjetoNaoEncontradoException;
 import br.com.suprasync.persistencia.dao.exception.SacOcorrenciaNaoEncontradaException;
 import br.com.suprasync.persistencia.filter.SacOcorrenciaFilter;
 
@@ -133,6 +135,10 @@ public class SacOcorrenciaFacade {
 	
 	public List<SacDesenvolvimento> obterUltimosSacDesenvolvedor(int idUsuario, int quantidadeSacs) {
 		return service.obterUltimosSacDesenvolvedor(idUsuario, quantidadeSacs);
+	}
+	
+	public SacOcorrencia redirecionarOcorrencia(SacOcorrenciaDTO ocorrenciaDto) throws ObjetoNaoEncontradoException {
+		return service.redirecionarOcorrencia(ocorrenciaDto);
 	}
 	
 }
