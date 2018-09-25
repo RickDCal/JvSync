@@ -9,10 +9,12 @@ import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
+import br.com.suprasync.negocio.dto.SacOcorrenciaDTO;
 import br.com.suprasync.persistencia.SacDesenvolvimento;
 import br.com.suprasync.persistencia.SacOcorrencia;
 import br.com.suprasync.persistencia.SacOcorrenciaArquivo;
 import br.com.suprasync.persistencia.SacOcorrenciaFollowUp;
+import br.com.suprasync.persistencia.dao.exception.ObjetoNaoEncontradoException;
 import br.com.suprasync.persistencia.dao.exception.SacOcorrenciaNaoEncontradaException;
 import br.com.suprasync.persistencia.enumerate.SACOcorrenciaEnum;
 import br.com.suprasync.persistencia.filter.SacOcorrenciaFilter;
@@ -673,5 +675,18 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 		return query2.getResultList();
 
 	}
-
+	
+	public SacOcorrencia redirecionarOcorrencia(SacOcorrenciaDTO ocorrenciaDto) throws ObjetoNaoEncontradoException {
+		StringBuilder consulta = new StringBuilder();
+		consulta.append("update sac_ocorrencia set func_codigo_redirecionamento = ")
+		.append(ocorrenciaDto.getIdFuncionario()).append(" , sacetapa_codigo = ")
+		.append(ocorrenciaDto.getIdEtapa())
+		.append(" where sac_ocorrencia.codigo = ").append(ocorrenciaDto.getId());
+		
+		Query query = entityManager.createNativeQuery(consulta.toString());
+		if (query.executeUpdate() == 1) {
+			return (SacOcorrencia) obter(SacOcorrencia.class, ocorrenciaDto.getId());
+		}		
+		return null;
+	}
 }
