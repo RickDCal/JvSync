@@ -495,4 +495,14 @@ public class SacOcorrenciaRest {
 		return montaResposta();
 	}
 
+	
+	@PUT
+	@Path("/redirecionarSac")
+	@Produces("text/plain")
+	public String redirecionarSac(SacOcorrenciaDTO ocorrenciaDto) {
+		System.out.println(ocorrenciaDto.getId());
+		return null;
+		
+	}
+	
 }

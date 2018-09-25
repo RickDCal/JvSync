@@ -515,11 +515,13 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 			consulta.append(" and o.estimativa = :estimativa ");
 			parametros.put("estimativa", filter.getEstimativa());
 		}
-
-		if (filter.getListIdFuncionario() != null) {
-			consulta.append(" and COALESCE(o.funcionarioRedirecionamento.id,o.funcionarioCadastro.id) in :listFuncionario ");
-			parametros.put("listFuncionario", filter.getListIdFuncionario());
-		}
+		
+		if (!filter.isPassouDesenvolvimento()) {
+			if (filter.getListIdFuncionario() != null) {
+				consulta.append(" and COALESCE(o.funcionarioRedirecionamento.id,o.funcionarioCadastro.id) in :listFuncionario ");
+				parametros.put("listFuncionario", filter.getListIdFuncionario());
+			}
+		} 
 
 		if (filter.getDataInicioPrevisaoTermino() != null) {
 			consulta.append(" and o.dataPrevisaoTermino >= :dataInicioPrevisao ");
@@ -551,7 +553,12 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 		}
 		
 		if (filter.isPassouDesenvolvimento()) {
-			consulta.append(" and o.id in (select d.sacOcorrencia.id from SacDesenvolvimento d) ");
+			if (filter.getListIdFuncionario() != null) {
+				consulta.append(" and o.id in (select d.sacOcorrencia.id from SacDesenvolvimento d where d.funcionario.id in :listFuncionario ) ");
+				parametros.put("listFuncionario", filter.getListIdFuncionario());
+			} else {
+				consulta.append(" and o.id in (select d.sacOcorrencia.id from SacDesenvolvimento d) ");
+			}
 		}
 
 		return consulta;
