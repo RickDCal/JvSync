@@ -502,12 +502,27 @@ public class SacOcorrenciaRest {
 		
 		try {
 			SacOcorrenciaFacade sacFacade = new SacOcorrenciaFacade();
+			SacOcorrencia ocorrenciaJaRedirecionada = sacFacade.redirecionarOcorrencia(ocorrenciaDto);
+			if (ocorrenciaJaRedirecionada != null) {
+				UsuarioFacade usuarioFacade = new UsuarioFacade(); // usuário tem que ser o que está logado... corrigir aqui
+				Usuario usuario = usuarioFacade.obterPorIdFuncionario(ocorrenciaJaRedirecionada.getFuncionarioRedirecionamento().getId()).get(0);
+				
+				
+				
+				
+				
+				sacFacade.insereFollowUp(ocorrenciaJaRedirecionada.getId(), usuario.getId(), "mensagem");
+				JsonObject jsac = ocorrenciaJaRedirecionada.getOcorrenciaDTO(null).getAsJson();
+				jdados.add(jsac);
+				setSuccess(true);				
+			}
 			
 		} catch (NamingException e) {
 			e.printStackTrace();
+		} catch (ObjetoNaoEncontradoException e) {
+			e.printStackTrace();
 		}
-		return null;
-		
+		return montaResposta();		
 	}
 	
 }
