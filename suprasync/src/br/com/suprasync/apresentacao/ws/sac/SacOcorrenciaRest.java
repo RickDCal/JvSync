@@ -1,8 +1,8 @@
 package br.com.suprasync.apresentacao.ws.sac;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -31,6 +31,7 @@ import br.com.suprasync.negocio.dto.SacOcorrenciaDTO;
 import br.com.suprasync.negocio.dto.SacOcorrenciaFollowUpDTO;
 import br.com.suprasync.negocio.exception.UsuarioInexistenteException;
 import br.com.suprasync.persistencia.Funcionario;
+import br.com.suprasync.persistencia.ParametroSlack;
 import br.com.suprasync.persistencia.SacDesenvolvimento;
 import br.com.suprasync.persistencia.SacEtapa;
 import br.com.suprasync.persistencia.SacOcorrencia;
@@ -40,6 +41,7 @@ import br.com.suprasync.persistencia.Usuario;
 import br.com.suprasync.persistencia.dao.exception.ObjetoNaoEncontradoException;
 import br.com.suprasync.persistencia.dao.exception.SacOcorrenciaNaoEncontradaException;
 import br.com.suprasync.persistencia.filter.SacOcorrenciaFilter;
+import br.com.suprasync.util.Utilities;
 
 @Path("/sac")
 public class SacOcorrenciaRest {
@@ -53,6 +55,7 @@ public class SacOcorrenciaRest {
 	private JsonArray jdados = new JsonArray();	
 	private boolean success = false;
 	private JsonParser parser = new JsonParser();
+	private String mensagemRetorno = null;
 
 	@POST
 	@Path("/inserirPrioridades")
@@ -150,6 +153,9 @@ public class SacOcorrenciaRest {
 	public String montaResposta() {
 		retorno.addProperty("success", success);
 		retorno.add("data", jdados);
+		if (mensagemRetorno != null) {
+			retorno.addProperty("mensagemRetorno", mensagemRetorno);
+		}
 		return retorno.toString();
 	}
 
@@ -182,7 +188,6 @@ public class SacOcorrenciaRest {
 		} catch (NamingException e) {
 			e.printStackTrace();			
 		} catch (ObjetoNaoEncontradoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return montaResposta();
@@ -250,7 +255,6 @@ public class SacOcorrenciaRest {
 			}			
 			setSuccess(true);
 		} catch (NamingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return montaResposta();
@@ -364,7 +368,7 @@ public class SacOcorrenciaRest {
 	@Path("/gravaFollowUpSac")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public String gravaFollowUpSac(SacOcorrenciaFollowUpDTO ocorrenciaDto ) {	
+	public String gravaFollowUpSac(SacOcorrenciaFollowUpDTO ocorrenciaDto) {	
 		setSuccess(false);
 		try {			
 
@@ -383,10 +387,9 @@ public class SacOcorrenciaRest {
 		} catch (NamingException e) {
 			e.printStackTrace();
 		} catch (UsuarioInexistenteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
-				
+
 		retorno.add("data", jdados);
 		return montaResposta();
 	}
@@ -440,10 +443,10 @@ public class SacOcorrenciaRest {
 			if (filter != null && filter.getId() != null) {
 				List<SacOcorrenciaFollowUp> followUps = new ArrayList<>();
 				followUps = ocorrenciaFacade.obterFollowUp(filter);
-				
-//				followUps.sort(Comparator.comparing(o -> o.getSequencia()));
-//				Collections.reverse(followUps); 
-//				A ordenação foi tratada no DAO mesmo
+
+				//				followUps.sort(Comparator.comparing(o -> o.getSequencia()));
+				//				Collections.reverse(followUps); 
+				//				A ordenação foi tratada no DAO mesmo
 
 				for (SacOcorrenciaFollowUp followUp : followUps) {
 					jdados.add(followUp.getOcorrenciaFollowUpDTO(null).getAsJson());
@@ -463,7 +466,7 @@ public class SacOcorrenciaRest {
 		return montaResposta();
 
 	}
-	
+
 	@GET
 	@Path("/obterUltimosSacDesenvolvedor")
 	@Produces(MediaType.APPLICATION_JSON)//@Produces("text/plain")
@@ -472,7 +475,7 @@ public class SacOcorrenciaRest {
 		try {
 			SacOcorrenciaFacade sacFacade = new SacOcorrenciaFacade();
 			List<SacDesenvolvimento> ocorrencias = new ArrayList<SacDesenvolvimento>(); 
-			
+
 			if (idFuncionario != null) {
 				ocorrencias = sacFacade.obterUltimosSacDesenvolvedor(idFuncionario, quantidadeSacs);
 			} else {
@@ -494,29 +497,39 @@ public class SacOcorrenciaRest {
 		}
 		return montaResposta();
 	}
-	
+
 	@PUT
 	@Path("/redirecionarSac")
 	@Produces("text/plain")
 	public String redirecionarSac(SacOcorrenciaDTO ocorrenciaDto) {
-		
+
 		try {
+
+			Integer idUsuario = ocorrenciaDto.getIdSituacao();//reaproveitando objeto
 			SacOcorrenciaFacade sacFacade = new SacOcorrenciaFacade();
+			GenericFacade genericFacade = new GenericFacade();	
+			Funcionario funcionarioOrigem = (Funcionario) genericFacade.pesquisar(Funcionario.class, ocorrenciaDto.getIdCliente()); //reaproveitando objeto
+			Funcionario funcionarioDestino = (Funcionario) genericFacade.pesquisar(Funcionario.class, ocorrenciaDto.getIdFuncionario());
+			SacEtapa etapa = (SacEtapa) genericFacade.pesquisar(SacEtapa.class, ocorrenciaDto.getIdEtapa());			
+
+			StringBuilder mensagem = new StringBuilder("Ocorrencia Nº ");
+			mensagem.append(ocorrenciaDto.getId())
+			.append(" redirecionada de ").append(funcionarioOrigem.getNome())
+			.append(" para ")
+			.append(funcionarioDestino.getNome())
+			.append(". Etapa: ")
+			.append(etapa.getNome()).append(".");			
+
 			SacOcorrencia ocorrenciaJaRedirecionada = sacFacade.redirecionarOcorrencia(ocorrenciaDto);
-			if (ocorrenciaJaRedirecionada != null) {
-				UsuarioFacade usuarioFacade = new UsuarioFacade(); // usuário tem que ser o que está logado... corrigir aqui
-				Usuario usuario = usuarioFacade.obterPorIdFuncionario(ocorrenciaJaRedirecionada.getFuncionarioRedirecionamento().getId()).get(0);
-				
-				
-				
-				
-				
-				sacFacade.insereFollowUp(ocorrenciaJaRedirecionada.getId(), usuario.getId(), "mensagem");
+			if (ocorrenciaJaRedirecionada != null) {				
+				sacFacade.insereFollowUp(ocorrenciaJaRedirecionada.getId(), idUsuario, mensagem.toString());
 				JsonObject jsac = ocorrenciaJaRedirecionada.getOcorrenciaDTO(null).getAsJson();
 				jdados.add(jsac);
-				setSuccess(true);				
+				setSuccess(true);	
+				enviaMensagemSlack(idUsuario, mensagem.toString(), null);
+
 			}
-			
+
 		} catch (NamingException e) {
 			e.printStackTrace();
 		} catch (ObjetoNaoEncontradoException e) {
@@ -524,5 +537,25 @@ public class SacOcorrenciaRest {
 		}
 		return montaResposta();		
 	}
-	
+
+	private boolean enviaMensagemSlack(int idUsuario, String mensagem, String webHook) {
+
+		try {
+			GenericFacade genericFacade = new GenericFacade();
+			Usuario usuario = (Usuario) genericFacade.pesquisar(Usuario.class, idUsuario);
+
+			if (webHook == null) {
+				ParametroSlack parametro = (ParametroSlack) genericFacade.pesquisar(ParametroSlack.class,0,1).get(0);
+				webHook = parametro.getWebHookSlack();
+			}
+
+			if (Utilities.enviaMensagemSlack(usuario.getUsuarioSlack(), mensagem, webHook).equalsIgnoreCase("ok")) {
+				return true;
+			}			
+		} catch (NamingException | ObjetoNaoEncontradoException | ParseException | IOException e) {
+			e.printStackTrace();
+		}	
+		return false;
+	}
+
 }
