@@ -258,6 +258,7 @@ public class SacOcorrencia {
 		dto.setIdSituacao(this.getSituacaoOcorrencia() != null ? this.getSituacaoOcorrencia().getCode():null);
 		dto.setAssunto(this.getAssunto());
 		dto.setIdEtapa(this.getEtapa() != null ? this.getEtapa().getId():null);
+		dto.setNomeEtapa(this.getEtapa() != null ? this.getEtapa().getNome():null);
 		dto.setSolicitacao(this.getSolicitacao());
 		dto.setSolucao(this.getSolucao());
 		dto.setComentario(this.getComentario());

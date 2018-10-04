@@ -18,6 +18,7 @@ public class SacOcorrenciaDTO {
 	private Integer idSituacao;
 	private String assunto;
 	private Integer idEtapa;
+	private String nomeEtapa;
 	private String solicitacao;
 	private String solucao;
 	private String comentario;
@@ -97,6 +98,14 @@ public class SacOcorrenciaDTO {
 
 	public void setIdEtapa(Integer idEtapa) {
 		this.idEtapa = idEtapa;
+	}
+
+	public String getNomeEtapa() {
+		return nomeEtapa;
+	}
+
+	public void setNomeEtapa(String nomeEtapa) {
+		this.nomeEtapa = nomeEtapa;
 	}
 
 	public String getSolicitacao() {
