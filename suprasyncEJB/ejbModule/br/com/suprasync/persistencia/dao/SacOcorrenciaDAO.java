@@ -689,4 +689,5 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 		}		
 		return null;
 	}
+	
 }

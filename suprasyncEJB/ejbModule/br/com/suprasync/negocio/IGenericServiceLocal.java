@@ -25,5 +25,7 @@ public interface IGenericServiceLocal {
 	public Object alterar(Object entity) throws ObjetoNaoEncontradoException;
 	
 	public JsonObject objetoJson(Object objeto) throws FalhaAoCriarJSONException;
+	
+	public List<Object> obter (String nativeQuery);
 
 }

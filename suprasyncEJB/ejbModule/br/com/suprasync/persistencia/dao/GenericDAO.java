@@ -1,5 +1,6 @@
 package br.com.suprasync.persistencia.dao;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -45,7 +46,7 @@ public class GenericDAO {
 		return lista;	
 
 	}
-	
+
 	public <T> Object obter (Class<T> classe, String clientIdProperty) throws ObjetoNaoEncontradoException {
 
 		String className = classe.getSimpleName();
@@ -56,11 +57,11 @@ public class GenericDAO {
 		query.setParameter("clientIdProperty", clientIdProperty);
 		return query.getSingleResult();
 	}
-	
+
 	public <T>void removerPorId (Class<T> classe, String id) {
 		//coloquei o Id já como string para ficar flexível.
 		Object entity = null;
-		
+
 		try {
 			Integer idInt = Integer.parseInt(id);
 			entity  =  entityManager.find(classe, idInt);			
@@ -68,11 +69,11 @@ public class GenericDAO {
 			System.out.println(e.getMessage());
 			entity  =  entityManager.find(classe, id);
 		}		
-		
+
 		entityManager.remove(entityManager.contains(entity)? entity : entityManager.merge(entity)); 
 		entityManager.flush(); 
 	}
-	
+
 	public void remover (Object entity) {		
 		entityManager.remove(entityManager.contains(entity)? entity : entityManager.merge(entity)); 
 		entityManager.flush(); 
@@ -108,6 +109,47 @@ public class GenericDAO {
 		List<E> lista = query.getResultList();		
 		return lista;	
 
+	}
+
+	public List<Object> obter (String nativeQuery) {
+		
+		
+//		StringBuilder testes = new StringBuilder();
+//		testes.append("select data as coluna1, sum(cadastradas) as coluna2, sum(solucionadas) as coluna3")
+//		.append(" from")
+//		.append(" (	select datepart(year, data_cadastro) as ano , substring(convert(varchar, data_cadastro, 3), 4,5) as data,")
+//		.append(" 1 as cadastradas, 0 as solucionadas")
+//		.append(" from sac_ocorrencia")
+//		.append(" Union ALL")
+//		.append(" select datepart(year, data_solucao) as ano, substring(convert(varchar, data_solucao, 3), 4,5) as data,")
+//		.append(" 0 as cadastradas, 1 as solucionadas")
+//		.append(" from sac_ocorrencia where data_solucao is not null")
+//		.append(" ) todos")
+//		.append(" group by ano, data");		
+//
+//		nativeQuery = testes.toString();
+		
+		
+		
+		
+
+		Query query = entityManager.createNativeQuery(nativeQuery);
+		List resultList = query.getResultList();
+		
+
+		
+		List<Object[]> results =  query.getResultList(); //ou singleResult
+        Iterator<Object[]> ite =results.iterator();
+        while (ite.hasNext()) {
+            Object[] result = (Object[]) ite.next();
+            String codigo = (String) result[0];
+            Integer contexto = (Integer) result[1];
+            Integer tipoLigacao = (Integer) result[2];
+            System.out.println(codigo + contexto + tipoLigacao);
+            
+            }
+		
+		return resultList;		
 	}
 
 }

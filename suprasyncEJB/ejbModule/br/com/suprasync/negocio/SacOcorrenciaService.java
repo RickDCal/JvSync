@@ -176,5 +176,5 @@ public class SacOcorrenciaService implements ISacOcorrenciaServiceLocal {
 	public SacOcorrencia redirecionarOcorrencia(SacOcorrenciaDTO ocorrenciaDto) throws ObjetoNaoEncontradoException {
 		return sacOcorrenciaDao.redirecionarOcorrencia(ocorrenciaDto);
 	}
-
+	
 }

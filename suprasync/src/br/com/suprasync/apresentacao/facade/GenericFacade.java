@@ -58,6 +58,10 @@ public class GenericFacade {
 	public JsonObject objetoJson(Object objeto) throws FalhaAoCriarJSONException {
 		return service.objetoJson(objeto);
 	}
+	
+	public List<Object> obter (String nativeQuery) {
+		return service.obter(nativeQuery);
+	}
 			
 	
 }

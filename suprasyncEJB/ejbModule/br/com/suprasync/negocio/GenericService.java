@@ -70,6 +70,11 @@ public class GenericService implements IGenericServiceLocal  {
 		JsonObject jo = (JsonObject) jp.parse(gson.toJson(objeto));
 		return jo;		
 	}
+	
+	public List<Object> obter (String nativeQuery) {
+		return genericDao.obter(nativeQuery);
+	}
+
 
 }
 

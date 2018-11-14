@@ -24,5 +24,7 @@ public interface IGenericDAO {
 	public void remover(Object entity);
 	
 	public <T>void removerPorId (Class<T> classe, String id);
+	
+	public List<Object> obter (String nativeQuery);
 
 }

@@ -61,4 +61,5 @@ public interface ISacOcorrenciaServiceLocal {
 	public List<SacDesenvolvimento> obterUltimosSacDesenvolvedor(int idUsuario, int quantidadeSacs);
 	
 	public SacOcorrencia redirecionarOcorrencia(SacOcorrenciaDTO ocorrenciaDto) throws ObjetoNaoEncontradoException;
+	
 }
