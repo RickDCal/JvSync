@@ -1,6 +1,5 @@
 package br.com.suprasync.persistencia.dao;
 
-import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -28,6 +27,7 @@ public class GenericDAO {
 		return entity;
 	}
 
+	@SuppressWarnings("unchecked")
 	public <E, T> List<E> obter (Class<T> classe, Integer position, Integer max) throws ObjetoNaoEncontradoException {
 
 		String className = classe.getSimpleName();
@@ -91,6 +91,7 @@ public class GenericDAO {
 		return entity;
 	}
 
+	@SuppressWarnings("unchecked")
 	public <E, T> List<E> obter (Class<T> classe, String nome, Integer position, Integer max) {
 
 		String className = classe.getSimpleName();
@@ -111,44 +112,10 @@ public class GenericDAO {
 
 	}
 
-	public List<Object> obter (String nativeQuery) {
-		
-		
-//		StringBuilder testes = new StringBuilder();
-//		testes.append("select data as coluna1, sum(cadastradas) as coluna2, sum(solucionadas) as coluna3")
-//		.append(" from")
-//		.append(" (	select datepart(year, data_cadastro) as ano , substring(convert(varchar, data_cadastro, 3), 4,5) as data,")
-//		.append(" 1 as cadastradas, 0 as solucionadas")
-//		.append(" from sac_ocorrencia")
-//		.append(" Union ALL")
-//		.append(" select datepart(year, data_solucao) as ano, substring(convert(varchar, data_solucao, 3), 4,5) as data,")
-//		.append(" 0 as cadastradas, 1 as solucionadas")
-//		.append(" from sac_ocorrencia where data_solucao is not null")
-//		.append(" ) todos")
-//		.append(" group by ano, data");		
-//
-//		nativeQuery = testes.toString();
-		
-		
-		
-		
-
-		Query query = entityManager.createNativeQuery(nativeQuery);
-		List resultList = query.getResultList();
-		
-
-		
-		List<Object[]> results =  query.getResultList(); //ou singleResult
-        Iterator<Object[]> ite =results.iterator();
-        while (ite.hasNext()) {
-            Object[] result = (Object[]) ite.next();
-            String codigo = (String) result[0];
-            Integer contexto = (Integer) result[1];
-            Integer tipoLigacao = (Integer) result[2];
-            System.out.println(codigo + contexto + tipoLigacao);
-            
-            }
-		
+	@SuppressWarnings("unchecked")
+	public List<Object> obter (String nativeQuery) {		
+		Query query = entityManager.createNativeQuery(nativeQuery);		
+		List<Object> resultList = query.getResultList();			
 		return resultList;		
 	}
 

@@ -265,6 +265,12 @@ public class Utilities {
 		String date = dataFormat.format(data.getTime());
 		return date;		
 	}
+	
+	public static String dataMMIYY(Date data) {		
+		SimpleDateFormat dataFormat = new SimpleDateFormat("MM/YY");
+		String date = dataFormat.format(data.getTime());		
+		return date;		
+	}
 
 	/*inteiro para Date*/
 
