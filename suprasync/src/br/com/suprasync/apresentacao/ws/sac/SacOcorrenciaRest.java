@@ -56,6 +56,19 @@ public class SacOcorrenciaRest {
 	private boolean success = false;
 	private JsonParser parser = new JsonParser();
 	private String mensagemRetorno = null;
+	
+	public String montaResposta() {
+		retorno.addProperty("success", success);
+		retorno.add("data", jdados);
+		if (mensagemRetorno != null) {
+			retorno.addProperty("mensagemRetorno", mensagemRetorno);
+		}
+		return retorno.toString();
+	}
+	
+	public void setSuccess(boolean success) {
+		this.success = success;
+	}
 
 	@POST
 	@Path("/inserirPrioridades")
@@ -144,20 +157,7 @@ public class SacOcorrenciaRest {
 		}		
 		retorno.add("data", jdados);
 		return retorno.toString();		
-	}
-
-	public void setSuccess(boolean success) {
-		this.success = success;
-	}
-
-	public String montaResposta() {
-		retorno.addProperty("success", success);
-		retorno.add("data", jdados);
-		if (mensagemRetorno != null) {
-			retorno.addProperty("mensagemRetorno", mensagemRetorno);
-		}
-		return retorno.toString();
-	}
+	}	
 
 	@GET
 	@Path("/obterFuncionarios")

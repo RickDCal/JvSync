@@ -1,6 +1,8 @@
 package br.com.suprasync.persistencia;
 
 
+import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -18,6 +20,8 @@ public class Cliente {
 	private int id;	
 	@Column(name="nome", columnDefinition="nvarchar")
 	private String nome;
+	@Column(name="data_exclusao", columnDefinition="datetime")
+	private Date dataExclusao;
 		
 	public Cliente() {
 		
@@ -38,6 +42,14 @@ public class Cliente {
 	}
 
 
+	public Date getDataExclusao() {
+		return dataExclusao;
+	}
+
+	public void setDataExclusao(Date dataExclusao) {
+		this.dataExclusao = dataExclusao;
+	}
+
 	public String toString() {
 		
 		StringBuilder stringBuilder = new StringBuilder();
@@ -47,12 +59,5 @@ public class Cliente {
 	   	   
 	   	return stringBuilder.toString();
 	}
-
-
-
-
-
-	
-
 
 }
