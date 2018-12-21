@@ -102,5 +102,15 @@ public class ServiceVerificaSacSuprasoft {
 			System.out.println("Falha ao finalizar Sac não pausado.");
 			e.printStackTrace();
 		}
-	}	
+	}
+	
+	@Schedule(hour="07", minute="0", persistent=false)
+	public void reativaMensagensFérias() throws RemoteException, Exception {
+		try {
+			ocorrenciaService.reativaMensagensFerias();
+		} catch (Exception e) {
+			System.out.println("Falha ao ajustar banco para receber mensagens slack.");
+			e.printStackTrace();
+		}
+	}
 }

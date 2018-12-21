@@ -690,4 +690,12 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 		return null;
 	}
 	
+	
+	public void reativaMensagensFerias() {
+		StringBuilder consulta = new StringBuilder();
+		consulta.append("update usuario set usuario_slack = case when '07/01/2019' = convert(date, getdate()) then (select usuario_slack from funcionario where codigo = usuario.func_codigo) else usuario_slack end");
+		Query query = entityManager.createNativeQuery(consulta.toString());
+		query.executeUpdate();
+	}	
+	
 }

@@ -65,4 +65,6 @@ public List<SacDesenvolvimento> obterUltimosSacDesenvolvedor(int idUsuario, int 
 
 public SacOcorrencia redirecionarOcorrencia(SacOcorrenciaDTO ocorrenciaDto) throws ObjetoNaoEncontradoException;
 
+public void reativaMensagensFerias();
+
 }

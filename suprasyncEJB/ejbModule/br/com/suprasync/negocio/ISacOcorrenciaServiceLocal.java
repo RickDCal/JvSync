@@ -62,4 +62,6 @@ public interface ISacOcorrenciaServiceLocal {
 	
 	public SacOcorrencia redirecionarOcorrencia(SacOcorrenciaDTO ocorrenciaDto) throws ObjetoNaoEncontradoException;
 	
+	public void reativaMensagensFerias();
+	
 }

@@ -177,4 +177,8 @@ public class SacOcorrenciaService implements ISacOcorrenciaServiceLocal {
 		return sacOcorrenciaDao.redirecionarOcorrencia(ocorrenciaDto);
 	}
 	
+	public void reativaMensagensFerias() {
+		sacOcorrenciaDao.reativaMensagensFerias();
+	}
+	
 }
