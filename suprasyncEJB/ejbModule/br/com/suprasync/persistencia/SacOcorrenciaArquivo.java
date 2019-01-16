@@ -27,7 +27,7 @@ public class SacOcorrenciaArquivo {
 	private int codigo;
 	
 	@Expose
-	@Column(name = "nome_arquivo", columnDefinition="nvarchar")
+	@Column(name = "descricao", columnDefinition="nvarchar") // @Column(name = "descricao", columnDefinition="nvarchar") mudando em função dos anexos do helpdesk
 	private String nomeArquivo;
 	
 	@Expose
