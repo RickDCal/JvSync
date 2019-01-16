@@ -27,8 +27,13 @@ public class SacOcorrenciaArquivo {
 	private int codigo;
 	
 	@Expose
-	@Column(name = "descricao", columnDefinition="nvarchar") // @Column(name = "descricao", columnDefinition="nvarchar") mudando em função dos anexos do helpdesk
+	@Column(name = "nome_arquivo", columnDefinition="nvarchar")
 	private String nomeArquivo;
+	
+	@Expose
+	@Column(name = "descricao", columnDefinition="nvarchar")
+	private String desricao;
+	
 	
 	@Expose
 	@Column(name = "data", columnDefinition="datetime")
@@ -64,6 +69,14 @@ public class SacOcorrenciaArquivo {
 
 	public void setNomeArquivo(String nomeArquivo) {
 		this.nomeArquivo = nomeArquivo;
+	}
+
+	public String getDesricao() {
+		return desricao;
+	}
+
+	public void setDesricao(String desricao) {
+		this.desricao = desricao;
 	}
 
 	public Date getData() {
