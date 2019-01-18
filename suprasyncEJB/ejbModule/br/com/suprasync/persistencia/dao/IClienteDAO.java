@@ -16,6 +16,8 @@ public interface IClienteDAO {
 	public <T> Object obter(Class<T> classe, int id) throws ObjetoNaoEncontradoException;
 	
 	public List<Cliente> obterClientesAtivos(Integer position, Integer max) throws ClienteNaoEncontradoException;
+	
+	public List<Cliente> obterClientesPorCNPJ(Integer position, Integer max, String cnpj) throws ClienteNaoEncontradoException;
 		
 
 }

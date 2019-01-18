@@ -18,8 +18,13 @@ public class Cliente {
 	@Column(name="codigo", columnDefinition="int")
 	//@GeneratedValue(strategy = GenerationType.IDENTITY) 
 	private int id;	
+	
 	@Column(name="nome", columnDefinition="nvarchar")
 	private String nome;
+	
+	@Column(name="cnpj", columnDefinition="nvarchar")
+	private String cnpj;
+	
 	@Column(name="data_exclusao", columnDefinition="datetime")
 	private Date dataExclusao;
 		
@@ -41,6 +46,14 @@ public class Cliente {
 		this.nome = nome;
 	}
 
+
+	public String getCnpj() {
+		return cnpj;
+	}
+
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
+	}
 
 	public Date getDataExclusao() {
 		return dataExclusao;

@@ -39,6 +39,16 @@ public class ClienteService implements IClienteServiceLocal {
 		}		
 
 	}
+	
+	public List<Cliente> pesquisarPorCNPJ(Integer position, Integer max, String cnpj) throws ClienteInexistenteException {
+		try {
+			return clienteDao.obterClientesPorCNPJ(position, max, cnpj);
+		} catch (ClienteNaoEncontradoException e) {
+			throw new ClienteInexistenteException();
+		}
+	}
+	
+	
 
 
 }

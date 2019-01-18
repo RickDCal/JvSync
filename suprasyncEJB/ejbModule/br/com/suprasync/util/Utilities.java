@@ -32,6 +32,7 @@ import br.com.suprasync.negocio.exception.FalhaAoConverterDataException;
 import br.com.suprasync.negocio.exception.FalhaAoRemoverArquivoException;
 import br.com.suprasync.negocio.exception.FalhaAoSalvarArquivoException;
 import br.com.suprasync.persistencia.dao.IUsuarioDAO;
+import br.com.suprasync.persistencia.enumerate.TempoEnum;
 
 @Stateless
 public class Utilities { 
@@ -306,8 +307,24 @@ public class Utilities {
 		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(data);
 		return date;
 	}
-
 	
+	public static Date incrementaData(Date dataOriginal, TempoEnum tempo, int quantidade) {
+		/*Passar quantidade negativa para diminuir datas*/
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(dataOriginal); 
+		
+		switch (tempo) {
+			case DIA: cal.add(Calendar.DAY_OF_MONTH, quantidade);	break;
+			case MES: cal.add(Calendar.MONTH, quantidade);	break;
+			case ANO: cal.add(Calendar.YEAR, quantidade);	break;
+			case HORA: cal.add(Calendar.HOUR, quantidade);	break;
+			case MINUTO: cal.add(Calendar.MINUTE, quantidade);	break;
+			case SEGUNDO: cal.add(Calendar.SECOND, quantidade);	break;
+			case MILISSEGUNDO: cal.add(Calendar.MILLISECOND, quantidade);	break;
+			default: break;
+		}		
+		return cal.getTime();
+	}
 
 	public static String enviaMensagemSlack(String usuarioSlack, String mensagem, String webHook) throws ParseException, IOException {
 		/***Ricardo Dias 06/03/2018

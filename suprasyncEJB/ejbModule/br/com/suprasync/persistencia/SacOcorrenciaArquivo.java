@@ -1,6 +1,5 @@
 package br.com.suprasync.persistencia;
 
-import java.sql.Blob;
 import java.util.Date;
 
 import javax.persistence.Column;

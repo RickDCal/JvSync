@@ -33,5 +33,24 @@ public class ClienteDAO extends GenericDAO implements IClienteDAO {
 		return clientes;		
 
 	}
+	
+	public List<Cliente> obterClientesPorCNPJ(Integer position, Integer max, String cnpj) throws ClienteNaoEncontradoException{
+
+		String consulta =  "select f from Cliente f where f.id is not null and f.dataExclusao is null and f.cnpj = :cnpj";		
+		Query query = entityManager.createQuery(consulta);
+		query.setParameter("cnpj", cnpj);
+
+		if (position !=null) {
+			query.setFirstResult(position);
+		}
+		if (max != null) {
+			query.setMaxResults(max);
+		}
+
+		List<Cliente> clientes = query.getResultList();
+
+		return clientes;		
+
+	}
 
 }

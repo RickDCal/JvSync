@@ -33,5 +33,9 @@ public class ClienteFacade {
 	public List<Cliente> pesquisar(Integer position, Integer max) throws ClienteInexistenteException {
 		return service.pesquisar(position, max);
 	}
+	
+	public List<Cliente> pesquisarPorCNPJ(Integer position, Integer max, String cnpj) throws ClienteInexistenteException {
+		return service.pesquisarPorCNPJ(position, max, cnpj);
+	}
 
 }

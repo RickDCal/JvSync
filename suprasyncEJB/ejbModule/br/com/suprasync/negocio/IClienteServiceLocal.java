@@ -13,5 +13,7 @@ public interface IClienteServiceLocal {
 	public Cliente pesquisar(int id) throws ClienteInexistenteException;
 	
 	public List<Cliente> pesquisar(Integer position, Integer max) throws ClienteInexistenteException;		
+	
+	public List<Cliente> pesquisarPorCNPJ(Integer position, Integer max, String cnpj) throws ClienteInexistenteException; 
 
 }
