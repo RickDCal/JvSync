@@ -1,5 +1,6 @@
 package br.com.suprasync.persistencia;
 
+import java.text.ParseException;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -11,7 +12,13 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import br.com.suprasync.negocio.exception.FalhaAoConverterDataException;
 import br.com.suprasync.persistencia.enumerate.ProdutoSuprasoftEnum;
+import br.com.suprasync.util.Utilities;
 
 @Entity
 @Table(name="versao_sistema")
@@ -20,7 +27,7 @@ public class VersaoSistema {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY) 
 	@Column(name="codigo", columnDefinition = "int")
-	private Long id;
+	private Integer id;
 	
 	@Column(name="numero_versao", columnDefinition = "nvarchar")
 	private String numeroVersao;
@@ -44,13 +51,52 @@ public class VersaoSistema {
 	private Date dataSuspensao;
 	
 	@Column(name="mensagem", columnDefinition="ntext")
-	private String mensagem;	
+	private String mensagem;
+	
+	
+	public VersaoSistema() {
+		
+	}
+	
 
-	public Long getId() {
+	public VersaoSistema(String JsonString) {
+		JsonParser parser = new JsonParser();
+		JsonObject jVersao = (JsonObject) parser.parse(JsonString);
+		
+		if (jVersao != null) {
+			
+			try {
+				try {
+					this.id = jVersao.get("id").getAsInt();
+				} catch (Exception e) {
+					this.id = null;
+				}	
+				
+				this.numeroVersao = jVersao.get("numeroVersao").getAsString();
+				this.dataLancamento = Utilities.dataYYYY_MM_DDeHHppmmppss(jVersao.get("dataLancamento").getAsString());
+				
+				switch (jVersao.get("idProdutoSuprasoft").getAsString()) {
+				case "1": this.produtoSuprasoft = ProdutoSuprasoftEnum.SUPRA_MAIS;	break;
+				case "2": this.produtoSuprasoft = ProdutoSuprasoftEnum.SUPRA_WEB;	break;
+				case "3": this.produtoSuprasoft = ProdutoSuprasoftEnum.SUPRA_MOBILE;	break;
+				default: break;
+				}	
+				
+				this.dataSuspensao = Utilities.dataYYYY_MM_DDeHHppmmppss(jVersao.get("dataSuspensao").getAsString());
+				this.mensagem = jVersao.get("mensagem").getAsString();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			} catch (FalhaAoConverterDataException e) {
+				e.printStackTrace();
+			}			
+		}		
+	}
+
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -92,5 +138,14 @@ public class VersaoSistema {
 
 	public void setMensagem(String mensagem) {
 		this.mensagem = mensagem;
-	}	
+	}
+	
+	public JsonObject getAsJson() {
+		Gson gson = new Gson();
+		JsonParser parser = new JsonParser();
+		JsonObject jo = (JsonObject) parser.parse(gson.toJson(this));
+		jo.addProperty("idProdutoSuprasoft", getProdutoSuprasoft().getValue());
+		return jo;				
+	}
+		
 }

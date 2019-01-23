@@ -1,4 +1,4 @@
-package br.com.suprasync.apresentacao.ws;
+package br.com.suprasync.apresentacao.ws.supramais;
 
 import java.util.Date;
 import java.util.List;
@@ -7,14 +7,17 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import br.com.suprasync.apresentacao.facade.GenericFacade;
 import br.com.suprasync.apresentacao.facade.cadastro.ClienteFacade;
 import br.com.suprasync.apresentacao.facade.financeiro.ContaFacade;
 import br.com.suprasync.apresentacao.facade.versao.VersaoSistemaFacade;
@@ -24,6 +27,7 @@ import br.com.suprasync.persistencia.VersaoSistema;
 import br.com.suprasync.persistencia.enumerate.ProdutoSuprasoftEnum;
 import br.com.suprasync.persistencia.enumerate.TempoEnum;
 import br.com.suprasync.util.Utilities;
+import jdk.management.resource.internal.TotalResourceContext;
 
 @Path("/supraMais")
 public class LoginHelper {
@@ -128,6 +132,115 @@ public class LoginHelper {
 			responseText = "Ocorreu uma falha ao tentar validar os dados da versão em uso.";
 			return enviaRetorno();
 		}
+	}
+	
+	
+	@PUT
+	@Path("/obterVersoesSupraMais")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes("application/json") 
+	public String obterVersoesSupraMais(String jsonString) throws Exception {
+		GenericFacade genericFacade = new GenericFacade();
+		
+		Integer position = 0;
+		Integer max = 50;
+		Integer totalRegistros = null;
+		JsonObject jFilter = null;
+		
+		if (jsonString != null && !jsonString.isEmpty()) {
+			jFilter = (JsonObject) parser.parse(jsonString);
+			position = jFilter.get("position").getAsInt();
+			max = jFilter.get("max").getAsInt();
+		}		
+		
+		List<VersaoSistema> versoes = genericFacade.pesquisar(VersaoSistema.class, position, max);
+		Gson gson = new Gson();
+		JsonArray jDados = new JsonArray();
+		
+		for (VersaoSistema versaoSistema : versoes) {
+			JsonObject jVersao = (JsonObject) parser.parse(gson.toJson(versaoSistema));	
+			jVersao.addProperty("idProdutoSuprasoft", versaoSistema.getProdutoSuprasoft().getValue());
+			jDados.add(jVersao);
+		}
+		
+		totalRegistros = genericFacade.pesquisar(VersaoSistema.class, position, null).size();
+		retorno.addProperty("total", totalRegistros);		
+		
+		setSuccess(true);
+		retorno.add("data", jDados);
+		return enviaRetorno();		
+	}
+	
+	@PUT
+	@Path("/cadastrarVersoesSupraMais")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes("application/json") 
+	public String cadastrarVersoesSupraMais(String jsonString) throws Exception {
+		
+		try {
+			VersaoSistema versao = new VersaoSistema(jsonString);
+			GenericFacade genericFacade = new GenericFacade();
+			genericFacade.cadastrar(versao);
+			
+			Gson gson = new Gson();
+			
+			JsonArray jDados = new JsonArray();
+			jDados.add(gson.toJsonTree(versao));
+			retorno.add("data", jDados);
+			setSuccess(true);				
+		} catch (Exception e) {
+			e.printStackTrace();
+			setResponseText("Ocorreu uma falha ao tentar gravar o registro.");
+			return enviaRetorno();
+		}
+		return enviaRetorno();		
+	}	
+	
+	
+	@PUT
+	@Path("/editarVersoesSupraMais")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes("application/json") 
+	public String editarVersoesSupraMais(String jsonString) throws Exception {
+		
+		try {
+			VersaoSistema versao = new VersaoSistema(jsonString);
+			GenericFacade genericFacade = new GenericFacade();
+			
+			genericFacade.atualizar(versao);
+			
+			Gson gson = new Gson();
+			
+			JsonArray jDados = new JsonArray();
+			jDados.add(gson.toJsonTree(versao));
+			retorno.add("data", jDados);
+			setSuccess(true);				
+		} catch (Exception e) {
+			e.printStackTrace();
+			setResponseText("Ocorreu uma falha ao tentar persistir o registro editado. Recarregue os dados do registro para conferência.");
+			return enviaRetorno();
+		}
+		return enviaRetorno();		
+	}	
+	
+	@PUT
+	@Path("/removerVersoesSupraMais")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes("application/json") 
+	public String removerVersoesSupraMais(String jsonString) throws Exception {
+		
+		try {
+			VersaoSistema versao = new VersaoSistema(jsonString);			
+			GenericFacade genericFacade = new GenericFacade();
+			versao = (VersaoSistema) genericFacade.pesquisar(VersaoSistema.class, versao.getId().intValue());			
+			genericFacade.remover(versao);
+			setSuccess(true);				
+		} catch (Exception e) {
+			e.printStackTrace();
+			setResponseText("Ocorreu uma falha ao tentar remover o registro.");
+			return enviaRetorno();
+		}
+		return enviaRetorno();		
 	}
 
 	public void montaRetorno() {
