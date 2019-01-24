@@ -158,8 +158,8 @@ public class LoginHelper {
 		JsonArray jDados = new JsonArray();
 		
 		for (VersaoSistema versaoSistema : versoes) {
-			JsonObject jVersao = (JsonObject) parser.parse(gson.toJson(versaoSistema));	
-			jVersao.addProperty("idProdutoSuprasoft", versaoSistema.getProdutoSuprasoft().getValue());
+			JsonObject jVersao = versaoSistema.getAsJson();//(JsonObject) parser.parse(gson.toJson(versaoSistema));	
+			//jVersao.addProperty("idProdutoSuprasoft", versaoSistema.getProdutoSuprasoft().getValue());
 			jDados.add(jVersao);
 		}
 		

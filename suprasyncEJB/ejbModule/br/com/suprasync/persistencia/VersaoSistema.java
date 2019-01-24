@@ -32,6 +32,9 @@ public class VersaoSistema {
 	@Column(name="numero_versao", columnDefinition = "nvarchar")
 	private String numeroVersao;
 	
+	@Column(name="versao_banco_dados", columnDefinition = "nvarchar")
+	private String versaoBancoDados;
+	
 	@Column(name="data_lancamento", columnDefinition="datetime")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataLancamento;
@@ -73,6 +76,7 @@ public class VersaoSistema {
 				}	
 				
 				this.numeroVersao = jVersao.get("numeroVersao").getAsString();
+				this.versaoBancoDados = jVersao.get("versaoBancoDados").getAsString();
 				this.dataLancamento = Utilities.dataYYYY_MM_DDeHHppmmppss(jVersao.get("dataLancamento").getAsString());
 				
 				switch (jVersao.get("idProdutoSuprasoft").getAsString()) {
@@ -107,6 +111,16 @@ public class VersaoSistema {
 	public void setNumeroVersao(String numeroVersao) {
 		this.numeroVersao = numeroVersao;
 	}
+
+	public String getVersaoBancoDados() {
+		return versaoBancoDados;
+	}
+
+
+	public void setVersaoBancoDados(String versaoBancoDados) {
+		this.versaoBancoDados = versaoBancoDados;
+	}
+
 
 	public Date getDataLancamento() {
 		return dataLancamento;
