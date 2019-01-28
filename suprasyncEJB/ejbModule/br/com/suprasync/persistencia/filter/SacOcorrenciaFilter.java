@@ -26,6 +26,7 @@ public class SacOcorrenciaFilter {
 	private List<Integer> ListIdEtapa;
 	private String solicitacao;
 	private String solucao;
+	private String numeroVersao;
 	private String comentario;
 	private Integer estimativa;
 	private String descricaoDesenvolvimento;
@@ -143,6 +144,14 @@ public class SacOcorrenciaFilter {
 
 	public void setSolucao(String solucao) {
 		this.solucao = solucao;
+	}
+
+	public String getNumeroVersao() {
+		return numeroVersao;
+	}
+
+	public void setNumeroVersao(String numeroVersao) {
+		this.numeroVersao = numeroVersao;
 	}
 
 	public String getComentario() {
@@ -337,10 +346,9 @@ public class SacOcorrenciaFilter {
 					}
 				} else {
 					ListIdEtapa.add(Integer.parseInt(valor));
-				}
-				
+				}				
 				break;	
-
+				case "numeroversao" : setNumeroVersao(valor); break;
 				default:
 				break;
 				}

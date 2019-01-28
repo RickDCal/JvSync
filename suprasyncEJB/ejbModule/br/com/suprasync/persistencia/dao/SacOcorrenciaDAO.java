@@ -473,7 +473,7 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 			parametros.put("dataFimSolucao", filter.getDataFimSolucao());
 		}
 
-		if (filter.getListSituacaoEnum() != null) {
+		if (filter.getListSituacaoEnum() != null && filter.getListSituacaoEnum().size() > 0 ) {
 			consulta.append(" and o.situacaoOcorrencia in :listSituacao ");
 			parametros.put("listSituacao", filter.getListSituacaoEnum());
 		}
@@ -483,7 +483,7 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 			parametros.put("assunto", "%" + filter.getAssunto() +"%");
 		}
 
-		if (filter.getListIdEtapa() != null) {
+		if (filter.getListIdEtapa() != null && filter.getListIdEtapa().size() > 0) {
 			consulta.append(" and o.etapa.id in :listEtapa ");
 			parametros.put("listEtapa", filter.getListIdEtapa());
 		}
@@ -533,6 +533,11 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 		if (filter.getDataFimPrevisaoTermino() != null) {
 			consulta.append(" and o.dataPrevisaoTermino <= :dataFimPrevisao ");
 			parametros.put("dataFimPrevisao", filter.getDataFimPrevisaoTermino());
+		}
+		
+		if (filter.getNumeroVersao() != null && !filter.getNumeroVersao().isEmpty()) {
+			consulta.append(" and o.numeroVersao = :numeroVersao ");
+			parametros.put("numeroVersao", filter.getNumeroVersao());
 		}
 
 		if (filter.isUteis()) {

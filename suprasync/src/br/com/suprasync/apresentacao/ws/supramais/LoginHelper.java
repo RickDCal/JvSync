@@ -209,11 +209,10 @@ public class LoginHelper {
 			
 			genericFacade.atualizar(versao);
 			
-			Gson gson = new Gson();
-			
 			JsonArray jDados = new JsonArray();
-			jDados.add(gson.toJsonTree(versao));
+			jDados.add(versao.getAsJson());
 			retorno.add("data", jDados);
+			setResponseText("Registro atualizado");
 			setSuccess(true);				
 		} catch (Exception e) {
 			e.printStackTrace();

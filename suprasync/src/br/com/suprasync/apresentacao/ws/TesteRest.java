@@ -1,7 +1,6 @@
 package br.com.suprasync.apresentacao.ws;
 
 import java.io.UnsupportedEncodingException;
-import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -17,9 +16,7 @@ import javax.ws.rs.core.MediaType;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import br.com.suprasync.apresentacao.facade.sac.SacOcorrenciaFacade;
 import br.com.suprasync.negocio.dto.SacOcorrenciaDTO;
-import br.com.suprasync.persistencia.SacOcorrenciaArquivo;
 
 @Path("/teste")
 public class TesteRest {

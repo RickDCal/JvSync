@@ -87,7 +87,10 @@ public class VersaoSistema {
 				}	
 				
 				this.dataSuspensao = Utilities.dataYYYY_MM_DDeHHppmmppss(jVersao.get("dataSuspensao").getAsString());
-				this.mensagem = jVersao.get("mensagem").getAsString();
+				if(jVersao.get("mensagem") != null && !jVersao.get("mensagem").isJsonNull()) {
+					this.mensagem = jVersao.get("mensagem").getAsString();
+				}
+				
 			} catch (ParseException e) {
 				e.printStackTrace();
 			} catch (FalhaAoConverterDataException e) {
