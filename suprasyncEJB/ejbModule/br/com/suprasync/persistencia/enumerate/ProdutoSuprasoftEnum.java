@@ -12,7 +12,8 @@ public enum ProdutoSuprasoftEnum {
 	SUPRA_MAIS(1, "SupraMAIS"),
 	SUPRA_WEB(2, "SupraWEB"),
 	SUPRA_MOBILE(3, "SupraMobile"),
-	SUPRA_PCP(4, "SupraPCP");
+	SUPRA_PCP(4, "SupraPCP"),
+	SUPRA_RH(5, "SupraRH");
 	
 	private ProdutoSuprasoftEnum(Integer value, String descricao) {
 		this.value = value;

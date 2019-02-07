@@ -32,7 +32,7 @@ public class VersaoSistema {
 	@Column(name="numero_versao", columnDefinition = "nvarchar")
 	private String numeroVersao;
 	
-	@Column(name="versao_banco_dados", columnDefinition = "nvarchar")
+	@Column(name="script_banco_dados", columnDefinition = "nvarchar")
 	private String versaoBancoDados;
 	
 	@Column(name="data_lancamento", columnDefinition="datetime")
@@ -53,7 +53,7 @@ public class VersaoSistema {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataSuspensao;
 	
-	@Column(name="mensagem", columnDefinition="ntext")
+	@Column(name="observacao", columnDefinition="ntext")
 	private String mensagem;
 	
 	
