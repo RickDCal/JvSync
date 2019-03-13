@@ -1,8 +1,17 @@
 package br.com.suprasync.apresentacao.ws.supramais;
 
+import java.nio.charset.Charset;
+import java.security.spec.KeySpec;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.spec.SecretKeySpec;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.ws.rs.Consumes;
@@ -11,6 +20,10 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+
+//import org.apache.commons.codec.binary.Base64;
+
+//import org.apache.commons.codec.binary.Base64;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -28,6 +41,8 @@ import br.com.suprasync.persistencia.enumerate.ProdutoSuprasoftEnum;
 import br.com.suprasync.persistencia.enumerate.TempoEnum;
 import br.com.suprasync.util.Utilities;
 import jdk.management.resource.internal.TotalResourceContext;
+
+//import org.apache.commons.codec.binary.Base64;
 
 @Path("/supraMais")
 public class LoginHelper {
@@ -72,6 +87,14 @@ public class LoginHelper {
 		try {
 			JsonObject json =  null;
 			if (null != jsonString && !jsonString.isEmpty()) {
+				
+//				JsonObject jsonEncriptado = (JsonObject) parser.parse(jsonString);
+//				if (jsonEncriptado.get("text") != null && !jsonEncriptado.get("text").isJsonNull()) {
+//					jsonString = Utilities.stringDecrypt(jsonEncriptado.get("text").getAsString()/*"12345"*/);
+//				} else {
+//					return enviaRetorno();
+//				}							
+
 				json = (JsonObject) parser.parse(jsonString);
 
 				VersaoSistema versao = versaoFacade.obterPorNumeroVersao(json.get("numeroVersao").getAsString(), ProdutoSuprasoftEnum.SUPRA_MAIS);
@@ -267,5 +290,77 @@ public class LoginHelper {
 	public void setResponseText(String responseText) {
 		this.responseText = responseText;
 	}
-
+	
+	@PUT
+	@Path("/encripta")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes("application/json") 	 
+	public String encrypt(String text) {
+		return Utilities.encryptAESCBC(text);
+//		String initVector = "suprasoftEncrypt";//16bytes - pode ser encontrato tbem como salt em alguns exemplos
+//		String key = "aesEncryptionKeyaesEncryptionKey"; 
+//		/*o tamanho da chave determina se será AES256 ou AES128,
+//		 * chave de 32 bytes corresponde a criptografia de 256 enquanto chave de 16 bytes passa criptografia para 128*/
+//	    try {
+//	        IvParameterSpec iv = new IvParameterSpec(initVector.getBytes());
+//	        SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
+//	 
+//	        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+//	        cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
+//	 
+//	        byte[] encrypted = cipher.doFinal(value.getBytes());
+//	        return Base64.getEncoder().encodeToString(encrypted);
+//	        //return Utilities.bytesToHex(encrypted);
+//	    } catch (Exception ex) {
+//	        ex.printStackTrace();
+//	    }
+//	    return null;
+	}
+	
+//public static String decrypt(String strToDecrypt, String secret) {
+//		
+//		String secretKeys = "boooooooooom!!!!";
+//		String salt = "ssshhhhhhhhhhh!!!!";
+//	    try
+//	    {
+//	        byte[] iv = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+//	        IvParameterSpec ivspec = new IvParameterSpec(iv);
+//	         
+//	        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+//	        KeySpec spec = new PBEKeySpec(secretKeys.toCharArray(), salt.getBytes(), 65536, 256);
+//	        SecretKey tmp = factory.generateSecret(spec);
+//	        SecretKeySpec secretKey = new SecretKeySpec(tmp.getEncoded(), "AES");
+//	         
+//	        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+//	        cipher.init(Cipher.DECRYPT_MODE, secretKey, ivspec);
+//	        return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
+//	    }
+//	    catch (Exception e) {
+//	        System.out.println("Error while decrypting: " + e.toString());
+//	    }
+//	    return null;
+//	}
+	
+	@PUT
+	@Path("/decripta")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes("application/json") 	 
+	public String decrypt(String text) {
+		return Utilities.decryptAESCBC(text);
+//		String key = "aesEncryptionKeyaesEncryptionKey";
+//		String initVector = "suprasoftEncrypt";		
+//	    try {
+//	        IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
+//	        SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
+//	 
+//	        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+//	        cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
+//	        byte[] original = cipher.doFinal(Base64.getDecoder().decode(text));
+//	 
+//	        return new String(original);
+//	    } catch (Exception ex) {
+//	        ex.printStackTrace();
+//	    }	 
+//	    return null;
+	}
 }

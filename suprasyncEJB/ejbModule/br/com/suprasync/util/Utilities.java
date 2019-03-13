@@ -6,13 +6,19 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.text.Normalizer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.servlet.http.Part;
@@ -203,6 +209,32 @@ public class Utilities {
 		result = new String(bResult);
 		return result;
 	}
+	
+	
+	
+	 public static String stringDecrypt(String value) throws UnsupportedEncodingException {
+	        Integer startKey = 673;
+	        String result = "";
+	        if(value != null){
+	            int letra;
+	            byte[] senhaCriptografada = value.getBytes("UTF-8");
+	            for (int i = 0; i < value.length(); i++) {
+	         	    letra = senhaCriptografada[i];
+	                 if(letra < 0){
+	                     letra += 256;
+	                }
+	                 int b = ((byte)(letra ^ Integer.rotateRight(startKey, 8)));
+	                 if(b < 0){
+	                      b += 256;
+	                 }
+	                 result = result + (char)b;
+	                 startKey = ((int) letra + startKey) * multKey + addKey;
+	             }
+	        }
+	        return result;
+	     }
+	 
+	 
 
 	public static String removeAcentos(final String texto) {
 		String textoSemAcentos = Normalizer.normalize(texto, Normalizer.Form.NFD);
@@ -388,6 +420,44 @@ public class Utilities {
 	public static boolean isDiaUtil (Calendar data) { 
 		int diaSemana = data.get (Calendar.DAY_OF_WEEK);
 		return ((diaSemana >= Calendar.MONDAY) && (diaSemana <= Calendar.FRIDAY));   	
+	}
+	
+	public static String encryptAESCBC(String text) {
+		String initVector = "suprasoftEncrypt";//16bytes - pode ser encontrato tbem como salt em alguns exemplos
+		String chave = "aesEncryptionKeyaesEncryptionKey"; 
+		/*o tamanho da chave determina se será AES256 ou AES128,
+		 * chave de 32 bytes corresponde a criptografia de 256 enquanto chave de 16 bytes passa criptografia para 128*/
+	    try {
+	        IvParameterSpec iv = new IvParameterSpec(initVector.getBytes());
+	        SecretKeySpec skeySpec = new SecretKeySpec(chave.getBytes("UTF-8"), "AES");
+	 
+	        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+	        cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
+	 
+	        byte[] encrypted = cipher.doFinal(text.getBytes());
+	        return Base64.getEncoder().encodeToString(encrypted);
+	        //return Utilities.bytesToHex(encrypted);
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	    }
+	    return null;
+	}
+	
+	public static String decryptAESCBC(String encryptedText) {
+		String chave = "aesEncryptionKeyaesEncryptionKey";
+		String initVector = "suprasoftEncrypt";		
+	    try {
+	        IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
+	        SecretKeySpec skeySpec = new SecretKeySpec(chave.getBytes("UTF-8"), "AES");
+	 
+	        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+	        cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
+	        byte[] original = cipher.doFinal(Base64.getDecoder().decode(encryptedText));	 
+	        return new String(original);
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	    }	 
+	    return null;
 	}
 
 }
