@@ -2,20 +2,22 @@ package br.com.suprasync.negocio.dto;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import br.com.suprasync.persistencia.SacOcorrencia;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SacOcorrenciaDTO {
 
 	private int id;	
-	private Integer idFuncionario;
 	private Integer idCliente;
 	private String nomeCliente;
 	private Date dataCadastro;
 	private Integer idSituacao;
+	private String nomeSituacao;
 	private String assunto;
 	private Integer idEtapa;
 	private String nomeEtapa;
@@ -26,16 +28,23 @@ public class SacOcorrenciaDTO {
 	private String descricaoDesenvolvimento;
 	private String comentarioDesenvolvimento;
 	private Date dataUltimoRedirecionamento; 
+	private Integer idFuncionario;
+	private String nomeFuncionario;
 	private Date dataPrevisaoTermino;
 	private String numeroVersao;
 	private Integer prioridade;
+	/**este não tem os anexos, o do Suprasac tem**/
 	private boolean ready;
 	private Date dataSolucao;
-			
+
+	//para utilização nos redirecionamentos apenas//
+	private Integer idUsuarioRedirecionando;
+	private Integer idFuncionarioAnterior;
+
 	public SacOcorrenciaDTO() {
-		
+
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -50,6 +59,14 @@ public class SacOcorrenciaDTO {
 
 	public void setIdFuncionario(Integer idFuncionario) {
 		this.idFuncionario = idFuncionario;
+	}
+
+	public String getNomeFuncionario() {
+		return nomeFuncionario;
+	}
+
+	public void setNomeFuncionario(String nomeFuncionario) {
+		this.nomeFuncionario = nomeFuncionario;
 	}
 
 	public Integer getIdCliente() {
@@ -84,6 +101,14 @@ public class SacOcorrenciaDTO {
 		this.idSituacao = idSituacao;
 	}
 
+	public String getNomeSituacao() {
+		return nomeSituacao;
+	}
+
+	public void setNomeSituacao(String nomeSituacao) {
+		this.nomeSituacao = nomeSituacao;
+	}
+
 	public String getAssunto() {
 		return assunto;
 	}
@@ -115,7 +140,7 @@ public class SacOcorrenciaDTO {
 	public void setSolicitacao(String solicitacao) {
 		this.solicitacao = solicitacao;
 	}
-	
+
 	public String getSolucao() {
 		return solucao;
 	}
@@ -171,7 +196,7 @@ public class SacOcorrenciaDTO {
 	public void setDataPrevisaoTermino(Date dataPrevisaoTermino) {
 		this.dataPrevisaoTermino = dataPrevisaoTermino;
 	}
-	
+
 	public String getNumeroVersao() {
 		return numeroVersao;
 	}
@@ -179,7 +204,7 @@ public class SacOcorrenciaDTO {
 	public void setNumeroVersao(String numeroVersao) {
 		this.numeroVersao = numeroVersao;
 	}
-	
+
 	public Integer getPrioridade() {
 		return prioridade;
 	}
@@ -204,14 +229,30 @@ public class SacOcorrenciaDTO {
 		this.dataSolucao = dataSolucao;
 	}
 
+	public Integer getIdUsuarioRedirecionando() {
+		return idUsuarioRedirecionando;
+	}
+
+	public void setIdUsuarioRedirecionando(Integer idUsuarioRedirecionando) {
+		this.idUsuarioRedirecionando = idUsuarioRedirecionando;
+	}
+
+	public Integer getIdFuncionarioAnterior() {
+		return idFuncionarioAnterior;
+	}
+
+	public void setIdFuncionarioAnterior(Integer idFuncionarioAnterior) {
+		this.idFuncionarioAnterior = idFuncionarioAnterior;
+	}
+
 	public SacOcorrenciaDTO convertToDTO (SacOcorrencia ocorrencia) {
 		return ocorrencia.getOcorrenciaDTO(null);		
 	}
-	
+
 	public JsonObject getAsJson() {
 		Gson gson = new Gson();
 		JsonParser jsonParser = new JsonParser();
 		return (JsonObject) jsonParser.parse(gson.toJson(this));		
 	}		
-	
+
 }

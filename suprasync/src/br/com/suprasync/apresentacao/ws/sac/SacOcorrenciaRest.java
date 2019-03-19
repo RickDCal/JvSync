@@ -505,10 +505,10 @@ public class SacOcorrenciaRest {
 
 		try {
 
-			Integer idUsuario = ocorrenciaDto.getIdSituacao();//reaproveitando objeto
+			Integer idUsuario = ocorrenciaDto.getIdUsuarioRedirecionando();
 			SacOcorrenciaFacade sacFacade = new SacOcorrenciaFacade();
 			GenericFacade genericFacade = new GenericFacade();	
-			Funcionario funcionarioOrigem = (Funcionario) genericFacade.pesquisar(Funcionario.class, ocorrenciaDto.getIdCliente()); //reaproveitando objeto
+			Funcionario funcionarioOrigem = (Funcionario) genericFacade.pesquisar(Funcionario.class, ocorrenciaDto.getIdFuncionarioAnterior()); 
 			Funcionario funcionarioDestino = (Funcionario) genericFacade.pesquisar(Funcionario.class, ocorrenciaDto.getIdFuncionario());
 			SacEtapa etapa = (SacEtapa) genericFacade.pesquisar(SacEtapa.class, ocorrenciaDto.getIdEtapa());			
 
