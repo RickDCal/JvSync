@@ -46,11 +46,6 @@ import br.com.suprasync.util.Utilities;
 @Path("/sac")
 public class SacOcorrenciaRest {
 
-	//	Construtor com facades
-	//	public LogUtilizacaoWS() throws NamingException {
-	//		InitialContext context = new InitialContext();
-	//		logUtilizacaoFacede = (LogUtilizacaoFacade) context.lookup("java:global/Suprasoft/Suprasoft-ejb/LogUtilizacaoFacade");	
-	//	}
 	private JsonObject retorno = new JsonObject();
 	private JsonArray jdados = new JsonArray();	
 	private boolean success = false;
@@ -76,27 +71,12 @@ public class SacOcorrenciaRest {
 	//@Consumes("application/x-www-form-urlencoded")
 	public String inserirPrioridadesSac(@DefaultValue("") @QueryParam("id") String id, @QueryParam("data") String dados, @QueryParam("action") String action  ) {
 		return null;
-		//		try {
-		//			GenericFacade genericFacade = new GenericFacade();
-		//			List<SacPrioridade> prioridades = genericFacade.pesquisar(SacPrioridade.class, 0, 1000, null);
-		//			JsonArray array = new JsonArray();
-		//			for (Iterator<SacPrioridade> iterator = prioridades.iterator(); iterator.hasNext();) {
-		//				SacPrioridade sacPrioridade = (SacPrioridade) iterator.next();
-		//				array.add(sacPrioridade.prioridadeJson(sacPrioridade));	
-		//			} 
-		//			return array.toString();
-		//		} catch (NamingException | ObjetoNaoEncontradoException e) {
-		//			e.printStackTrace();
-		//			return null;
-		//		}	
 	}
 
-	@SuppressWarnings("finally")
 	@GET
 	@Path("/obterPrioridades")
 	@Produces(MediaType.APPLICATION_JSON)//@Produces("text/plain")
 	public String obterPrioridadesSac(@DefaultValue("") @QueryParam("id") String id, @QueryParam("data") String dados, @QueryParam("action") String action  ) {
-		//return null;
 		setSuccess(false);
 		try {
 			SacOcorrenciaFacade ocorrenciaFacade = new SacOcorrenciaFacade();
@@ -104,18 +84,14 @@ public class SacOcorrenciaRest {
 			filter.setPrioridade(true);
 			List<SacOcorrencia> prioridades = ocorrenciaFacade.obter(filter);
 			for (Iterator<SacOcorrencia> iterator = prioridades.iterator(); iterator.hasNext();) {
-				SacOcorrencia prioridade = (SacOcorrencia) iterator.next();
+				SacOcorrencia prioridade = iterator.next();
 				jdados.add(prioridade.getOcorrenciaDTO(null).getAsJson());	
 			}			
 			setSuccess(true);			
-		} catch (NamingException e) {
+		} catch (NamingException | SacOcorrenciaNaoEncontradaException e) {
 			e.printStackTrace();
-		} catch (SacOcorrenciaNaoEncontradaException e) {
-			e.printStackTrace();
-		} finally {
-			return montaResposta();
-		}
-
+		} 
+		return montaResposta();
 	}
 
 	@PUT
@@ -123,11 +99,7 @@ public class SacOcorrenciaRest {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)//@Produces("text/plain")
 	public String atualizarSacOcorrencia(String query) {		
-		//public String atualizarPrioridadesSac(@DefaultValue("") @QueryParam("id") String id, @QueryParam("data") String dados, @QueryParam("action") String action  ) {
-
-		try {
-			//JsonObject json = (JsonObject) parser.parse(jsonObject);
-			//String consulta = json.get("query").getAsString();			
+		try {		
 			SacOcorrenciaFacade sacFacade = new SacOcorrenciaFacade();
 			sacFacade.consultaNativa(query);		
 		} catch (NamingException e) {
@@ -169,7 +141,7 @@ public class SacOcorrenciaRest {
 			GenericFacade genericFacade = new GenericFacade();
 			List<Funcionario> funcionarios = genericFacade.pesquisar(Funcionario.class, null, null);
 			for (Iterator<Funcionario> iterator = funcionarios.iterator(); iterator.hasNext();) {
-				Funcionario funcionario = (Funcionario) iterator.next();
+				Funcionario funcionario = iterator.next();
 				if(funcionario.getDataExclusao() == null && funcionario.isAtivoSac()) {
 					List<SacEtapa> etapas = new ArrayList<>();
 					if (funcionario.getEtapas() != null) {
@@ -185,11 +157,9 @@ public class SacOcorrenciaRest {
 				}
 			}							
 			setSuccess(true);			
-		} catch (NamingException e) {
+		} catch (NamingException | ObjetoNaoEncontradoException e) {
 			e.printStackTrace();			
-		} catch (ObjetoNaoEncontradoException e) {
-			e.printStackTrace();
-		}
+		} 
 		return montaResposta();
 
 	}
@@ -199,9 +169,6 @@ public class SacOcorrenciaRest {
 	@Produces(MediaType.APPLICATION_JSON)//@Produces("text/plain")
 	public String obterTreeFuncionario() {
 		obterFuncionarios(null,  null);
-		//String dados = obterFuncionarios(null, null);
-		//JsonObject jo = (JsonObject) parser.parse(dados);
-		//JsonArray ja = jo.getAsJsonArray("data");
 		if (jdados != null) {
 			for (int i = 0; i < jdados.size(); i++) {
 				JsonObject jfunc = (JsonObject) jdados.get(i);
@@ -248,8 +215,6 @@ public class SacOcorrenciaRest {
 			gb.excludeFieldsWithoutExposeAnnotation();
 			Gson gson = gb.create();
 
-			//String array = gson.toJson(arquivos);
-
 			for (SacOcorrenciaArquivo arquivo : arquivos) {
 				jdados.add((JsonObject) parser.parse(gson.toJson(arquivo)));				
 			}			
@@ -260,7 +225,6 @@ public class SacOcorrenciaRest {
 		return montaResposta();
 	}
 
-	@SuppressWarnings("finally")
 	@PUT
 	@Path("/obterOcorrenciasToDo")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -278,25 +242,20 @@ public class SacOcorrenciaRest {
 			List<SacOcorrencia> ocorrencias = ocorrenciaFacade.obterSacToDo(filter);
 			//ocorrencias.sort(Comparator.comparing(o -> o.getPrioridade() != null? o.getPrioridade() : 999)); // já filtrei na consulta
 			for (Iterator<SacOcorrencia> iterator = ocorrencias.iterator(); iterator.hasNext();) {
-				SacOcorrencia sac = (SacOcorrencia) iterator.next();
-				JsonObject jsac = sac.getOcorrenciaDTO(null).getAsJson();
-				//jsac.addProperty("sort", sac.getPrioridade() != null ? sac.getPrioridade() : 999);
+				SacOcorrencia sac = iterator.next();
+				JsonObject jsac = sac.getOcorrenciaDTO(null).getAsJson(); //jsac.addProperty("sort", sac.getPrioridade() != null ? sac.getPrioridade() : 999);
 				jdados.add(jsac);	
 			}
 			setSuccess(true);
 
-		} catch (NamingException e) {
-			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
-		finally {			
-			return montaResposta();
-		}
+				
+		return montaResposta();	
 
 	}
 
-	@SuppressWarnings("finally")
 	@PUT
 	@Path("/obterOcorrenciasDoing")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -313,24 +272,18 @@ public class SacOcorrenciaRest {
 
 			List<SacOcorrencia> ocorrencias = ocorrenciaFacade.obterSacDoing(filter);
 			for (Iterator<SacOcorrencia> iterator = ocorrencias.iterator(); iterator.hasNext();) {
-				SacOcorrencia sac = (SacOcorrencia) iterator.next();
+				SacOcorrencia sac = iterator.next();
 				JsonObject jsac = sac.getOcorrenciaDTO(null).getAsJson();
 				jdados.add(jsac);	
 			}
 			setSuccess(true);
 
-		} catch (NamingException e) {
-			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
-		finally {			
-			return montaResposta();
-		}
-
+		} 			
+		return montaResposta();
 	}
 
-	@SuppressWarnings("finally")
 	@PUT
 	@Path("/obterOcorrenciasDone")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -347,20 +300,18 @@ public class SacOcorrenciaRest {
 
 			List<SacOcorrencia> ocorrencias = ocorrenciaFacade.obterSacDone(filter);
 			for (Iterator<SacOcorrencia> iterator = ocorrencias.iterator(); iterator.hasNext();) {
-				SacOcorrencia sac = (SacOcorrencia) iterator.next();
+				SacOcorrencia sac = iterator.next();
 				JsonObject jsac = sac.getOcorrenciaDTO(null).getAsJson();
 				jdados.add(jsac);	
 			}
 			setSuccess(true);
 
-		} catch (NamingException e) {
-			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
-		finally {			
-			return montaResposta();
-		}
+			
+		return montaResposta();
+		
 
 	}
 
@@ -384,17 +335,14 @@ public class SacOcorrenciaRest {
 				setSuccess(true);
 			}
 
-		} catch (NamingException e) {
+		} catch (NamingException | UsuarioInexistenteException e) {
 			e.printStackTrace();
-		} catch (UsuarioInexistenteException e) {
-			e.printStackTrace();
-		}		
+		} 	
 
 		retorno.add("data", jdados);
 		return montaResposta();
 	}
 
-	@SuppressWarnings("finally")
 	@PUT
 	@Path("/obterTotalRegistros")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -415,14 +363,11 @@ public class SacOcorrenciaRest {
 			retorno.addProperty("total",totalRegistros);
 			setSuccess(true);
 
-		} catch (NamingException e) {
-			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
-		finally {			
-			return montaResposta();
-		}
+				
+		return montaResposta();		
 
 	}
 
@@ -441,8 +386,7 @@ public class SacOcorrenciaRest {
 			}
 
 			if (filter != null && filter.getId() != null) {
-				List<SacOcorrenciaFollowUp> followUps = new ArrayList<>();
-				followUps = ocorrenciaFacade.obterFollowUp(filter);
+				List<SacOcorrenciaFollowUp> followUps = ocorrenciaFacade.obterFollowUp(filter);
 
 				//				followUps.sort(Comparator.comparing(o -> o.getSequencia()));
 				//				Collections.reverse(followUps); 
@@ -457,12 +401,9 @@ public class SacOcorrenciaRest {
 			retorno.addProperty("total",jdados.size());
 			setSuccess(true);
 
-		} catch (NamingException e) {
-			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
-
 		return montaResposta();
 
 	}
@@ -474,7 +415,7 @@ public class SacOcorrenciaRest {
 
 		try {
 			SacOcorrenciaFacade sacFacade = new SacOcorrenciaFacade();
-			List<SacDesenvolvimento> ocorrencias = new ArrayList<SacDesenvolvimento>(); 
+			List<SacDesenvolvimento> ocorrencias; 
 
 			if (idFuncionario != null) {
 				ocorrencias = sacFacade.obterUltimosSacDesenvolvedor(idFuncionario, quantidadeSacs);
@@ -483,7 +424,7 @@ public class SacOcorrenciaRest {
 			}			
 
 			for (Iterator<SacDesenvolvimento> iterator = ocorrencias.iterator(); iterator.hasNext();) {
-				SacDesenvolvimento sac = (SacDesenvolvimento) iterator.next();
+				SacDesenvolvimento sac = iterator.next();
 				//montando o retorn com base em um model de ocorrencia, manipulando a ocorrencia original para mostrar os valores pretendidos
 				SacOcorrencia sacManipulado = sac.getSacOcorrencia();
 				sacManipulado.setDataCadastro(sac.getDataFim() != null ? sac.getDataFim() : sac.getDataInicio());
@@ -526,30 +467,28 @@ public class SacOcorrenciaRest {
 				JsonObject jsac = ocorrenciaJaRedirecionada.getOcorrenciaDTO(null).getAsJson();
 				jdados.add(jsac);
 				setSuccess(true);	
-				enviaMensagemSlack(idUsuario, mensagem.toString(), null);
+				if (funcionarioDestino.getUsuarioSlack() != null) {
+					enviaMensagemSlack(funcionarioDestino.getUsuarioSlack(), mensagem.toString(), null);
+				}
 
 			}
 
-		} catch (NamingException e) {
+		} catch (NamingException | ObjetoNaoEncontradoException e) {
 			e.printStackTrace();
-		} catch (ObjetoNaoEncontradoException e) {
-			e.printStackTrace();
-		}
+		} 
 		return montaResposta();		
 	}
 
-	private boolean enviaMensagemSlack(int idUsuario, String mensagem, String webHook) {
+	private boolean enviaMensagemSlack(String usuarioSlack, String mensagem, String webHook) {
 
-		try {
-			GenericFacade genericFacade = new GenericFacade();
-			Usuario usuario = (Usuario) genericFacade.pesquisar(Usuario.class, idUsuario);
-
+		try {			
 			if (webHook == null) {
+				GenericFacade genericFacade = new GenericFacade();
 				ParametroSlack parametro = (ParametroSlack) genericFacade.pesquisar(ParametroSlack.class,0,1).get(0);
 				webHook = parametro.getWebHookSlack();
 			}
 
-			if (Utilities.enviaMensagemSlack(usuario.getUsuarioSlack(), mensagem, webHook).equalsIgnoreCase("ok")) {
+			if (Utilities.enviaMensagemSlack(usuarioSlack, mensagem, webHook).equalsIgnoreCase("ok")) {
 				return true;
 			}			
 		} catch (NamingException | ObjetoNaoEncontradoException | ParseException | IOException e) {

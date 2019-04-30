@@ -22,15 +22,13 @@ import br.com.suprasync.persistencia.filter.SacOcorrenciaFilter;
 @Stateless
 public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 
-	private Map<String, Object> parametros = new HashMap<String, Object>();
+	private Map<String, Object> parametros = new HashMap<>();
 
 	public SacOcorrenciaDAO() {
-
+		/*construtor padrão*/
 	}
 
 	public List<SacOcorrencia> obter (SacOcorrenciaFilter filter) throws SacOcorrenciaNaoEncontradaException {
-
-		//Map<String, Object> parametros = new HashMap<String, Object>();
 
 		if (filter == null) {
 			filter = new SacOcorrenciaFilter();
@@ -90,7 +88,6 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 
 	public List <SacOcorrenciaArquivo> obterAnexosSac(int idOcorrencia, Integer codigo, String nomeArquivo) {
 
-		//Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("idOcorrencia", idOcorrencia);
 
 		StringBuilder sb = new StringBuilder("select a from SacOcorrenciaArquivo a where a.idSacOcorrencia = :idOcorrencia ");
@@ -114,7 +111,7 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 		try {
 			return query.getResultList();
 		} catch (NoResultException e) {
-			return null;
+			return new ArrayList<>();
 		}		
 
 
@@ -164,12 +161,10 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 		Query query = entityManager.createNativeQuery(sb.toString());
 
 		System.out.println("Ocorrencias esquecidas finalizadas automaticamente: " + query.executeUpdate());
-		//return query.getResultList();		
+	
 	}
 
 	public List<SacDesenvolvimento> obterSacDesenvolvimento(SacOcorrenciaFilter filter) {
-
-		//Map<String, Object> parametros = new HashMap<String, Object>();
 
 		StringBuilder consulta = new StringBuilder();
 		consulta.append("select d from SacDesenvolvimento d where d.id is not null");
@@ -220,18 +215,17 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 
 		//String codigosFuncionariosDesenvolvedores = "9, 31, 119, 113, 57, 68";
 		String codigosFuncaoDesenvolvedores = "7,10,15,16,17,18,19,20,21,22,23";
-
-
-
 		StringBuilder consulta = new StringBuilder();
 		consulta.append("select o from SacOcorrencia o where o.id is not null");
+		
+		consulta.append(" and o.cliente.id not in (2127, 2159, 2160)"); /*FCK não entra nesta lista*/
 
 		consulta.append(" and (o.etapa.id  = 15 or (o.id.etapa = 16 and o.funcionarioRedirecionamento.funcao in ( ")
 		.append(codigosFuncaoDesenvolvedores).append(")))")
 		.append(" and o.etapa.id <> 21 "); //etapa 21 = quarentena
 
 		consulta.append(" and o.situacaoOcorrencia not in :listSituacaoInuteis ");
-		List<SACOcorrenciaEnum> listSituacoes = new ArrayList<SACOcorrenciaEnum>();
+		List<SACOcorrenciaEnum> listSituacoes = new ArrayList<>();
 		listSituacoes.add(SACOcorrenciaEnum.AGRUPADA);
 		//listSituacoes.add(SACOcorrenciaEnum.FEEDBACK);
 		listSituacoes.add(SACOcorrenciaEnum.SOLUCIONADA);
@@ -262,10 +256,6 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 			consulta.append(" and o.prioridade is not null ");
 		}
 
-		//		if (filter.isReady()) {
-		//			consulta.append(" and o.ready = 1 ");
-		//		}
-
 		consulta.append(" order by COALESCE(o.prioridade, 999) asc ");
 
 		/** seta os parâmetros na query */
@@ -291,8 +281,6 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 		//String codigosFuncionariosDesenvolvedores = "9, 31, 119, 113, 57, 68";
 		String codigosFuncaoDesenvolvedores = "7,10,15,16,17,18,19,20,21,22,23";
 
-		//Map<String, Object> parametros = new HashMap<String, Object>();
-
 		StringBuilder consulta = new StringBuilder();
 
 		consulta.append(" select o from SacOcorrencia o where o.id is not null")
@@ -302,7 +290,7 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 		.append(" and o.situacaoOcorrencia not in :listSituacaoInuteis ")
 		.append(" and o.etapa.id <> 21 "); //etapa 21 = quarentena
 
-		List<SACOcorrenciaEnum> listSituacoes = new ArrayList<SACOcorrenciaEnum>();
+		List<SACOcorrenciaEnum> listSituacoes = new ArrayList<>();
 		//listSituacoes.add(SACOcorrenciaEnum.AGRUPADA);  agrupadas neste caso aparecem
 		listSituacoes.add(SACOcorrenciaEnum.FEEDBACK);
 		listSituacoes.add(SACOcorrenciaEnum.SOLUCIONADA);
@@ -333,10 +321,6 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 			consulta.append(" and o.prioridade is not null ");
 		}
 
-		//		if (filter.isReady()) {
-		//			consulta.append(" and o.ready = 1 ");
-		//		}
-
 		consulta.append(" order by o.funcionarioRedirecionamento.nome, COALESCE(o.prioridade, 999), o.id asc ");
 
 		/** seta os parâmetros na query */
@@ -362,8 +346,6 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 
 		//String codigosFuncionariosDesenvolvedores = "9, 31, 119, 113, 57, 68";
 		String codigosFuncaoDesenvolvedores = "7,10,15,16,17,18,19,20,21,22,23";
-
-		//Map<String, Object> parametros = new HashMap<String, Object>();
 
 		StringBuilder consulta = new StringBuilder();		
 
@@ -473,7 +455,7 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 			parametros.put("dataFimSolucao", filter.getDataFimSolucao());
 		}
 
-		if (filter.getListSituacaoEnum() != null && filter.getListSituacaoEnum().size() > 0 ) {
+		if (filter.getListSituacaoEnum() != null && !filter.getListSituacaoEnum().isEmpty() ) {
 			consulta.append(" and o.situacaoOcorrencia in :listSituacao ");
 			parametros.put("listSituacao", filter.getListSituacaoEnum());
 		}
@@ -483,7 +465,7 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 			parametros.put("assunto", "%" + filter.getAssunto() +"%");
 		}
 
-		if (filter.getListIdEtapa() != null && filter.getListIdEtapa().size() > 0) {
+		if (filter.getListIdEtapa() != null && !filter.getListIdEtapa().isEmpty()) {
 			consulta.append(" and o.etapa.id in :listEtapa ");
 			parametros.put("listEtapa", filter.getListIdEtapa());
 		}
@@ -518,11 +500,9 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 			parametros.put("estimativa", filter.getEstimativa());
 		}
 		
-		if (!filter.isPassouDesenvolvimento()) {
-			if (filter.getListIdFuncionario() != null) {
+		if (!filter.isPassouDesenvolvimento() && filter.getListIdFuncionario() != null) {
 				consulta.append(" and COALESCE(o.funcionarioRedirecionamento.id,o.funcionarioCadastro.id) in :listFuncionario ");
 				parametros.put("listFuncionario", filter.getListIdFuncionario());
-			}
 		} 
 
 		if (filter.getDataInicioPrevisaoTermino() != null) {
@@ -542,7 +522,7 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 
 		if (filter.isUteis()) {
 			consulta.append(" and o.situacaoOcorrencia not in :listSituacaoInuteis ");
-			List<SACOcorrenciaEnum> listSituacoes = new ArrayList<SACOcorrenciaEnum>();
+			List<SACOcorrenciaEnum> listSituacoes = new ArrayList<>();
 			listSituacoes.add(SACOcorrenciaEnum.AGRUPADA);
 			//listSituacoes.add(SACOcorrenciaEnum.FEEDBACK);
 			listSituacoes.add(SACOcorrenciaEnum.SOLUCIONADA);
@@ -591,20 +571,19 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 	
 	public List<Integer> followUpComSimilares(int id, int idUsuarioSupraMais, String mensagem) {
 
-		List<Integer> ids = new ArrayList<Integer>();
-		List<Integer> registrados = new ArrayList<Integer>();
+		List<Integer> registrados = new ArrayList<>();
 
 		StringBuilder consultaInicial = new StringBuilder("select codigo from sac_ocorrencia where codigo = ")
 				.append(id).append(" or sacocor_codigo_similar = ").append(id);
 		Query queryInicial = entityManager.createNativeQuery(consultaInicial.toString());
-		ids = queryInicial.getResultList();
+		List<Integer> ids = queryInicial.getResultList();
 
-		if (ids.size() > 0) {
-			for (Integer codigo : ids) {
+		if (!ids.isEmpty()) {
+			for (int i = 0; i < ids.size(); i++) {
 				try {
 					if (insereFollowUp(id, idUsuarioSupraMais, mensagem)) {
 						registrados.add(id);
-					};
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -615,7 +594,7 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 	
 	public boolean insereFollowUp(int id, int idUsuarioSupraMais, String mensagem) {
 		//existe outro mpetodo nesta classe que insere follow up também nas ocorrencias vinculadas / agrupadas
-		List<Integer> registrados = new ArrayList<Integer>();
+		List<Integer> registrados = new ArrayList<>();
 		
 		try {
 			StringBuilder consulta = new StringBuilder("insert into sac_follow_up (ocor_codigo, codigo, data, usu_codigo, historico) ")
@@ -639,10 +618,8 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 	public List<SacDesenvolvimento> obterUltimosSacDesenvolvedores(int quantidadeSacs) {
 		StringBuilder consulta = new StringBuilder("select distinct d.funcionario.id from SacDesenvolvimento d ");
 		Query query = entityManager.createQuery(consulta.toString());
-		List<Integer> idFucionarios = new ArrayList<Integer>();
-		
-		idFucionarios = query.getResultList();
-		List<SacDesenvolvimento> ocorrencias = new ArrayList<SacDesenvolvimento>();
+		List<Integer> idFucionarios = query.getResultList();
+		List<SacDesenvolvimento> ocorrencias = new ArrayList<>();
 		
 		for (Integer id : idFucionarios) {
 			ocorrencias.addAll(obterUltimosSacDesenvolvedor(id, quantidadeSacs));
@@ -659,9 +636,8 @@ public class SacOcorrenciaDAO extends GenericDAO implements ISacOcorrenciaDAO {
 		.append(" (select distinct func_codigo, sacocor_codigo, max(codigo) as maxCodigo from sac_ocorrencia_desenvolvimento")
 		.append(" where func_codigo = ").append(idUsuario).append(" group by func_codigo, sacocor_codigo ) base  order by maxCodigo desc");
 		
-		List<Integer> listaSacDesenvolvimento =  new ArrayList<>();
 		Query query = entityManager.createNativeQuery(consulta.toString());
-		listaSacDesenvolvimento = query.getResultList();
+		List<Integer> listaSacDesenvolvimento = query.getResultList();
 		
 		StringBuilder ids = new StringBuilder();
 		

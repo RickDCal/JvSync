@@ -16,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import br.com.suprasync.apresentacao.facade.GenericFacade;
 import br.com.suprasync.negocio.dto.SacOcorrenciaDTO;
 
 @Path("/teste")
@@ -57,6 +58,11 @@ public class TesteRest {
 			encodeMensagemUtfToIso("01150995902323441717033110622762");
 
 			System.out.println("testes get");
+			setSuccess(true);
+			
+			GenericFacade gf = new GenericFacade();
+			gf.testaTimer();
+			
 //			SacOcorrenciaFacade sacFacade = new SacOcorrenciaFacade();
 //			
 //			List<SacOcorrenciaArquivo> arquivos = sacFacade.obterAnexosSac(71046, null, null);

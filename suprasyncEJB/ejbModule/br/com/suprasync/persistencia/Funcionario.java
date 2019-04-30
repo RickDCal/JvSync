@@ -17,7 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity  
-@Table(name="funcionario")// o nome da tabela correspondente quando for entity
+@Table(name="funcionario")
 public class Funcionario {
 
 	private int id;	
@@ -31,16 +31,14 @@ public class Funcionario {
 	private boolean ativoSac;
 	private List<SacDesenvolvimento> sacDesenvolvimento;
 	private Funcao funcao; 
-	//private List<Usuario> usuarios;
-	
+	private String usuarioSlack; //esta coluna só existe em bancos de dados da Suprasoft
 			
 	public Funcionario() {
-		
+		/*construtor padrão*/
 	}
 	
-	@Id //indica chave primï¿½ria
+	@Id 
 	@Column(name="codigo")/*este valor corresponde ao func_codigo do usuario do supra*/
-	//@GeneratedValue(strategy = GenerationType.IDENTITY) //auto incermento na chave
 	public int getId() {
 		return id;
 	}
@@ -117,10 +115,7 @@ public class Funcionario {
 
 	@Transient
 	public boolean isAtivoSac() {
-		if (efetuarAnalise || executarSolucao || providenciarFeedback || providenciarSolucao || ativoSac) {
-			return true;
-		}
-		return false;
+		return (efetuarAnalise || executarSolucao || providenciarFeedback || providenciarSolucao || ativoSac);
 	}
 
 	public void setAtivoSac(boolean ativoSac) {
@@ -144,6 +139,15 @@ public class Funcionario {
 
 	public void setFuncao(Funcao funcao) {
 		this.funcao = funcao;
+	}
+
+	@Column(name = "usuario_slack", columnDefinition="nvarchar")
+	public String getUsuarioSlack() {
+		return usuarioSlack;
+	}
+
+	public void setUsuarioSlack(String usuarioSlack) {
+		this.usuarioSlack = usuarioSlack;
 	}
 	
 }

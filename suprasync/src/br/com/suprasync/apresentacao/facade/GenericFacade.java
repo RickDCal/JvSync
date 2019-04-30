@@ -12,6 +12,7 @@ import com.google.gson.JsonObject;
 import br.com.suprasync.negocio.IGenericServiceLocal;
 import br.com.suprasync.negocio.exception.FalhaAoCriarJSONException;
 import br.com.suprasync.persistencia.dao.exception.ObjetoNaoEncontradoException;
+import br.com.suprasync.timer.ServiceVerificaSacSuprasoft;
 
 public class GenericFacade {
 	
@@ -19,12 +20,14 @@ public class GenericFacade {
 	private Context c;
 	
 	public IGenericServiceLocal service;
+	public ServiceVerificaSacSuprasoft timer;
 	
 	public GenericFacade() throws NamingException {
 		
 		p = new Properties();
 		c = new InitialContext(p);
 		service = (IGenericServiceLocal)c.lookup("java:global/suprasyncEAR/suprasyncEJB/GenericService");
+		timer = (ServiceVerificaSacSuprasoft)c.lookup("java:global/suprasyncEAR/suprasyncEJB/ServiceVerificaSacSuprasoft");
 		
 	}
 	
@@ -61,6 +64,10 @@ public class GenericFacade {
 	
 	public List<Object> obter (String nativeQuery) {
 		return service.obter(nativeQuery);
+	}
+	
+	public void testaTimer() {
+		timer.lembrarFeedbacksNovos();
 	}
 			
 	
