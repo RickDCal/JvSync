@@ -1,4 +1,4 @@
-package br.com.suprasync.apresentacao.ws;
+package br.com.jvsync.apresentacao.ws;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;

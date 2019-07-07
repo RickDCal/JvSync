@@ -1,23 +1,21 @@
-package br.com.suprasync.persistencia.dao;
+package br.com.jvsync.persistencia.dao;
 
 import java.util.List;
 
 import javax.ejb.Local;
 
-import br.com.suprasync.persistencia.Cliente;
-import br.com.suprasync.persistencia.dao.exception.ClienteNaoEncontradoException;
-import br.com.suprasync.persistencia.dao.exception.ObjetoNaoEncontradoException;
+import br.com.jvsync.negocio.dto.FilterNotaFiscalDTO;
+import br.com.jvsync.persistencia.CabecalhoNotaFiscal;
+import br.com.jvsync.persistencia.ItemNotaFiscal;
+import br.com.jvsync.persistencia.dao.exception.ObjetoNaoEncontradoException;
 
 @Local
-public interface IClienteDAO {
-
-	//public Cliente obter(int id) throws ClienteNaoEncontradoException;
+public interface INotaFiscalDAO {
 	
-	public <T> Object obter(Class<T> classe, int id) throws ObjetoNaoEncontradoException;
+	public List<CabecalhoNotaFiscal> obterCabecalhos(Integer position, Integer max) throws ObjetoNaoEncontradoException;
 	
-	public List<Cliente> obterClientesAtivos(Integer position, Integer max) throws ClienteNaoEncontradoException;
+	public List<CabecalhoNotaFiscal> obter (FilterNotaFiscalDTO filter);
 	
-	public List<Cliente> obterClientesPorCNPJ(Integer position, Integer max, String cnpj) throws ClienteNaoEncontradoException;
-		
-
+	public List<ItemNotaFiscal> obterItens (FilterNotaFiscalDTO filter);
+	
 }

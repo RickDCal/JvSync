@@ -1,4 +1,4 @@
-package br.com.suprasync.persistencia.dao.exception;
+package br.com.jvsync.persistencia.dao.exception;
 
 public class ObjetoNaoEncontradoException extends Exception{
 	

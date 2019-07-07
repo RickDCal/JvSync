@@ -1,4 +1,4 @@
-package br.com.suprasync.negocio;
+package br.com.jvsync.negocio;
 
 
 
@@ -11,9 +11,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import br.com.suprasync.negocio.exception.FalhaAoCriarJSONException;
-import br.com.suprasync.persistencia.dao.IGenericDAO;
-import br.com.suprasync.persistencia.dao.exception.ObjetoNaoEncontradoException;
+import br.com.jvsync.negocio.exception.FalhaAoCriarJSONException;
+import br.com.jvsync.persistencia.dao.IGenericDAO;
+import br.com.jvsync.persistencia.dao.exception.ObjetoNaoEncontradoException;
 
 
 

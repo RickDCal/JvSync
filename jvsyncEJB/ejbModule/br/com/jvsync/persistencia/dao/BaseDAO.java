@@ -1,4 +1,4 @@
-package br.com.suprasync.persistencia.dao;
+package br.com.jvsync.persistencia.dao;
 
 import javax.ejb.Stateless;
 

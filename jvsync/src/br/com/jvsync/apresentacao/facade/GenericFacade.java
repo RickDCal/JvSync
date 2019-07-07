@@ -1,4 +1,4 @@
-package br.com.suprasync.apresentacao.facade;
+package br.com.jvsync.apresentacao.facade;
 
 import java.util.List;
 import java.util.Properties;
@@ -9,10 +9,10 @@ import javax.naming.NamingException;
 
 import com.google.gson.JsonObject;
 
-import br.com.suprasync.negocio.IGenericServiceLocal;
-import br.com.suprasync.negocio.exception.FalhaAoCriarJSONException;
-import br.com.suprasync.persistencia.dao.exception.ObjetoNaoEncontradoException;
-import br.com.suprasync.timer.ServiceVerificaSacSuprasoft;
+import br.com.jvsync.negocio.IGenericServiceLocal;
+import br.com.jvsync.negocio.exception.FalhaAoCriarJSONException;
+import br.com.jvsync.persistencia.dao.exception.ObjetoNaoEncontradoException;
+//import br.com.jvsync.timer.ServiceVerificaSacSuprasoft;
 
 public class GenericFacade {
 	
@@ -20,14 +20,14 @@ public class GenericFacade {
 	private Context c;
 	
 	public IGenericServiceLocal service;
-	public ServiceVerificaSacSuprasoft timer;
+	//public ServiceVerificaSacSuprasoft timer;
 	
 	public GenericFacade() throws NamingException {
 		
 		p = new Properties();
 		c = new InitialContext(p);
-		service = (IGenericServiceLocal)c.lookup("java:global/suprasyncEAR/suprasyncEJB/GenericService");
-		timer = (ServiceVerificaSacSuprasoft)c.lookup("java:global/suprasyncEAR/suprasyncEJB/ServiceVerificaSacSuprasoft");
+		service = (IGenericServiceLocal)c.lookup("java:global/jvsyncEAR/jvsyncEJB/GenericService");
+		//timer = (ServiceVerificaSacSuprasoft)c.lookup("java:global/jvsyncEAR/jvsyncEJB/ServiceVerificaSacSuprasoft");
 		
 	}
 	
@@ -66,9 +66,9 @@ public class GenericFacade {
 		return service.obter(nativeQuery);
 	}
 	
-	public void testaTimer() {
-		timer.lembrarFeedbacksNovos();
-	}
+//	public void testaTimer() {
+//		timer.lembrarFeedbacksNovos();
+//	}
 			
 	
 }

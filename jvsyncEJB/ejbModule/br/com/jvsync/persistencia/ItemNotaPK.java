@@ -1,20 +1,20 @@
-package br.com.suprasync.persistencia;
+package br.com.jvsync.persistencia;
 
 import java.io.Serializable;
 
 import javax.persistence.Column;
 
-public class SacArquivoPK implements Serializable {
+public class ItemNotaPK implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "sac_codigo", columnDefinition="int")
-	private int idSacOcorrencia;
+	@Column(name = "nunota", columnDefinition="number")
+	private int idNota;
 
-	@Column(name = "codigo")
-	private int codigo;
+	@Column(name = "sequencia" , columnDefinition="number")
+	private int sequencia;
 
-	public SacArquivoPK() {
+	public ItemNotaPK() {
 		// TODO Auto-generated constructor stub
 	}
 }

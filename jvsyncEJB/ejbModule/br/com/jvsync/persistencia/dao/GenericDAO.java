@@ -1,6 +1,8 @@
-package br.com.suprasync.persistencia.dao;
+package br.com.jvsync.persistencia.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -8,7 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
 
-import br.com.suprasync.persistencia.dao.exception.ObjetoNaoEncontradoException;
+import br.com.jvsync.persistencia.dao.exception.ObjetoNaoEncontradoException;
 
 public class GenericDAO {
 
@@ -19,6 +21,7 @@ public class GenericDAO {
 	@PersistenceUnit(unitName = "transcal")
 
 	protected EntityManagerFactory entityManagerFactory;
+	protected Map<String, Object> parametros = new HashMap();
 
 
 	public <T> Object obter(Class<T> classe, int id) throws ObjetoNaoEncontradoException {		

@@ -1,4 +1,4 @@
-package br.com.suprasync.negocio;
+package br.com.jvsync.negocio;
 
 import java.util.List;
 
@@ -6,8 +6,8 @@ import javax.ejb.Local;
 
 import com.google.gson.JsonObject;
 
-import br.com.suprasync.negocio.exception.FalhaAoCriarJSONException;
-import br.com.suprasync.persistencia.dao.exception.ObjetoNaoEncontradoException;
+import br.com.jvsync.negocio.exception.FalhaAoCriarJSONException;
+import br.com.jvsync.persistencia.dao.exception.ObjetoNaoEncontradoException;
 
 @Local
 public interface IGenericServiceLocal {

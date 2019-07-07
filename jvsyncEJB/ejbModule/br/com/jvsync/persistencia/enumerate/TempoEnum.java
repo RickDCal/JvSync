@@ -1,4 +1,4 @@
-package br.com.suprasync.persistencia.enumerate;
+package br.com.jvsync.persistencia.enumerate;
 
 import java.util.Arrays;
 import java.util.List;

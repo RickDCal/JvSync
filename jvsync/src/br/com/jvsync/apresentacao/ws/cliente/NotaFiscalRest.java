@@ -1,4 +1,4 @@
-package br.com.suprasync.apresentacao.ws.cliente;
+package br.com.jvsync.apresentacao.ws.cliente;
 
 import java.util.Iterator;
 import java.util.List;
@@ -16,12 +16,14 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import br.com.suprasync.apresentacao.facade.cadastro.ClienteFacade;
-import br.com.suprasync.negocio.exception.ClienteInexistenteException;
-import br.com.suprasync.persistencia.Cliente;
+import br.com.jvsync.apresentacao.facade.NotaFiscalFacade;
+import br.com.jvsync.negocio.dto.FilterNotaFiscalDTO;
+import br.com.jvsync.negocio.exception.ObjetoInexistenteException;
+import br.com.jvsync.persistencia.CabecalhoNotaFiscal;
+import br.com.jvsync.persistencia.ItemNotaFiscal;
 
-@Path("/cliente")
-public class ClienteRest {
+@Path("/notaFiscal")
+public class NotaFiscalRest {
 
 	//	Construtor com facades
 	//	public LogUtilizacaoWS() throws NamingException {
@@ -48,28 +50,43 @@ public class ClienteRest {
 	}
 
 	@GET
-	@Path("/obterClientes")
+	@Path("/tgfcab")
 	@Produces(MediaType.APPLICATION_JSON)//@Produces("text/plain")
-	public String obterClientes(@DefaultValue("") @QueryParam("id") String id, @QueryParam("data") String dados) {
-		//return null;
-		setSuccess(false);
-		Gson gson = new Gson();
+	//public String obterCabecalhosNotas(@DefaultValue("") @QueryParam("id") String id, @QueryParam("data") String dados) {
+	public String obterCabecalhosNotas(String jsFilter) {
+		setSuccess(false);		
+		FilterNotaFiscalDTO filter = new Gson().fromJson((JsonObject) parser.parse(jsFilter), FilterNotaFiscalDTO.class);		
 		try {
-			ClienteFacade clienteFacade = new ClienteFacade();
-			List<Cliente> clientes = clienteFacade.pesquisar(0, 10);
-			for (Iterator<Cliente> iterator = clientes.iterator(); iterator.hasNext();) {
-				Cliente cliente = (Cliente) iterator.next();				
-				jdados.add(parser.parse(gson.toJson(cliente)));	
+			NotaFiscalFacade notaFacade = new NotaFiscalFacade();
+			List<CabecalhoNotaFiscal> cabecalhos = notaFacade.pesquisar(filter);
+			for (Iterator<CabecalhoNotaFiscal> iterator = cabecalhos.iterator(); iterator.hasNext();) {
+				CabecalhoNotaFiscal cabecalho = iterator.next();				
+				jdados.add(cabecalho.toJson());	
 			}			
 			setSuccess(true);			
 		} catch (NamingException e) {
 			e.printStackTrace();
-		} catch (ClienteInexistenteException e) {
+		} 			
+		return montaResposta();
+	}
+	
+	@GET
+	@Path("/tgfite")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String obterItensNotas(String jsFilter) {
+		setSuccess(false);		
+		FilterNotaFiscalDTO filter = new Gson().fromJson((JsonObject) parser.parse(jsFilter), FilterNotaFiscalDTO.class);		
+		try {
+			NotaFiscalFacade notaFacade = new NotaFiscalFacade();
+			List<ItemNotaFiscal> itens = notaFacade.obterItens(filter);
+			for (Iterator<ItemNotaFiscal> iterator = itens.iterator(); iterator.hasNext();) {
+				ItemNotaFiscal item = iterator.next();				
+				jdados.add(item.toJson());	
+			}			
+			setSuccess(true);			
+		} catch (NamingException e) {
 			e.printStackTrace();
 		} 			
 		return montaResposta();
-		
-
 	}
-
 }

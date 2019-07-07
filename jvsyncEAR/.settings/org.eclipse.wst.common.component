@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="suprasyncEAR">
+    <wb-module deploy-name="jvsyncEAR">
         <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
-        <dependent-module archiveName="suprasyncEJB.jar" deploy-path="/" handle="module:/resource/suprasyncEJB/suprasyncEJB">
+        <dependent-module archiveName="jvsync.war" deploy-path="/" handle="module:/resource/jvsync/jvsync">
             <dependent-object/>
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="suprasyncEJBClient.jar" deploy-path="/" handle="module:/resource/suprasyncEJBClient/suprasyncEJBClient">
+        <dependent-module archiveName="jvsyncEJB.jar" deploy-path="/" handle="module:/resource/jvsyncEJB/jvsyncEJB">
+            <dependent-object/>
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="suprasync.war" deploy-path="/" handle="module:/resource/suprasync/suprasync">
-            <dependent-object/>
+        <dependent-module archiveName="jvsyncEJBClient.jar" deploy-path="/lib" handle="module:/resource/jvsyncEJBClient/jvsyncEJBClient">
             <dependency-type>uses</dependency-type>
         </dependent-module>
     </wb-module>

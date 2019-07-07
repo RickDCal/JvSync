@@ -1,4 +1,4 @@
-package br.com.suprasync.util;
+package br.com.jvsync.util;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -34,21 +34,21 @@ import org.apache.http.util.EntityUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import br.com.suprasync.negocio.exception.FalhaAoConverterDataException;
-import br.com.suprasync.negocio.exception.FalhaAoRemoverArquivoException;
-import br.com.suprasync.negocio.exception.FalhaAoSalvarArquivoException;
-import br.com.suprasync.persistencia.dao.IUsuarioDAO;
-import br.com.suprasync.persistencia.enumerate.TempoEnum;
+import br.com.jvsync.negocio.exception.FalhaAoConverterDataException;
+import br.com.jvsync.negocio.exception.FalhaAoRemoverArquivoException;
+import br.com.jvsync.negocio.exception.FalhaAoSalvarArquivoException;
+//import br.com.jvsync.persistencia.dao.IUsuarioDAO;
+import br.com.jvsync.persistencia.enumerate.TempoEnum;
 
 @Stateless
 public class Utilities { 
 	//removi as interfaces e facades para esta classe e coloquei todos os métodos estáticos em 11/07/2018
 
-	@EJB
-	private IUsuarioDAO usuarioDao;
-	
-	final static Integer multKey = 34378;
-	final static Integer addKey = 41529;
+//	@EJB
+//	private IUsuarioDAO usuarioDao;
+//	
+//	final static Integer multKey = 34378;
+//	final static Integer addKey = 41529;
 
 	public Utilities() {
 
@@ -183,56 +183,56 @@ public class Utilities {
 		return senhaCriptografada;
 	}
 	
-	public static String criptografiaSenhaSupraMais(String value) {
-		Integer startKey = 673;
-		String result = "";
-		int letra;
-		byte[] senhaCriptografada = value.getBytes();
-		byte[] bResult = value.getBytes();
-		for (int i = 0; i < value.length(); i++) {
-			letra = senhaCriptografada[i];
-			if(letra < 0){
-				letra += 256;
-			}
-			int b = ((byte)(letra ^ Integer.rotateRight(startKey, 8)));
-			if(b < 0){
-				b += 256;
-			}
-
-			bResult[i] = (byte)b;
-			letra = bResult[i];
-			if(letra < 0){
-				letra += 256;
-			}
-			startKey = ((int) letra + startKey) * multKey + addKey;
-		}
-		result = new String(bResult);
-		return result;
-	}
+//	public static String criptografiaSenhaSupraMais(String value) {
+//		Integer startKey = 673;
+//		String result = "";
+//		int letra;
+//		byte[] senhaCriptografada = value.getBytes();
+//		byte[] bResult = value.getBytes();
+//		for (int i = 0; i < value.length(); i++) {
+//			letra = senhaCriptografada[i];
+//			if(letra < 0){
+//				letra += 256;
+//			}
+//			int b = ((byte)(letra ^ Integer.rotateRight(startKey, 8)));
+//			if(b < 0){
+//				b += 256;
+//			}
+//
+//			bResult[i] = (byte)b;
+//			letra = bResult[i];
+//			if(letra < 0){
+//				letra += 256;
+//			}
+//			startKey = ((int) letra + startKey) * multKey + addKey;
+//		}
+//		result = new String(bResult);
+//		return result;
+//	}
 	
 	
 	
-	 public static String stringDecrypt(String value) throws UnsupportedEncodingException {
-	        Integer startKey = 673;
-	        String result = "";
-	        if(value != null){
-	            int letra;
-	            byte[] senhaCriptografada = value.getBytes("UTF-8");
-	            for (int i = 0; i < value.length(); i++) {
-	         	    letra = senhaCriptografada[i];
-	                 if(letra < 0){
-	                     letra += 256;
-	                }
-	                 int b = ((byte)(letra ^ Integer.rotateRight(startKey, 8)));
-	                 if(b < 0){
-	                      b += 256;
-	                 }
-	                 result = result + (char)b;
-	                 startKey = ((int) letra + startKey) * multKey + addKey;
-	             }
-	        }
-	        return result;
-	     }
+//	 public static String stringDecrypt(String value) throws UnsupportedEncodingException {
+//	        Integer startKey = 673;
+//	        String result = "";
+//	        if(value != null){
+//	            int letra;
+//	            byte[] senhaCriptografada = value.getBytes("UTF-8");
+//	            for (int i = 0; i < value.length(); i++) {
+//	         	    letra = senhaCriptografada[i];
+//	                 if(letra < 0){
+//	                     letra += 256;
+//	                }
+//	                 int b = ((byte)(letra ^ Integer.rotateRight(startKey, 8)));
+//	                 if(b < 0){
+//	                      b += 256;
+//	                 }
+//	                 result = result + (char)b;
+//	                 startKey = ((int) letra + startKey) * multKey + addKey;
+//	             }
+//	        }
+//	        return result;
+//	     }
 	 
 	 
 

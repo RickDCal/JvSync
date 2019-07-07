@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="suprasyncEJB">
+    <wb-module deploy-name="jvsyncEJB">
         <wb-resource deploy-path="/" source-path="/ejbModule"/>
-        <property name="ClientProject" value="suprasyncEJBClient"/>
-        <property name="ClientJARURI" value="suprasyncEJBClient.jar"/>
-        <property name="java-output-path" value="/suprasyncEJB/build/classes"/>
+        <property name="ClientJARURI" value="jvsyncEJBClient.jar"/>
+        <property name="ClientProject" value="jvsyncEJBClient"/>
+        <property name="java-output-path" value="/jvsyncEJB/build/classes"/>
     </wb-module>
 </project-modules>

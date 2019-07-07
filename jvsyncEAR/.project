@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>suprasyncEAR</name>
+	<name>jvsyncEAR</name>
 	<comment></comment>
 	<projects>
-		<project>suprasyncEJB</project>
-		<project>suprasyncEJBClient</project>
-		<project>suprasync</project>
+		<project>jvsync</project>
+		<project>jvsyncEJB</project>
+		<project>jvsyncEJBClient</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

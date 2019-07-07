@@ -1,4 +1,4 @@
-package br.com.suprasync.negocio.exception;
+package br.com.jvsync.negocio.exception;
 
 public class FalhaAoEncriptarChaveException extends Exception{
 	

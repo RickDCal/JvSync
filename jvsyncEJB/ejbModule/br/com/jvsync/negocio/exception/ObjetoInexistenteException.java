@@ -1,8 +1,8 @@
-package br.com.suprasync.negocio.exception;
+package br.com.jvsync.negocio.exception;
 
-public class ClienteInexistenteException extends Exception{
+public class ObjetoInexistenteException extends Exception{
 	
-	public ClienteInexistenteException() {
+	public ObjetoInexistenteException() {
 		
 	}
 }

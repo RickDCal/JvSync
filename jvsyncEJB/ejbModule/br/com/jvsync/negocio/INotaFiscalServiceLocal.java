@@ -1,19 +1,21 @@
-package br.com.suprasync.negocio;
+package br.com.jvsync.negocio;
 
 import java.util.List;
 
 import javax.ejb.Local;
 
-import br.com.suprasync.negocio.exception.ClienteInexistenteException;
-import br.com.suprasync.persistencia.Cliente;
+import br.com.jvsync.negocio.dto.FilterNotaFiscalDTO;
+import br.com.jvsync.negocio.exception.ObjetoInexistenteException;
+import br.com.jvsync.persistencia.CabecalhoNotaFiscal;
+import br.com.jvsync.persistencia.ItemNotaFiscal;
 
 @Local
-public interface IClienteServiceLocal {
-
-	public Cliente pesquisar(int id) throws ClienteInexistenteException;
+public interface INotaFiscalServiceLocal {
 	
-	public List<Cliente> pesquisar(Integer position, Integer max) throws ClienteInexistenteException;		
+	public List<CabecalhoNotaFiscal> pesquisar(Integer position, Integer max) throws ObjetoInexistenteException;
 	
-	public List<Cliente> pesquisarPorCNPJ(Integer position, Integer max, String cnpj) throws ClienteInexistenteException; 
-
+	public List<CabecalhoNotaFiscal> pesquisar (FilterNotaFiscalDTO filter);
+	
+	public List<ItemNotaFiscal> obterItens (FilterNotaFiscalDTO filter);
+	
 }
