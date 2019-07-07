@@ -64,10 +64,6 @@ public class ItemNotaFiscal {
 	@Column(name="codvend", columnDefinition="number")
 	private Integer codvend;
 	
-//	@ManyToOne
-//	@JoinColumn(name = "nuNota")
-//	private CabecalhoNotaFiscal cabecalho;
-//	
 	public JsonObject toJson() {
 		return (JsonObject) new JsonParser().parse(new Gson().toJson(this));		
 	}

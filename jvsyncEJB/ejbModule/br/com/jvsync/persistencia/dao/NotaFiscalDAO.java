@@ -56,8 +56,7 @@ public class NotaFiscalDAO extends GenericDAO implements INotaFiscalDAO {
 
 		if (filter.getMax() != null) {
 			query.setMaxResults(filter.getMax());
-		}
-		
+		}		
 
 		return query.getResultList();			
 		
@@ -65,7 +64,7 @@ public class NotaFiscalDAO extends GenericDAO implements INotaFiscalDAO {
 	
 public List<ItemNotaFiscal> obterItens (FilterNotaFiscalDTO filter) {
 		
-		StringBuilder queryBuilder = new StringBuilder("select i from ItemNotaFiscal i where i.idNota is not null");
+		StringBuilder queryBuilder = new StringBuilder("select i from CabecalhoNotaFiscal c join c.itens i where c.id is not null");
 				
 		queryBuilder = aplicaFilter(queryBuilder, filter);
 		
@@ -93,8 +92,8 @@ public List<ItemNotaFiscal> obterItens (FilterNotaFiscalDTO filter) {
 	public StringBuilder aplicaFilter (StringBuilder queryBuilder, FilterNotaFiscalDTO filter) {
 		
 		if (filter.getDataFinal() != null) {
-			queryBuilder.append(" and c.dtMov >= :dtFinal" );
-			parametros.put("dtInicial", filter.getDataFinal());
+			queryBuilder.append(" and c.dtMov <= :dtFinal" );
+			parametros.put("dtFinal", filter.getDataFinal());
 		}
 		
 		if (filter.getDataInicial() != null) {

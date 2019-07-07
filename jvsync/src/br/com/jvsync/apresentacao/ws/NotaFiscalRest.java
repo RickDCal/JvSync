@@ -1,4 +1,4 @@
-package br.com.jvsync.apresentacao.ws.cliente;
+package br.com.jvsync.apresentacao.ws;
 
 import java.util.Iterator;
 import java.util.List;
