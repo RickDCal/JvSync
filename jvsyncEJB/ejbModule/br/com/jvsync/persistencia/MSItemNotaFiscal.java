@@ -12,24 +12,24 @@ import com.google.gson.JsonParser;
 
 @Entity  
 @Table(name="TGFITE")
-@IdClass(value = ItemNotaPK.class)
-public class ItemNotaFiscal {
+@IdClass(value = MSItemNotaPK.class)
+public class MSItemNotaFiscal {
 	
 	@Id 
-	@Column(name="nunota", columnDefinition="number")
+	@Column(name="nunota", columnDefinition="bigint")
 	private Long idNota;
 	
-	@Column(name="sequenciaFiscal", columnDefinition="number")
+	@Column(name="sequenciaFiscal", columnDefinition="bigint")
 	private Long sequenciaFiscal;
 	
 	@Id 
-	@Column(name="sequencia", columnDefinition="number")
+	@Column(name="sequencia", columnDefinition="bigint")
 	private Long sequencia;
 	
-	@Column(name="codProd", columnDefinition="number")
+	@Column(name="codProd", columnDefinition="bigint")
 	private Long codProd;
 	
-	@Column(name="codCfo", columnDefinition="number")
+	@Column(name="codCfo", columnDefinition="bigint")
 	private Long codCfo;
 	
 	@Column(name="qtdNeg", columnDefinition="float")
@@ -59,7 +59,7 @@ public class ItemNotaFiscal {
 	@Column(name="custo", columnDefinition="float")
 	private Double custo;
 	
-	@Column(name="codvend", columnDefinition="number")
+	@Column(name="codvend", columnDefinition="bigint")
 	private Long codvend;
 	
 	public JsonObject toJson() {
@@ -188,11 +188,11 @@ public class ItemNotaFiscal {
 
 	@Override
 	public String toString() {
-		return "ItemNotaFiscal [idNota=" + idNota + ", sequenciaFiscal=" + sequenciaFiscal + ", sequencia=" + sequencia
-				+ ", codProd=" + codProd + ", codCfo=" + codCfo + ", qtdNeg=" + qtdNeg + ", codVol=" + codVol
-				+ ", vlrUnit=" + vlrUnit + ", vlrDesc=" + vlrDesc + ", vlrTot=" + vlrTot + ", baseIcms=" + baseIcms
-				+ ", vlrIcms=" + vlrIcms + ", aliqIcms=" + aliqIcms + ", custo=" + custo + ", codvend=" + codvend + "]";
-	}
-	
+		return "MSItemNotaFiscal [idNota=" + idNota + ", sequenciaFiscal=" + sequenciaFiscal + ", sequencia="
+				+ sequencia + ", codProd=" + codProd + ", codCfo=" + codCfo + ", qtdNeg=" + qtdNeg + ", codVol="
+				+ codVol + ", vlrUnit=" + vlrUnit + ", vlrDesc=" + vlrDesc + ", vlrTot=" + vlrTot + ", baseIcms="
+				+ baseIcms + ", vlrIcms=" + vlrIcms + ", aliqIcms=" + aliqIcms + ", custo=" + custo + ", codvend="
+				+ codvend + "]";
+	}	
 
 }

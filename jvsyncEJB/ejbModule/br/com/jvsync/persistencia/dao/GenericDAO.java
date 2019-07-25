@@ -14,13 +14,18 @@ import br.com.jvsync.persistencia.dao.exception.ObjetoNaoEncontradoException;
 
 public class GenericDAO {
 
-	@PersistenceContext(unitName = "transcal")
-
+	@PersistenceContext(unitName = "dboracle")
 	protected EntityManager entityManager; // protected está acessível a classes do mesmo pacote e classes que herdam desta
 
-	@PersistenceUnit(unitName = "transcal")
-
+	@PersistenceUnit(unitName = "dboracle")
 	protected EntityManagerFactory entityManagerFactory;
+	
+	@PersistenceContext(unitName = "dbsqlserver")
+	protected EntityManager em; // protected está acessível a classes do mesmo pacote e classes que herdam desta
+
+	@PersistenceUnit(unitName = "dbsqlserver")
+	protected EntityManagerFactory emFactory;
+	
 	protected Map<String, Object> parametros = new HashMap();
 
 

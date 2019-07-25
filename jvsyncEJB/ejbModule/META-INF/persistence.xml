@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>   
 <persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">   
 	
-	<persistence-unit name="transcal">
+	<persistence-unit name="dboracle">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <jta-data-source>java:/datasources/jvSync</jta-data-source>
+        <class>br.com.jvsync.persistencia.CabecalhoNotaFiscal</class>
+        <class>br.com.jvsync.persistencia.ItemNotaFiscal</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
             <property name="hibernate.hbm2ddl.auto" value="validate" />
         </properties>
     </persistence-unit>
+    	
+    <persistence-unit name="dbsqlserver">	
+	    <jta-data-source>java:/datasources/jvSyncMSSQL</jta-data-source> 
+	    <class>br.com.jvsync.persistencia.MSCabecalhoNotaFiscal</class>
+	    <class>br.com.jvsync.persistencia.MSItemNotaFiscal</class>
+	    <exclude-unlisted-classes>true</exclude-unlisted-classes> 
+		<properties>   
+			<property name="hibernate.hbm2ddl.auto"	value="validate"/> 
+			<property name="hibernate.dialect" value="org.hibernate.dialect.SQLServer2012Dialect" />  
+		</properties>
+	</persistence-unit>
 
 </persistence>

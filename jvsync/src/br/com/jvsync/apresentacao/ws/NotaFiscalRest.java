@@ -1,5 +1,6 @@
 package br.com.jvsync.apresentacao.ws;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -21,15 +22,12 @@ import br.com.jvsync.negocio.dto.FilterNotaFiscalDTO;
 import br.com.jvsync.negocio.exception.ObjetoInexistenteException;
 import br.com.jvsync.persistencia.CabecalhoNotaFiscal;
 import br.com.jvsync.persistencia.ItemNotaFiscal;
+import br.com.jvsync.persistencia.MSCabecalhoNotaFiscal;
+import br.com.jvsync.persistencia.dao.exception.ObjetoNaoEncontradoException;
 
 @Path("/notaFiscal")
 public class NotaFiscalRest {
 
-	//	Construtor com facades
-	//	public LogUtilizacaoWS() throws NamingException {
-	//		InitialContext context = new InitialContext();
-	//		logUtilizacaoFacede = (LogUtilizacaoFacade) context.lookup("java:global/Suprasoft/Suprasoft-ejb/LogUtilizacaoFacade");	
-	//	}
 	private JsonObject retorno = new JsonObject();
 	private JsonArray jdados = new JsonArray();	
 	private boolean success = false;
@@ -59,10 +57,20 @@ public class NotaFiscalRest {
 		try {
 			NotaFiscalFacade notaFacade = new NotaFiscalFacade();
 			List<CabecalhoNotaFiscal> cabecalhos = notaFacade.pesquisar(filter);
+			List <MSCabecalhoNotaFiscal> cabs = new ArrayList<>();
+			
+			
 			for (Iterator<CabecalhoNotaFiscal> iterator = cabecalhos.iterator(); iterator.hasNext();) {
-				CabecalhoNotaFiscal cabecalho = iterator.next();				
-				jdados.add(cabecalho.toJson());	
-			}			
+				CabecalhoNotaFiscal cabecalho = iterator.next();	
+				MSCabecalhoNotaFiscal cab = new MSCabecalhoNotaFiscal(cabecalho);
+				cabs.add(cab);
+				//jdados.add(cabecalho.toJson());				
+			}
+			
+			for (MSCabecalhoNotaFiscal msCabecalhoNotaFiscal : cabs) {
+				notaFacade.gravaCabecalho(msCabecalhoNotaFiscal);
+			}
+			
 			setSuccess(true);			
 		} catch (NamingException e) {
 			e.printStackTrace();
@@ -85,6 +93,33 @@ public class NotaFiscalRest {
 			}			
 			setSuccess(true);			
 		} catch (NamingException e) {
+			e.printStackTrace();
+		} 			
+		return montaResposta();
+	}
+	
+	@GET
+	@Path("/atualizarDados")
+	@Produces(MediaType.APPLICATION_JSON)
+	public <T>String atualizarDados(@QueryParam("tabela") String tabela) {
+		setSuccess(false);
+		Object object = null;
+		try {
+			NotaFiscalFacade notaFacade = new NotaFiscalFacade();
+			switch (tabela.toLowerCase()) {
+			case "tgfcab": object = new CabecalhoNotaFiscal();break;
+			case "tgfite": object = new ItemNotaFiscal();break;
+
+			default: break;
+			}
+			
+			if (object == null ) {
+				return notaFacade.atualizaDados(null);
+			} else {
+				return notaFacade.atualizaDados(object.getClass());
+			}
+								
+		} catch (NamingException | ObjetoNaoEncontradoException e) {
 			e.printStackTrace();
 		} 			
 		return montaResposta();

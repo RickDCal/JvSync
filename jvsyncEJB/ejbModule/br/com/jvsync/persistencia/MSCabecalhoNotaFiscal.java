@@ -19,29 +19,29 @@ import com.google.gson.JsonParser;
 @Entity  
 @Table(name="TGFCAB")
 
-public class CabecalhoNotaFiscal {
+public class MSCabecalhoNotaFiscal {
 
 	@Id 
-	@Column(name="nunota", columnDefinition="number")
+	@Column(name="nunota", columnDefinition="int")
 	//@GeneratedValue(strategy = GenerationType.IDENTITY) 
 	private Long id;
 	
-	@Column(name="numnota", columnDefinition="number")
+	@Column(name="numnota", columnDefinition="int")
 	private Long numNota;
 	
-	@Column(name="chavenfe", columnDefinition="varchar")
+	@Column(name="chavenfe", columnDefinition="nvarchar")
 	private String chavenfe;
 	
 	@Column(name="dtmov", columnDefinition="date")
 	private Date dtMov;
 	
-	@Column(name="hrmov", columnDefinition="number")
+	@Column(name="hrmov", columnDefinition="int")
 	private String hrmov;
 	
 	@Column(name="dtentsai", columnDefinition="date")
 	private Date dtEntSai;
 	
-	@Column(name="codparc", columnDefinition="number")
+	@Column(name="codparc", columnDefinition="int")
 	private Long codParc;
 	
 	@Column(name="baseicms", columnDefinition="float")
@@ -68,24 +68,52 @@ public class CabecalhoNotaFiscal {
 	@Column(name="vlrnota", columnDefinition="float")
 	private Double vlrNota;
 	
-	@Column(name="codparctransp", columnDefinition="number")
+	@Column(name="codparctransp", columnDefinition="int")
 	private Double codParcTransp;	
 	
-	@Column(name="qtdvol", columnDefinition="number")
+	@Column(name="qtdvol", columnDefinition="int")
 	private Long qtdVol;
 	
-	@Column(name="volume", columnDefinition="varchar2")
+	@Column(name="volume", columnDefinition="nvarchar2")
 	private String volume;
 	
 	@Column(name="peso", columnDefinition="float")
 	private Double peso;
 	
-	@Column(name="statusnfe", columnDefinition="varchar")
+	@Column(name="statusnfe", columnDefinition="nvarchar")
 	private String statusnfe;
 
 	@OneToMany //(fetch = FetchType.EAGER)
 	@JoinColumn(name = "nunota")
-	private List<ItemNotaFiscal> itens;
+	private List<MSItemNotaFiscal> itens;
+	
+	public MSCabecalhoNotaFiscal() {
+		
+	}	
+	
+	public MSCabecalhoNotaFiscal (CabecalhoNotaFiscal cabecalho) {
+		this.baseIcms = cabecalho.getBaseIcms();
+		this.baseSubstit = cabecalho.getBaseSubstit();
+		this.chavenfe = cabecalho.getChavenfe();
+		this.codParc = cabecalho.getCodParc();
+		this.codParcTransp = cabecalho.getCodParcTransp();
+		this.dtEntSai = cabecalho.getDtEntSai();
+		this.dtMov = cabecalho.getDtMov();
+		this.hrmov = cabecalho.getHrmov();
+		this.id = cabecalho.getId();
+		//this.itens = cabecalho.getItens();
+		this.numNota = cabecalho.getNumNota();
+		this.peso = cabecalho.getPeso();
+		this.qtdVol = cabecalho.getQtdVol();
+		this.statusnfe = cabecalho.getStatusnfe();
+		this.totalCustoProd = cabecalho.getTotalCustoProd();
+		this.vlrFrete = cabecalho.getVlrFrete();
+		this.vlrIcms = cabecalho.getVlrIcms();
+		this.vlrNota = cabecalho.getVlrNota();
+		this.vlroutros = cabecalho.getVlroutros();
+		this.vlrSubst = cabecalho.getVlrSubst();
+		this.volume = cabecalho.getVolume();	
+	}
 	
 	public JsonObject toJson() {
 		this.itens = null;
@@ -252,23 +280,22 @@ public class CabecalhoNotaFiscal {
 		this.statusnfe = statusnfe;
 	}
 	
-	public List<ItemNotaFiscal> getItens() {
+	public List<MSItemNotaFiscal> getItens() {
 		return itens;
 	}
 
-	public void setItens(List<ItemNotaFiscal> itens) {
+	public void setItens(List<MSItemNotaFiscal> itens) {
 		this.itens = itens;
 	}
 
 	@Override
 	public String toString() {
-		return "CabecalhoNotaFiscal [id=" + id + ", numNota=" + numNota + ", chavenfe=" + chavenfe + ", dtMov=" + dtMov
-				+ ", hrmov=" + hrmov + ", dtEntSai=" + dtEntSai + ", codParc=" + codParc + ", baseIcms=" + baseIcms
-				+ ", vlrIcms=" + vlrIcms + ", baseSubstit=" + baseSubstit + ", vlrSubst=" + vlrSubst
+		return "MSCabecalhoNotaFiscal [id=" + id + ", numNota=" + numNota + ", chavenfe=" + chavenfe + ", dtMov="
+				+ dtMov + ", hrmov=" + hrmov + ", dtEntSai=" + dtEntSai + ", codParc=" + codParc + ", baseIcms="
+				+ baseIcms + ", vlrIcms=" + vlrIcms + ", baseSubstit=" + baseSubstit + ", vlrSubst=" + vlrSubst
 				+ ", totalCustoProd=" + totalCustoProd + ", vlrFrete=" + vlrFrete + ", vlroutros=" + vlroutros
 				+ ", vlrNota=" + vlrNota + ", codParcTransp=" + codParcTransp + ", qtdVol=" + qtdVol + ", volume="
 				+ volume + ", peso=" + peso + ", statusnfe=" + statusnfe  + "]";
 	}
-	
 	
 }

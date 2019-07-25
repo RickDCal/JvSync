@@ -2,18 +2,15 @@ package br.com.jvsync.negocio.dto;
 
 import java.util.Date;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-
 public class FilterNotaFiscalDTO {
 	
 	private Integer position;
 	private Integer max;
-	private Integer id;
+	private Long id;
 	private Date dataInicial;
 	private Date dataFinal;	
-	private Integer numNota;
-	private Integer idInicial;	
+	private Long numNota;
+	private Long idInicial;	
 	
 	public Integer getPosition() {
 		return position;
@@ -27,10 +24,10 @@ public class FilterNotaFiscalDTO {
 	public void setMax(Integer max) {
 		this.max = max;
 	}
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public Date getDataInicial() {
@@ -45,16 +42,16 @@ public class FilterNotaFiscalDTO {
 	public void setDataFinal(Date dataFinal) {
 		this.dataFinal = dataFinal;
 	}
-	public Integer getNumNota() {
+	public Long getNumNota() {
 		return numNota;
 	}
-	public void setNumNota(Integer numNota) {
+	public void setNumNota(Long numNota) {
 		this.numNota = numNota;
 	}
-	public Integer getIdInicial() {
+	public Long getIdInicial() {
 		return idInicial;
 	}
-	public void setIdInicial(Integer idInicial) {
+	public void setIdInicial(Long idInicial) {
 		this.idInicial = idInicial;
 	}
 	

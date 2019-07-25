@@ -12,6 +12,8 @@ import br.com.jvsync.negocio.dto.FilterNotaFiscalDTO;
 import br.com.jvsync.negocio.exception.ObjetoInexistenteException;
 import br.com.jvsync.persistencia.CabecalhoNotaFiscal;
 import br.com.jvsync.persistencia.ItemNotaFiscal;
+import br.com.jvsync.persistencia.MSCabecalhoNotaFiscal;
+import br.com.jvsync.persistencia.dao.exception.ObjetoNaoEncontradoException;
 
 public class NotaFiscalFacade {
 	
@@ -41,4 +43,17 @@ public class NotaFiscalFacade {
 		return service.obterItens(filter);
 	}
 	
+	public boolean gravaCabecalho(MSCabecalhoNotaFiscal cabecalho) {
+		return service.gravaCabecalho(cabecalho);
+	}
+	
+	public <T>String atualizaDados (Class<T> classe) throws ObjetoNaoEncontradoException, NamingException {
+		
+		StringBuilder stb = new StringBuilder("Atualizar ").append(classe.getSimpleName()).append(". Total registros de origem: ");		
+		List<Object> entidadesAtualizar = service.entidadesAtualizar(classe);
+		stb.append(entidadesAtualizar.size());
+		stb.append(service.atualizaDados(entidadesAtualizar));
+		System.out.println(stb.toString());
+		return stb.toString();
+	}	
 }

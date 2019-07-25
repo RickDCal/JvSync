@@ -7,6 +7,7 @@ import javax.ejb.Local;
 import br.com.jvsync.negocio.dto.FilterNotaFiscalDTO;
 import br.com.jvsync.persistencia.CabecalhoNotaFiscal;
 import br.com.jvsync.persistencia.ItemNotaFiscal;
+import br.com.jvsync.persistencia.MSCabecalhoNotaFiscal;
 import br.com.jvsync.persistencia.dao.exception.ObjetoNaoEncontradoException;
 
 @Local
@@ -17,5 +18,11 @@ public interface INotaFiscalDAO {
 	public List<CabecalhoNotaFiscal> obter (FilterNotaFiscalDTO filter);
 	
 	public List<ItemNotaFiscal> obterItens (FilterNotaFiscalDTO filter);
+	
+	public boolean gravaCabecalho(MSCabecalhoNotaFiscal cabecalho);
+	
+	public <T>List<Object> entidadesAtualizar(Class<T> classe);
+	
+	public String atualizaDados (List<Object> entidadesAtualizar);
 	
 }

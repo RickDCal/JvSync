@@ -1,5 +1,6 @@
 package br.com.jvsync.persistencia.dao;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -99,6 +100,22 @@ public List<Parceiro> obterParceiros (FilterParceiroDTO filter) {
 
 		return query.getResultList();			
 		
+	}
+	
+	
+	public void removeDadosTabelas (String senha) {
+		
+		Query query = entityManager.createNativeQuery("SELECT table_name  FROM all_tables where tablespace_name = 'JIVA' and num_rows > 0");
+		
+		List<String> tabelas = query.getResultList();
+		
+		for (Iterator iterator = tabelas.iterator(); iterator.hasNext();) {
+			String tabela = (String) iterator.next();
+			query = entityManager.createNativeQuery("delete from " + tabela);
+			if (query.executeUpdate() > 0 ) {
+				System.out.println("dados removidos da tabela" + tabela);
+			}			
+		}		
 	}
 	
 	
