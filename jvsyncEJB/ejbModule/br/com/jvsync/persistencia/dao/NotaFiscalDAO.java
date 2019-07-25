@@ -142,7 +142,7 @@ public class NotaFiscalDAO extends GenericDAO implements INotaFiscalDAO {
 	public <T>List<Object> entidadesAtualizar(Class<T> classe) {	
 		
 		try {
-			List<Object> entidades = obter(classe, 0, null);
+			List<Object> entidades = obter(classe, 0, 1000);
 			List<Object> entidadesPersistir = new ArrayList<>();
 
 			String tipo = classe.getSimpleName().toLowerCase();
