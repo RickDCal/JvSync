@@ -22,11 +22,11 @@ import com.google.gson.JsonParser;
 public class MSCabecalhoNotaFiscal {
 
 	@Id 
-	@Column(name="nunota", columnDefinition="int")
+	@Column(name="nunota", columnDefinition="bigint")
 	//@GeneratedValue(strategy = GenerationType.IDENTITY) 
 	private Long id;
 	
-	@Column(name="numnota", columnDefinition="int")
+	@Column(name="numnota", columnDefinition="bigint")
 	private Long numNota;
 	
 	@Column(name="chavenfe", columnDefinition="nvarchar")
@@ -35,13 +35,13 @@ public class MSCabecalhoNotaFiscal {
 	@Column(name="dtmov", columnDefinition="date")
 	private Date dtMov;
 	
-	@Column(name="hrmov", columnDefinition="int")
+	@Column(name="hrmov", columnDefinition="bigint")
 	private String hrmov;
 	
 	@Column(name="dtentsai", columnDefinition="date")
 	private Date dtEntSai;
 	
-	@Column(name="codparc", columnDefinition="int")
+	@Column(name="codparc", columnDefinition="bigint")
 	private Long codParc;
 	
 	@Column(name="baseicms", columnDefinition="float")
@@ -68,10 +68,10 @@ public class MSCabecalhoNotaFiscal {
 	@Column(name="vlrnota", columnDefinition="float")
 	private Double vlrNota;
 	
-	@Column(name="codparctransp", columnDefinition="int")
+	@Column(name="codparctransp", columnDefinition="bigint")
 	private Double codParcTransp;	
 	
-	@Column(name="qtdvol", columnDefinition="int")
+	@Column(name="qtdvol", columnDefinition="bigint")
 	private Long qtdVol;
 	
 	@Column(name="volume", columnDefinition="nvarchar2")
