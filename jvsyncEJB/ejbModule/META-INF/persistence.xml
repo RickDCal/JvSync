@@ -17,6 +17,7 @@
 	    <jta-data-source>java:/datasources/jvSyncMSSQL</jta-data-source> 
 	    <class>br.com.jvsync.persistencia.MSCabecalhoNotaFiscal</class>
 	    <class>br.com.jvsync.persistencia.MSItemNotaFiscal</class>
+	    <class>br.com.jvsync.persistencia.MSParceiro</class>
 	    <exclude-unlisted-classes>true</exclude-unlisted-classes> 
 		<properties>   
 			<property name="hibernate.hbm2ddl.auto"	value="validate"/> 

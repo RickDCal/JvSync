@@ -15,7 +15,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-
+/***neste modo de operação toda entidade a ser gerenciada deve estar presente no persistence.xml porque são distintos*/
 @Entity  
 @Table(name="TGFCAB")
 
