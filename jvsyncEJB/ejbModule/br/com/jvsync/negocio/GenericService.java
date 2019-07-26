@@ -74,6 +74,14 @@ public class GenericService implements IGenericServiceLocal  {
 	public List<Object> obter (String nativeQuery) {
 		return genericDao.obter(nativeQuery);
 	}
+	
+	public String atualizaDados (List<Object> entidadesAtualizar) {
+		return genericDao.atualizaDados(entidadesAtualizar);
+	}
+	
+	public <T> Long totalRegistros(Class<T> classe) {
+		return genericDao.totalRegistros(classe);
+	}
 
 
 }

@@ -27,5 +27,9 @@ public interface IGenericServiceLocal {
 	public JsonObject objetoJson(Object objeto) throws FalhaAoCriarJSONException;
 	
 	public List<Object> obter (String nativeQuery);
+	
+	public String atualizaDados (List<Object> entidadesAtualizar);
+	
+	public <T> Long totalRegistros(Class<T> classe);
 
 }

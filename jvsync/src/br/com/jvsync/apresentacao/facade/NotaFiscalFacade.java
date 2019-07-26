@@ -46,14 +46,5 @@ public class NotaFiscalFacade {
 	public boolean gravaCabecalho(MSCabecalhoNotaFiscal cabecalho) {
 		return service.gravaCabecalho(cabecalho);
 	}
-	
-	public <T>String atualizaDados (Class<T> classe) throws ObjetoNaoEncontradoException, NamingException {
 		
-		StringBuilder stb = new StringBuilder("Atualizar ").append(classe.getSimpleName()).append(". Total registros de origem: ");		
-		List<Object> entidadesAtualizar = service.entidadesAtualizar(classe);
-		stb.append(entidadesAtualizar.size());
-		stb.append(service.atualizaDados(entidadesAtualizar));
-		System.out.println(stb.toString());
-		return stb.toString();
-	}	
 }

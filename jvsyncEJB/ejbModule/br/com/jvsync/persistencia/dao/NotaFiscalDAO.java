@@ -1,6 +1,5 @@
 package br.com.jvsync.persistencia.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -133,54 +132,4 @@ public class NotaFiscalDAO extends GenericDAO implements INotaFiscalDAO {
 		return false;		
 	}
 
-	public <T> Long totalRegistros(Class<T> classe) {
-		String consulta = "select count (o) from " + classe.getSimpleName() + " o";
-		Query query = entityManager.createQuery(consulta);		
-		return (Long) query.getSingleResult();		
-	}
-
-	public <T>List<Object> entidadesAtualizar(Class<T> classe) {	
-		
-		try {
-			List<Object> entidades = obter(classe, 0, 1000);
-			List<Object> entidadesPersistir = new ArrayList<>();
-
-			String tipo = classe.getSimpleName().toLowerCase();
-
-			for (Object object : entidades) {
-				Object entidadePersistir = null;
-				switch (tipo) {
-				case "cabecalhonotafiscal": entidadePersistir = new MSCabecalhoNotaFiscal((CabecalhoNotaFiscal) object); break;
-				//case "itemnotafiscal": entidadePersistir = new MSItemNotaFiscal((ItemNotaFiscal) object); break;
-				default: break;
-				}
-				if (entidadePersistir != null) {
-					entidadesPersistir.add(entidadePersistir);
-				}						
-			}
-			return entidadesPersistir;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}	
-		return null;		
-	}
-	
-	public String atualizaDados (List<Object> entidadesAtualizar) {
-		StringBuilder stb = new StringBuilder();
-		int i = 0;
-		try {
-			for (Object object : entidadesAtualizar) {
-				em.merge(object);
-				em.flush();
-				i++;
-			}
-		} catch (Exception e) {
-			stb.append(" Ocorreu uma falha ao atualizar os registros. ");
-			e.printStackTrace();
-		}		
-		if ( i > 0) {
-			stb.append(" Registros atualizados: ").append(i);
-		}
-		return stb.toString();		
-	}
 }

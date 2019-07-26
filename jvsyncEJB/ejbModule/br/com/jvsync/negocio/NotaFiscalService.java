@@ -44,13 +44,4 @@ public class NotaFiscalService implements INotaFiscalServiceLocal {
 	public boolean gravaCabecalho(MSCabecalhoNotaFiscal cabecalho) {
 		return nfDao.gravaCabecalho(cabecalho);
 	}
-	
-	public <T>List<Object> entidadesAtualizar(Class<T> classe) {
-		return nfDao.entidadesAtualizar(classe);
-	}
-	
-	public String atualizaDados (List<Object> entidadesAtualizar) {
-		return nfDao.atualizaDados(entidadesAtualizar);
-	}
-
 }

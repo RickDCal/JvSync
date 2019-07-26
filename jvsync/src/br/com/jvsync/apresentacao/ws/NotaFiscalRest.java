@@ -17,6 +17,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import br.com.jvsync.apresentacao.facade.GenericFacade;
 import br.com.jvsync.apresentacao.facade.NotaFiscalFacade;
 import br.com.jvsync.negocio.dto.FilterNotaFiscalDTO;
 import br.com.jvsync.negocio.exception.ObjetoInexistenteException;
@@ -49,22 +50,20 @@ public class NotaFiscalRest {
 
 	@GET
 	@Path("/tgfcab")
-	@Produces(MediaType.APPLICATION_JSON)//@Produces("text/plain")
-	//public String obterCabecalhosNotas(@DefaultValue("") @QueryParam("id") String id, @QueryParam("data") String dados) {
+	@Produces(MediaType.APPLICATION_JSON)
 	public String obterCabecalhosNotas(String jsFilter) {
 		setSuccess(false);		
 		FilterNotaFiscalDTO filter = new Gson().fromJson((JsonObject) parser.parse(jsFilter), FilterNotaFiscalDTO.class);		
 		try {
 			NotaFiscalFacade notaFacade = new NotaFiscalFacade();
 			List<CabecalhoNotaFiscal> cabecalhos = notaFacade.pesquisar(filter);
-			List <MSCabecalhoNotaFiscal> cabs = new ArrayList<>();
-			
+			List <MSCabecalhoNotaFiscal> cabs = new ArrayList<>();			
 			
 			for (Iterator<CabecalhoNotaFiscal> iterator = cabecalhos.iterator(); iterator.hasNext();) {
 				CabecalhoNotaFiscal cabecalho = iterator.next();	
 				MSCabecalhoNotaFiscal cab = new MSCabecalhoNotaFiscal(cabecalho);
 				cabs.add(cab);
-				//jdados.add(cabecalho.toJson());				
+				jdados.add(cabecalho.toJson());				
 			}
 			
 			for (MSCabecalhoNotaFiscal msCabecalhoNotaFiscal : cabs) {
@@ -98,30 +97,4 @@ public class NotaFiscalRest {
 		return montaResposta();
 	}
 	
-	@GET
-	@Path("/atualizarDados")
-	@Produces(MediaType.APPLICATION_JSON)
-	public <T>String atualizarDados(@QueryParam("tabela") String tabela) {
-		setSuccess(false);
-		Object object = null;
-		try {
-			NotaFiscalFacade notaFacade = new NotaFiscalFacade();
-			switch (tabela.toLowerCase()) {
-			case "tgfcab": object = new CabecalhoNotaFiscal();break;
-			case "tgfite": object = new ItemNotaFiscal();break;
-
-			default: break;
-			}
-			
-			if (object == null ) {
-				return notaFacade.atualizaDados(null);
-			} else {
-				return notaFacade.atualizaDados(object.getClass());
-			}
-								
-		} catch (NamingException | ObjetoNaoEncontradoException e) {
-			e.printStackTrace();
-		} 			
-		return montaResposta();
-	}
 }

@@ -35,7 +35,7 @@ public class MSItemNotaFiscal {
 	@Column(name="qtdNeg", columnDefinition="float")
 	private Double qtdNeg;
 	
-	@Column(name="codVol", columnDefinition="varchar2")
+	@Column(name="codVol", columnDefinition="nvarchar")
 	private String codVol;
 	
 	@Column(name="vlrUnit", columnDefinition="float")

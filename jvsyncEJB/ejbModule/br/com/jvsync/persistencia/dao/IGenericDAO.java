@@ -26,5 +26,9 @@ public interface IGenericDAO {
 	public <T>void removerPorId (Class<T> classe, String id);
 	
 	public List<Object> obter (String nativeQuery);
+	
+	public String atualizaDados (List<Object> entidadesAtualizar);
+	
+	public <T> Long totalRegistros(Class<T> classe);
 
 }

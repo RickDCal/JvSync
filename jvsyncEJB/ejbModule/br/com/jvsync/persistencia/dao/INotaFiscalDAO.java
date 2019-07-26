@@ -21,8 +21,4 @@ public interface INotaFiscalDAO {
 	
 	public boolean gravaCabecalho(MSCabecalhoNotaFiscal cabecalho);
 	
-	public <T>List<Object> entidadesAtualizar(Class<T> classe);
-	
-	public String atualizaDados (List<Object> entidadesAtualizar);
-	
 }

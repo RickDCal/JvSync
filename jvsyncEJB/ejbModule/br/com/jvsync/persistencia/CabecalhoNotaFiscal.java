@@ -2,13 +2,10 @@ package br.com.jvsync.persistencia;
 
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.google.gson.Gson;
@@ -83,12 +80,12 @@ public class CabecalhoNotaFiscal {
 	@Column(name="statusnfe", columnDefinition="varchar")
 	private String statusnfe;
 
-	@OneToMany //(fetch = FetchType.EAGER)
-	@JoinColumn(name = "nunota")
-	private List<ItemNotaFiscal> itens;
+//	@OneToMany //(fetch = FetchType.EAGER)
+//	@JoinColumn(name = "nunota")
+//	private List<ItemNotaFiscal> itens;
 	
 	public JsonObject toJson() {
-		this.itens = null;
+		//this.itens = null;
 		return (JsonObject) new JsonParser().parse(new Gson().toJson(this));		
 	}
 
@@ -252,13 +249,13 @@ public class CabecalhoNotaFiscal {
 		this.statusnfe = statusnfe;
 	}
 	
-	public List<ItemNotaFiscal> getItens() {
-		return itens;
-	}
-
-	public void setItens(List<ItemNotaFiscal> itens) {
-		this.itens = itens;
-	}
+//	public List<ItemNotaFiscal> getItens() {
+//		return itens;
+//	}
+//
+//	public void setItens(List<ItemNotaFiscal> itens) {
+//		this.itens = itens;
+//	}
 
 	@Override
 	public String toString() {

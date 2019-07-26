@@ -9,10 +9,10 @@ public class ItemNotaPK implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "nunota", columnDefinition="number")
-	private int idNota;
+	private Long idNota;
 
 	@Column(name = "sequencia" , columnDefinition="number")
-	private int sequencia;
+	private Long sequencia;
 
 	public ItemNotaPK() {
 		// TODO Auto-generated constructor stub

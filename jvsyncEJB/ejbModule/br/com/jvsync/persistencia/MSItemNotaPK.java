@@ -9,10 +9,10 @@ public class MSItemNotaPK implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "nunota", columnDefinition="bigint")
-	private int idNota;
+	private Long idNota;
 
 	@Column(name = "sequencia" , columnDefinition="bigint")
-	private int sequencia;
+	private Long sequencia;
 
 	public MSItemNotaPK() {
 		// TODO Auto-generated constructor stub

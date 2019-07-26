@@ -126,46 +126,30 @@ public class GenericDAO {
 		List<Object> resultList = query.getResultList();			
 		return resultList;		
 	}
+	
+	public String atualizaDados (List<Object> entidadesAtualizar) {
+		StringBuilder stb = new StringBuilder();
+		int i = 0;
+		try {
+			for (Object object : entidadesAtualizar) {
+				em.merge(object);
+				em.flush();
+				i++;
+			}
+		} catch (Exception e) {
+			stb.append(" Ocorreu uma falha ao atualizar os registros. ");
+			e.printStackTrace();
+		}		
+		if ( i > 0) {
+			stb.append(" Registros atualizados: ").append(i);
+		}
+		return stb.toString();		
+	}
+	
+	public <T> Long totalRegistros(Class<T> classe) {
+		String consulta = "select count (o) from " + classe.getSimpleName() + " o";
+		Query query = entityManager.createQuery(consulta);		
+		return (Long) query.getSingleResult();		
+	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//package br.com.mynerp.persistencia.dao;
-//
-//import javax.persistence.EntityManager;
-//import javax.persistence.EntityManagerFactory;
-//import javax.persistence.PersistenceContext;
-//import javax.persistence.PersistenceUnit;
-//
-//public class GenericDAO {
-//	
-//	@PersistenceContext(unitName = "transcal")
-//
-//	protected EntityManager entityManager;
-//	
-//	@PersistenceUnit(unitName = "transcal")
-//	
-////	@PersistenceContext(unitName = "mynerp")
-////
-////	protected EntityManager entityManager;
-////	
-////	@PersistenceUnit(unitName = "mynerp")
-////	
-//	protected EntityManagerFactory entityManagerFactory;
-//
-//}
