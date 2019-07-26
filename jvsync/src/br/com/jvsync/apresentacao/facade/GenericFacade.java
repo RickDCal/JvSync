@@ -111,6 +111,7 @@ public class GenericFacade {
 				default: break;
 				}	
 				
+				
 				if (classePersistir == null) {
 					return "Não foi possível determinar o tipo de entidade a ser perisistida. Classe de origem:" + classe.getSimpleName();
 				}
