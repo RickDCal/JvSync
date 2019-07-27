@@ -31,7 +31,7 @@ public class MSParceiro {
 	@Column(name="codend", columnDefinition="bigint")
 	private Long codEnd;
 	
-	@Column(name="numend", columnDefinition="nnvarchar")
+	@Column(name="numend", columnDefinition="nvarchar")
 	private String numEnd;
 	
 	@Column(name="codbai", columnDefinition="bigint")
@@ -40,7 +40,7 @@ public class MSParceiro {
 	@Column(name="codcid", columnDefinition="bigint")
 	private Long codcid;
 	
-	@Column(name="cep", columnDefinition="nnvarchar")
+	@Column(name="cep", columnDefinition="nvarchar")
 	private String cep;
 	
 	@Column(name="dtcad", columnDefinition="date")
@@ -49,7 +49,7 @@ public class MSParceiro {
 	@Column(name="dtalter", columnDefinition="date")
 	private Date dtAlter;
 	
-	@Column(name="cgc_cpf", columnDefinition="nnvarchar")
+	@Column(name="cgc_cpf", columnDefinition="nvarchar")
 	private String cgcCpf;
 	
 	@Column(name="cliente", columnDefinition="nvarchar")

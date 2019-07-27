@@ -13,6 +13,11 @@ import com.google.gson.JsonObject;
 import br.com.jvsync.apresentacao.facade.GenericFacade;
 import br.com.jvsync.persistencia.CabecalhoNotaFiscal;
 import br.com.jvsync.persistencia.ItemNotaFiscal;
+import br.com.jvsync.persistencia.Parceiro;
+import br.com.jvsync.persistencia.Produto;
+import br.com.jvsync.persistencia.TipoVenda;
+import br.com.jvsync.persistencia.TipoVolume;
+import br.com.jvsync.persistencia.Vendedor;
 import br.com.jvsync.persistencia.dao.exception.ObjetoNaoEncontradoException;
 
 @Path("/database")
@@ -48,6 +53,11 @@ public class DatabaseRest {
 			case "all": return genericFacade.atualizaBancoDados();
 			case "tgfcab": object = new CabecalhoNotaFiscal();break;
 			case "tgfite": object = new ItemNotaFiscal();break;
+			case "tgfpar": object = new Parceiro();break;
+			case "tgfpro": object = new Produto();break;
+			case "tgftpv": object = new TipoVenda();break;
+			case "tgfvoa": object = new TipoVolume();break;
+			case "tgfven": object = new Vendedor();break;
 
 			default: break;
 			}

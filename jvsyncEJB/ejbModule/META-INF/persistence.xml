@@ -6,6 +6,11 @@
         <jta-data-source>java:/datasources/jvSync</jta-data-source>
         <class>br.com.jvsync.persistencia.CabecalhoNotaFiscal</class>
         <class>br.com.jvsync.persistencia.ItemNotaFiscal</class>
+        <class>br.com.jvsync.persistencia.Parceiro</class>
+        <class>br.com.jvsync.persistencia.Produto</class>
+        <class>br.com.jvsync.persistencia.TipoVenda</class>
+        <class>br.com.jvsync.persistencia.TipoVolume</class>
+        <class>br.com.jvsync.persistencia.Vendedor</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
@@ -18,6 +23,10 @@
 	    <class>br.com.jvsync.persistencia.MSCabecalhoNotaFiscal</class>
 	    <class>br.com.jvsync.persistencia.MSItemNotaFiscal</class>
 	    <class>br.com.jvsync.persistencia.MSParceiro</class>
+	    <class>br.com.jvsync.persistencia.MSProduto</class>
+	    <class>br.com.jvsync.persistencia.MSTipoVenda</class>
+	    <class>br.com.jvsync.persistencia.MSTipoVolume</class>
+	    <class>br.com.jvsync.persistencia.MSVendedor</class>
 	    <exclude-unlisted-classes>true</exclude-unlisted-classes> 
 		<properties>   
 			<property name="hibernate.hbm2ddl.auto"	value="validate"/> 

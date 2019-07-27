@@ -19,13 +19,13 @@ public class GenericDAO {
 
 	@PersistenceUnit(unitName = "dboracle")
 	protected EntityManagerFactory entityManagerFactory;
-	
+
 	@PersistenceContext(unitName = "dbsqlserver")
 	protected EntityManager em; // protected está acessível a classes do mesmo pacote e classes que herdam desta
 
 	@PersistenceUnit(unitName = "dbsqlserver")
 	protected EntityManagerFactory emFactory;
-	
+
 	protected Map<String, Object> parametros = new HashMap();
 
 
@@ -50,8 +50,11 @@ public class GenericDAO {
 			query.setMaxResults(max);
 		}		
 
-		List<E> lista = query.getResultList();		
-		return lista;	
+		List<E> lista = query.getResultList();	
+		entityManager.close();
+		return lista;
+		
+		
 
 	}
 
@@ -126,26 +129,21 @@ public class GenericDAO {
 		List<Object> resultList = query.getResultList();			
 		return resultList;		
 	}
-	
+
 	public String atualizaDados (List<Object> entidadesAtualizar) {
 		StringBuilder stb = new StringBuilder();
 		int i = 0;
-		try {
-			for (Object object : entidadesAtualizar) {
-				em.merge(object);
-				em.flush();
-				i++;
-			}
-		} catch (Exception e) {
-			stb.append(" Ocorreu uma falha ao atualizar os registros. ");
-			e.printStackTrace();
-		}		
+		for (Object object : entidadesAtualizar) {
+			em.merge(object);
+			em.flush();
+			i++;
+		}	
 		if ( i > 0) {
 			stb.append(" Registros atualizados: ").append(i);
 		}
 		return stb.toString();		
 	}
-	
+
 	public <T> Long totalRegistros(Class<T> classe) {
 		String consulta = "select count (o) from " + classe.getSimpleName() + " o";
 		Query query = entityManager.createQuery(consulta);		

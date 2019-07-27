@@ -12,19 +12,16 @@ import com.google.gson.JsonParser;
 
 
 @Entity  
-@Table(name="TGFPRO")
+@Table(name="TGFTPV")
 
-public class MSProduto {
+public class MSTipoVenda {
 
 	@Id 
-	@Column(name="codprod", columnDefinition="bigint")
+	@Column(name="codtipvenda", columnDefinition="bigint")
 	private Long id;
 	
-	@Column(name="descrprod", columnDefinition="nvarchar")
-	private String descrProd;
-	
-	@Column(name="codvol", columnDefinition="nvarchar")
-	private String codVol;
+	@Column(name="descrtipvenda", columnDefinition="nvarchar")
+	private String descrTipVenda;
 	
 	public JsonObject toJson() {
 		return (JsonObject) new JsonParser().parse(new Gson().toJson(this));		
@@ -38,20 +35,14 @@ public class MSProduto {
 		this.id = id;
 	}
 
-	public String getDescrProd() {
-		return descrProd;
+	public String getDescrTipVenda() {
+		return descrTipVenda;
 	}
 
-	public void setDescrProd(String descrProd) {
-		this.descrProd = descrProd;
-	}
-
-	public String getCodVol() {
-		return codVol;
-	}
-
-	public void setCodVol(String codVol) {
-		this.codVol = codVol;
+	public void setDescrTipVenda(String descrTipVenda) {
+		this.descrTipVenda = descrTipVenda;
 	}	
+	
+	
 	
 }

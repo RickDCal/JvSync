@@ -1,19 +1,15 @@
-package br.com.jvsync.apresentacao.facade;
+package br.com.jvsync.negocio;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
+import javax.ejb.EJB;
 import javax.ejb.Schedule;
-import javax.naming.Context;
-import javax.naming.InitialContext;
+import javax.ejb.Stateless;
 import javax.naming.NamingException;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
-import br.com.jvsync.negocio.IGenericServiceLocal;
-import br.com.jvsync.negocio.exception.FalhaAoCriarJSONException;
 import br.com.jvsync.persistencia.CabecalhoNotaFiscal;
 import br.com.jvsync.persistencia.ItemNotaFiscal;
 import br.com.jvsync.persistencia.MSCabecalhoNotaFiscal;
@@ -28,63 +24,31 @@ import br.com.jvsync.persistencia.Produto;
 import br.com.jvsync.persistencia.TipoVenda;
 import br.com.jvsync.persistencia.TipoVolume;
 import br.com.jvsync.persistencia.Vendedor;
+import br.com.jvsync.persistencia.dao.ICadastroDAO;
+import br.com.jvsync.persistencia.dao.IGenericDAO;
 import br.com.jvsync.persistencia.dao.exception.ObjetoNaoEncontradoException;
-//import br.com.jvsync.timer.ServiceVerificaSacSuprasoft;
 
-public class GenericFacade {
+@Stateless
+public class DatabaseService {
+	
+	@EJB
+	private IGenericDAO genericDao;
 
-	private Properties p;
-	private Context c;
+	public DatabaseService() {
 
-	public IGenericServiceLocal service;
-	//public ServiceVerificaSacSuprasoft timer;
-
-	public GenericFacade() throws NamingException {
-
-		p = new Properties();
-		c = new InitialContext(p);
-		service = (IGenericServiceLocal)c.lookup("java:global/jvsyncEAR/jvsyncEJB/GenericService");
-		//timer = (ServiceVerificaSacSuprasoft)c.lookup("java:global/jvsyncEAR/jvsyncEJB/ServiceVerificaSacSuprasoft");
-
-	}
-
-	/*Gen√©ricos*/
-
-	public <T> Object pesquisar(Class<T> classe, int id) throws ObjetoNaoEncontradoException {
-		return service.obter(classe, id);
-	}
-
-	public <E, T> List<E> pesquisar(Class<T> classe, Integer position, Integer max) throws ObjetoNaoEncontradoException {
-		return service.obter(classe, position, max);
-	}
-
-	public <E, T> List<E> pesquisar(Class<T> classe, String nome, Integer position, Integer max) throws ObjetoNaoEncontradoException {
-		return service.obter(classe, nome, position, max);
-	}
-
-	public void remover(Object entity) {
-		service.remover(entity);
-	}
-
-	public Object cadastrar(Object entity) throws ObjetoNaoEncontradoException {
-		return service.inserir(entity);
-	}
-
-	public Object atualizar(Object entity) throws ObjetoNaoEncontradoException {
-		return service.alterar(entity);
-
-	}
-
-	public JsonObject objetoJson(Object objeto) throws FalhaAoCriarJSONException {
-		return service.objetoJson(objeto);
-	}
-
-	public List<Object> obter (String nativeQuery) {
-		return service.obter(nativeQuery);
+	}	
+	
+	@Schedule(hour="01", minute="40", persistent=false) //@Schedule(hour = "*", minute="*/2", persistent=false) // testes
+	public void atualizaBancoDadosTimer() {
+		try {
+			System.out.println(atualizaBancoDados());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}				
 	}
 	
 	public String atualizaBancoDados() {
-	
+		
 		StringBuilder stb = new StringBuilder();
 		try {
 			stb.append(atualizaDados(CabecalhoNotaFiscal.class));
@@ -102,18 +66,18 @@ public class GenericFacade {
 			stb.append(atualizaDados(Vendedor.class));
 			stb.append(System.lineSeparator());
 		} catch (ObjetoNaoEncontradoException | NamingException e) {
-			stb.append("ocorreu uma falha na atualiza√ß√£o dos dados");
+			stb.append("ocorreu uma falha na atualizaÁ„o dos dados");
 			e.printStackTrace();
 		}
 		return stb.toString();		
-	}	
-
+	}
+	
 	@SuppressWarnings("unchecked")
 	public <T>String atualizaDados (Class<T> classe) throws ObjetoNaoEncontradoException, NamingException {
 
 		StringBuilder stb = new StringBuilder("Atualizar ").append(classe.getSimpleName()).append(". Total registros de origem: ");		
 
-		int x = service.totalRegistros(classe).intValue();
+		int x = genericDao.totalRegistros(classe).intValue();
 		int i = 0;
 		stb.append(x);
 
@@ -122,7 +86,7 @@ public class GenericFacade {
 		while (i < x) {
 			try {
 				if (i > 0){ System.out.println("" + i + " linhas atualizadas");}
-				entidadesOrigem = service.obter(classe, i, 500);			
+				entidadesOrigem = genericDao.obter(classe, i, 500);			
 				List<Object> entidadesPersistir = new ArrayList<>();
 				String tipo = classe.getSimpleName().toLowerCase();				
 				Class classePersistir = null;	
@@ -140,7 +104,7 @@ public class GenericFacade {
 				}					
 				
 				if (classePersistir == null) {
-					return "N√£o foi poss√≠vel determinar o tipo de entidade a ser persistida. Classe de origem:" + classe.getSimpleName();
+					return "N„o foi possÌvel determinar o tipo de entidade a ser persistida. Classe de origem:" + classe.getSimpleName();
 				}
 
 				for (Object object : entidadesOrigem) {
@@ -149,11 +113,11 @@ public class GenericFacade {
 						entidadesPersistir.add(entidadePersistir);
 					}						
 				}				
-				service.atualizaDados(entidadesPersistir);
+				genericDao.atualizaDados(entidadesPersistir);
 				i = i + 500;
 				
 			} catch (Exception e) {
-				System.out.println("Houve uma falha ao atualizar registros. Registros atualizados at√© o momento: " + i);
+				System.out.println("Houve uma falha ao atualizar registros. Registros atualizados atÈ o momento: " + i);
 				e.printStackTrace();
 			}			
 		}
@@ -163,7 +127,6 @@ public class GenericFacade {
 		System.out.println(stb.toString());
 		return stb.toString();
 	}
-	
 	
 
 }

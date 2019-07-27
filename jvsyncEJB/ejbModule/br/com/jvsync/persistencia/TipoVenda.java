@@ -18,7 +18,7 @@ public class TipoVenda {
 
 	@Id 
 	@Column(name="codtipvenda", columnDefinition="number")
-	private int id;
+	private Long id;
 	
 	@Column(name="descrtipvenda", columnDefinition="varchar")
 	private String descrTipVenda;
@@ -27,11 +27,11 @@ public class TipoVenda {
 		return (JsonObject) new JsonParser().parse(new Gson().toJson(this));		
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
