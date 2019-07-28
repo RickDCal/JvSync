@@ -118,6 +118,7 @@ public class GenericFacade {
 			stb.append(atualizaDados(Rota.class));
 			stb.append(System.lineSeparator());
 			
+			stb.append("Sincronização finalizada com sucesso!");			
 			System.out.println("Sincronização finalizada com sucesso!");
 			
 		} catch (ObjetoNaoEncontradoException e) {
