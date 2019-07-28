@@ -1,6 +1,8 @@
 package br.com.jvsync.persistencia;
 
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -12,16 +14,21 @@ import com.google.gson.JsonParser;
 
 
 @Entity  
-@Table(name="TGFVEN")
+@Table(name="TGFROT")
 
-public class Vendedor {
+public class Rota {
 
 	@Id 
-	@Column(name="codvend", columnDefinition="number")
+	@Column(name="codrota", columnDefinition="number")
 	private Long id;
+
 	
-	@Column(name="apelido", columnDefinition="varchar")
-	private String apelido;
+	@Column(name="dtalter", columnDefinition="date")
+	private Date dtAlter;
+	
+	@Column(name="descrrota", columnDefinition="varchar")
+	private String descrrota;
+		
 		
 	public JsonObject toJson() {
 		return (JsonObject) new JsonParser().parse(new Gson().toJson(this));		

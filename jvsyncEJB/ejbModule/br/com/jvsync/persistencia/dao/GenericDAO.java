@@ -51,7 +51,6 @@ public class GenericDAO {
 		}		
 
 		List<E> lista = query.getResultList();	
-		entityManager.close();
 		return lista;
 		
 		

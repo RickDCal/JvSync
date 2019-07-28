@@ -1,5 +1,7 @@
 package br.com.jvsync.apresentacao.ws;
 
+import java.util.Date;
+
 import javax.naming.NamingException;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -11,14 +13,21 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import br.com.jvsync.apresentacao.facade.GenericFacade;
+import br.com.jvsync.persistencia.Bairro;
 import br.com.jvsync.persistencia.CabecalhoNotaFiscal;
+import br.com.jvsync.persistencia.Cidade;
+import br.com.jvsync.persistencia.Endereco;
 import br.com.jvsync.persistencia.ItemNotaFiscal;
 import br.com.jvsync.persistencia.Parceiro;
 import br.com.jvsync.persistencia.Produto;
+import br.com.jvsync.persistencia.Regiao;
+import br.com.jvsync.persistencia.Rota;
+import br.com.jvsync.persistencia.TipoOperacao;
 import br.com.jvsync.persistencia.TipoVenda;
 import br.com.jvsync.persistencia.TipoVolume;
 import br.com.jvsync.persistencia.Vendedor;
 import br.com.jvsync.persistencia.dao.exception.ObjetoNaoEncontradoException;
+import br.com.jvsync.util.EmailTools;
 
 @Path("/database")
 public class DatabaseRest {
@@ -58,9 +67,21 @@ public class DatabaseRest {
 			case "tgftpv": object = new TipoVenda();break;
 			case "tgfvoa": object = new TipoVolume();break;
 			case "tgfven": object = new Vendedor();break;
+			case "tgftop": object = new TipoOperacao();break;
+			case "tsibai": object = new Bairro();break;
+			case "tsicid": object = new Cidade();break;
+			case "tsireg": object = new Regiao();break;
+			case "tsiend": object = new Endereco();break;
+			case "tgfrot": object = new Rota();break;
 
 			default: break;
 			}
+			
+			System.out.println(new Date().toString());
+			
+			//não consegui fazer funcionar
+			//EmailTools email = new EmailTools();
+			//email.enviaEmail();
 			
 			if (object != null  ) {
 				return genericFacade.atualizaDados(object.getClass());

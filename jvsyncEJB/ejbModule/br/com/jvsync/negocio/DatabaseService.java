@@ -24,7 +24,6 @@ import br.com.jvsync.persistencia.Produto;
 import br.com.jvsync.persistencia.TipoVenda;
 import br.com.jvsync.persistencia.TipoVolume;
 import br.com.jvsync.persistencia.Vendedor;
-import br.com.jvsync.persistencia.dao.ICadastroDAO;
 import br.com.jvsync.persistencia.dao.IGenericDAO;
 import br.com.jvsync.persistencia.dao.exception.ObjetoNaoEncontradoException;
 

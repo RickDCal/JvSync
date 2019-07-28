@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import javax.ejb.Schedule;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -14,37 +13,42 @@ import com.google.gson.JsonObject;
 
 import br.com.jvsync.negocio.IGenericServiceLocal;
 import br.com.jvsync.negocio.exception.FalhaAoCriarJSONException;
+import br.com.jvsync.persistencia.Bairro;
 import br.com.jvsync.persistencia.CabecalhoNotaFiscal;
+import br.com.jvsync.persistencia.Cidade;
+import br.com.jvsync.persistencia.Endereco;
 import br.com.jvsync.persistencia.ItemNotaFiscal;
 import br.com.jvsync.persistencia.MSCabecalhoNotaFiscal;
 import br.com.jvsync.persistencia.MSItemNotaFiscal;
 import br.com.jvsync.persistencia.MSParceiro;
 import br.com.jvsync.persistencia.MSProduto;
+import br.com.jvsync.persistencia.MSTipoOperacao;
 import br.com.jvsync.persistencia.MSTipoVenda;
 import br.com.jvsync.persistencia.MSTipoVolume;
 import br.com.jvsync.persistencia.MSVendedor;
 import br.com.jvsync.persistencia.Parceiro;
 import br.com.jvsync.persistencia.Produto;
+import br.com.jvsync.persistencia.Regiao;
+import br.com.jvsync.persistencia.Rota;
+import br.com.jvsync.persistencia.TipoOperacao;
 import br.com.jvsync.persistencia.TipoVenda;
 import br.com.jvsync.persistencia.TipoVolume;
 import br.com.jvsync.persistencia.Vendedor;
 import br.com.jvsync.persistencia.dao.exception.ObjetoNaoEncontradoException;
-//import br.com.jvsync.timer.ServiceVerificaSacSuprasoft;
+
 
 public class GenericFacade {
 
 	private Properties p;
 	private Context c;
 
-	public IGenericServiceLocal service;
-	//public ServiceVerificaSacSuprasoft timer;
+	private IGenericServiceLocal service;
 
 	public GenericFacade() throws NamingException {
 
 		p = new Properties();
 		c = new InitialContext(p);
 		service = (IGenericServiceLocal)c.lookup("java:global/jvsyncEAR/jvsyncEJB/GenericService");
-		//timer = (ServiceVerificaSacSuprasoft)c.lookup("java:global/jvsyncEAR/jvsyncEJB/ServiceVerificaSacSuprasoft");
 
 	}
 
@@ -101,7 +105,20 @@ public class GenericFacade {
 			stb.append(System.lineSeparator());
 			stb.append(atualizaDados(Vendedor.class));
 			stb.append(System.lineSeparator());
-		} catch (ObjetoNaoEncontradoException | NamingException e) {
+			stb.append(atualizaDados(TipoOperacao.class));
+			stb.append(System.lineSeparator());
+			stb.append(atualizaDados(Bairro.class));
+			stb.append(System.lineSeparator());
+			stb.append(atualizaDados(Cidade.class));
+			stb.append(System.lineSeparator());
+			stb.append(atualizaDados(Regiao.class));
+			stb.append(System.lineSeparator());
+			stb.append(atualizaDados(Endereco.class));
+			stb.append(System.lineSeparator());
+			stb.append(atualizaDados(Rota.class));
+			stb.append(System.lineSeparator());
+			
+		} catch (ObjetoNaoEncontradoException e) {
 			stb.append("ocorreu uma falha na atualização dos dados");
 			e.printStackTrace();
 		}
@@ -109,7 +126,7 @@ public class GenericFacade {
 	}	
 
 	@SuppressWarnings("unchecked")
-	public <T>String atualizaDados (Class<T> classe) throws ObjetoNaoEncontradoException, NamingException {
+	public <T>String atualizaDados (Class<T> classe) throws ObjetoNaoEncontradoException {
 
 		StringBuilder stb = new StringBuilder("Atualizar ").append(classe.getSimpleName()).append(". Total registros de origem: ");		
 
@@ -136,6 +153,7 @@ public class GenericFacade {
 				case "tipovenda": classePersistir = MSTipoVenda.class; break;
 				case "tipovolume": classePersistir = MSTipoVolume.class; break;
 				case "vendedor": classePersistir = MSVendedor.class; break;
+				case "tipooperacao": classePersistir = MSTipoOperacao.class; break;
 				default: break;
 				}					
 				
@@ -157,7 +175,6 @@ public class GenericFacade {
 				e.printStackTrace();
 			}			
 		}
-
 		
 		stb.append(" Registros atualizados: ").append(i > x ? x : i);
 		System.out.println(stb.toString());

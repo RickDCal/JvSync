@@ -2,13 +2,10 @@ package br.com.jvsync.persistencia;
 
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.google.gson.Gson;
@@ -83,10 +80,10 @@ public class MSCabecalhoNotaFiscal {
 	@Column(name="statusnfe", columnDefinition="nvarchar")
 	private String statusnfe;
 
-	@OneToMany //(fetch = FetchType.EAGER)
-	@JoinColumn(name = "nunota")
-	private List<MSItemNotaFiscal> itens;
-	
+//	@OneToMany //(fetch = FetchType.EAGER)
+//	@JoinColumn(name = "nunota")
+//	private List<MSItemNotaFiscal> itens;
+//	
 	public MSCabecalhoNotaFiscal() {
 		
 	}	
@@ -116,7 +113,7 @@ public class MSCabecalhoNotaFiscal {
 	}
 	
 	public JsonObject toJson() {
-		this.itens = null;
+		//this.itens = null;
 		return (JsonObject) new JsonParser().parse(new Gson().toJson(this));		
 	}
 
@@ -280,13 +277,13 @@ public class MSCabecalhoNotaFiscal {
 		this.statusnfe = statusnfe;
 	}
 	
-	public List<MSItemNotaFiscal> getItens() {
-		return itens;
-	}
-
-	public void setItens(List<MSItemNotaFiscal> itens) {
-		this.itens = itens;
-	}
+//	public List<MSItemNotaFiscal> getItens() {
+//		return itens;
+//	}
+//
+//	public void setItens(List<MSItemNotaFiscal> itens) {
+//		this.itens = itens;
+//	}
 
 	@Override
 	public String toString() {

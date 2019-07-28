@@ -19,7 +19,7 @@ import com.google.gson.JsonParser;
 public class MSTipoOperacao {
 
 	@Id 
-	@Column(name="codtipoper", columnDefinition="number")
+	@Column(name="codtipoper", columnDefinition="bigint")
 	private Long id;
 
 	@Column(name="descroper", columnDefinition="nvarchar")

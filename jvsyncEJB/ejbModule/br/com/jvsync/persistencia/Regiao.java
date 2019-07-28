@@ -12,16 +12,17 @@ import com.google.gson.JsonParser;
 
 
 @Entity  
-@Table(name="TGFVEN")
+@Table(name="TSIREG")
 
-public class Vendedor {
+public class Regiao {
 
 	@Id 
-	@Column(name="codvend", columnDefinition="number")
+	@Column(name="codreg", columnDefinition="number")
 	private Long id;
 	
-	@Column(name="apelido", columnDefinition="varchar")
-	private String apelido;
+	@Column(name="nomereg", columnDefinition="varchar")
+	private String nomeReg;
+		
 		
 	public JsonObject toJson() {
 		return (JsonObject) new JsonParser().parse(new Gson().toJson(this));		

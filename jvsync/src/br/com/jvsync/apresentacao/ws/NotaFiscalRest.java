@@ -5,11 +5,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.naming.NamingException;
-import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.google.gson.Gson;
@@ -17,14 +15,11 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import br.com.jvsync.apresentacao.facade.GenericFacade;
 import br.com.jvsync.apresentacao.facade.NotaFiscalFacade;
 import br.com.jvsync.negocio.dto.FilterNotaFiscalDTO;
-import br.com.jvsync.negocio.exception.ObjetoInexistenteException;
 import br.com.jvsync.persistencia.CabecalhoNotaFiscal;
 import br.com.jvsync.persistencia.ItemNotaFiscal;
 import br.com.jvsync.persistencia.MSCabecalhoNotaFiscal;
-import br.com.jvsync.persistencia.dao.exception.ObjetoNaoEncontradoException;
 
 @Path("/notaFiscal")
 public class NotaFiscalRest {

@@ -11,6 +11,13 @@
         <class>br.com.jvsync.persistencia.TipoVenda</class>
         <class>br.com.jvsync.persistencia.TipoVolume</class>
         <class>br.com.jvsync.persistencia.Vendedor</class>
+        <class>br.com.jvsync.persistencia.TipoOperacao</class>
+        <class>br.com.jvsync.persistencia.TipoOperacao</class>
+        <class>br.com.jvsync.persistencia.Bairro</class>
+        <class>br.com.jvsync.persistencia.Cidade</class>
+        <class>br.com.jvsync.persistencia.Endereco</class>
+        <class>br.com.jvsync.persistencia.Regiao</class>
+        <class>br.com.jvsync.persistencia.Rota</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
@@ -27,6 +34,12 @@
 	    <class>br.com.jvsync.persistencia.MSTipoVenda</class>
 	    <class>br.com.jvsync.persistencia.MSTipoVolume</class>
 	    <class>br.com.jvsync.persistencia.MSVendedor</class>
+	    <class>br.com.jvsync.persistencia.MSTipoOperacao</class>
+	    <class>br.com.jvsync.persistencia.MSBairro</class>
+	    <class>br.com.jvsync.persistencia.MSCidade</class>
+        <class>br.com.jvsync.persistencia.MSEndereco</class>
+        <class>br.com.jvsync.persistencia.MSRegiao</class>
+        <class>br.com.jvsync.persistencia.MSRota</class>
 	    <exclude-unlisted-classes>true</exclude-unlisted-classes> 
 		<properties>   
 			<property name="hibernate.hbm2ddl.auto"	value="validate"/> 
