@@ -12,7 +12,7 @@ import javax.ws.rs.core.Response;
 @Stateless
 public class TimerAtualizaBancoDadosSqlServer {
 
-	@Schedule(hour="18", minute="40", persistent=false) //@Schedule(hour = "*", minute="*/2", persistent=false) // testes
+	@Schedule(hour="0", minute="10", persistent=false) //@Schedule(hour = "*", minute="*/2", persistent=false) // testes
 	public void atualizaBancoSQL() {
 		try {
 
