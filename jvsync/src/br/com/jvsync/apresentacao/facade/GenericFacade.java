@@ -18,10 +18,14 @@ import br.com.jvsync.persistencia.CabecalhoNotaFiscal;
 import br.com.jvsync.persistencia.Cidade;
 import br.com.jvsync.persistencia.Endereco;
 import br.com.jvsync.persistencia.ItemNotaFiscal;
+import br.com.jvsync.persistencia.MSBairro;
 import br.com.jvsync.persistencia.MSCabecalhoNotaFiscal;
+import br.com.jvsync.persistencia.MSCidade;
+import br.com.jvsync.persistencia.MSEndereco;
 import br.com.jvsync.persistencia.MSItemNotaFiscal;
 import br.com.jvsync.persistencia.MSParceiro;
 import br.com.jvsync.persistencia.MSProduto;
+import br.com.jvsync.persistencia.MSRota;
 import br.com.jvsync.persistencia.MSTipoOperacao;
 import br.com.jvsync.persistencia.MSTipoVenda;
 import br.com.jvsync.persistencia.MSTipoVolume;
@@ -157,6 +161,10 @@ public class GenericFacade {
 				case "tipovolume": classePersistir = MSTipoVolume.class; break;
 				case "vendedor": classePersistir = MSVendedor.class; break;
 				case "tipooperacao": classePersistir = MSTipoOperacao.class; break;
+				case "bairro": classePersistir = MSBairro.class; break;
+				case "cidade": classePersistir = MSCidade.class; break;
+				case "endereco": classePersistir = MSEndereco.class; break;
+				case "rota": classePersistir = MSRota.class; break;
 				default: break;
 				}					
 				
