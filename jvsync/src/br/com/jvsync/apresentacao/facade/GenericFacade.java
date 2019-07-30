@@ -18,17 +18,21 @@ import br.com.jvsync.persistencia.CabecalhoNotaFiscal;
 import br.com.jvsync.persistencia.Cidade;
 import br.com.jvsync.persistencia.Endereco;
 import br.com.jvsync.persistencia.ItemNotaFiscal;
+import br.com.jvsync.persistencia.Logradouro;
 import br.com.jvsync.persistencia.MSBairro;
 import br.com.jvsync.persistencia.MSCabecalhoNotaFiscal;
 import br.com.jvsync.persistencia.MSCidade;
 import br.com.jvsync.persistencia.MSEndereco;
 import br.com.jvsync.persistencia.MSItemNotaFiscal;
+import br.com.jvsync.persistencia.MSLogradouro;
 import br.com.jvsync.persistencia.MSParceiro;
 import br.com.jvsync.persistencia.MSProduto;
+import br.com.jvsync.persistencia.MSRegiao;
 import br.com.jvsync.persistencia.MSRota;
 import br.com.jvsync.persistencia.MSTipoOperacao;
 import br.com.jvsync.persistencia.MSTipoVenda;
 import br.com.jvsync.persistencia.MSTipoVolume;
+import br.com.jvsync.persistencia.MSUF;
 import br.com.jvsync.persistencia.MSVendedor;
 import br.com.jvsync.persistencia.Parceiro;
 import br.com.jvsync.persistencia.Produto;
@@ -37,6 +41,7 @@ import br.com.jvsync.persistencia.Rota;
 import br.com.jvsync.persistencia.TipoOperacao;
 import br.com.jvsync.persistencia.TipoVenda;
 import br.com.jvsync.persistencia.TipoVolume;
+import br.com.jvsync.persistencia.UF;
 import br.com.jvsync.persistencia.Vendedor;
 import br.com.jvsync.persistencia.dao.exception.ObjetoNaoEncontradoException;
 
@@ -121,6 +126,10 @@ public class GenericFacade {
 			stb.append(System.lineSeparator());
 			stb.append(atualizaDados(Rota.class));
 			stb.append(System.lineSeparator());
+			stb.append(atualizaDados(Logradouro.class));
+			stb.append(System.lineSeparator());
+			stb.append(atualizaDados(UF.class));
+			stb.append(System.lineSeparator());
 			
 			stb.append("Sincronização finalizada com sucesso!");			
 			System.out.println("Sincronização finalizada com sucesso!");
@@ -164,7 +173,10 @@ public class GenericFacade {
 				case "bairro": classePersistir = MSBairro.class; break;
 				case "cidade": classePersistir = MSCidade.class; break;
 				case "endereco": classePersistir = MSEndereco.class; break;
+				case "regiao": classePersistir = MSRegiao.class; break;
 				case "rota": classePersistir = MSRota.class; break;
+				case "logradouro": classePersistir = MSLogradouro.class; break;
+				case "uf": classePersistir = MSUF.class; break;
 				default: break;
 				}					
 				

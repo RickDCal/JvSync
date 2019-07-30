@@ -18,6 +18,7 @@ import br.com.jvsync.persistencia.CabecalhoNotaFiscal;
 import br.com.jvsync.persistencia.Cidade;
 import br.com.jvsync.persistencia.Endereco;
 import br.com.jvsync.persistencia.ItemNotaFiscal;
+import br.com.jvsync.persistencia.Logradouro;
 import br.com.jvsync.persistencia.Parceiro;
 import br.com.jvsync.persistencia.Produto;
 import br.com.jvsync.persistencia.Regiao;
@@ -25,6 +26,7 @@ import br.com.jvsync.persistencia.Rota;
 import br.com.jvsync.persistencia.TipoOperacao;
 import br.com.jvsync.persistencia.TipoVenda;
 import br.com.jvsync.persistencia.TipoVolume;
+import br.com.jvsync.persistencia.UF;
 import br.com.jvsync.persistencia.Vendedor;
 import br.com.jvsync.persistencia.dao.exception.ObjetoNaoEncontradoException;
 import br.com.jvsync.util.EmailTools;
@@ -73,6 +75,9 @@ public class DatabaseRest {
 			case "tsireg": object = new Regiao();break;
 			case "tsiend": object = new Endereco();break;
 			case "tgfrot": object = new Rota();break;
+			case "tfplgr": object = new Logradouro();break;
+			case "tsiufs": object = new UF();break;
+			
 
 			default: break;
 			}

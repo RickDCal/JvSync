@@ -18,6 +18,8 @@
         <class>br.com.jvsync.persistencia.Endereco</class>
         <class>br.com.jvsync.persistencia.Regiao</class>
         <class>br.com.jvsync.persistencia.Rota</class>
+        <class>br.com.jvsync.persistencia.Logradouro</class>
+        <class>br.com.jvsync.persistencia.UF</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
@@ -40,6 +42,8 @@
         <class>br.com.jvsync.persistencia.MSEndereco</class>
         <class>br.com.jvsync.persistencia.MSRegiao</class>
         <class>br.com.jvsync.persistencia.MSRota</class>
+        <class>br.com.jvsync.persistencia.MSLogradouro</class>
+        <class>br.com.jvsync.persistencia.MSUF</class>
 	    <exclude-unlisted-classes>true</exclude-unlisted-classes> 
 		<properties>   
 			<property name="hibernate.hbm2ddl.auto"	value="validate"/> 
