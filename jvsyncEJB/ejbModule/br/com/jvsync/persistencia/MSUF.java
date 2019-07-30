@@ -18,13 +18,10 @@ public class MSUF {
 
 	@Id 
 	@Column(name="coduf", columnDefinition="bigint")
-	private Long codUF;
-	
-	
+	private Long codUF;	
 	
 	@Column(name="uf", columnDefinition="nvarchar")
 	private String sigla;
-		
 		
 	public JsonObject toJson() {
 		return (JsonObject) new JsonParser().parse(new Gson().toJson(this));		
