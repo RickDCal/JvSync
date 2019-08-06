@@ -62,6 +62,9 @@ public class MSItemNotaFiscal {
 	@Column(name="codvend", columnDefinition="bigint")
 	private Long codvend;
 	
+	@Column(name="vlrsubst", columnDefinition="float")
+	private Double vlrsubst;
+
 	public JsonObject toJson() {
 		return (JsonObject) new JsonParser().parse(new Gson().toJson(this));		
 	}
@@ -186,13 +189,23 @@ public class MSItemNotaFiscal {
 		this.codvend = codvend;
 	}
 
+	public Double getVlrsubst() {
+		return vlrsubst;
+	}
+
+	public void setVlrsubst(Double vlrsubst) {
+		this.vlrsubst = vlrsubst;
+	}
+
 	@Override
 	public String toString() {
 		return "MSItemNotaFiscal [idNota=" + idNota + ", sequenciaFiscal=" + sequenciaFiscal + ", sequencia="
 				+ sequencia + ", codProd=" + codProd + ", codCfo=" + codCfo + ", qtdNeg=" + qtdNeg + ", codVol="
 				+ codVol + ", vlrUnit=" + vlrUnit + ", vlrDesc=" + vlrDesc + ", vlrTot=" + vlrTot + ", baseIcms="
 				+ baseIcms + ", vlrIcms=" + vlrIcms + ", aliqIcms=" + aliqIcms + ", custo=" + custo + ", codvend="
-				+ codvend + "]";
-	}	
+				+ codvend + ", vlrsubst=" + vlrsubst + "]";
+	}
+	
+	
 
 }

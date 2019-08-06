@@ -37,10 +37,6 @@ public class MSBairro {
 		
 	public JsonObject toJson() {
 		return (JsonObject) new JsonParser().parse(new Gson().toJson(this));		
-	}
-
-	
-	
-	
+	}	
 	
 }

@@ -62,6 +62,9 @@ public class ItemNotaFiscal {
 	@Column(name="codvend", columnDefinition="number")
 	private Long codvend;
 	
+	@Column(name="vlrsubst", columnDefinition="float")
+	private Double vlrsubst;
+
 	public JsonObject toJson() {
 		return (JsonObject) new JsonParser().parse(new Gson().toJson(this));		
 	}
@@ -185,14 +188,22 @@ public class ItemNotaFiscal {
 	public void setCodvend(Long codvend) {
 		this.codvend = codvend;
 	}
+	
+	public Double getVlrsubst() {
+		return vlrsubst;
+	}
+	
+	public void setVlrsubst(Double vlrsubst) {
+		this.vlrsubst = vlrsubst;
+	}
 
 	@Override
 	public String toString() {
 		return "ItemNotaFiscal [idNota=" + idNota + ", sequenciaFiscal=" + sequenciaFiscal + ", sequencia=" + sequencia
 				+ ", codProd=" + codProd + ", codCfo=" + codCfo + ", qtdNeg=" + qtdNeg + ", codVol=" + codVol
 				+ ", vlrUnit=" + vlrUnit + ", vlrDesc=" + vlrDesc + ", vlrTot=" + vlrTot + ", baseIcms=" + baseIcms
-				+ ", vlrIcms=" + vlrIcms + ", aliqIcms=" + aliqIcms + ", custo=" + custo + ", codvend=" + codvend + "]";
-	}
-	
+				+ ", vlrIcms=" + vlrIcms + ", aliqIcms=" + aliqIcms + ", custo=" + custo + ", codvend=" + codvend
+				+ ", vlrsubst=" + vlrsubst + "]";
+	}	
 
 }
