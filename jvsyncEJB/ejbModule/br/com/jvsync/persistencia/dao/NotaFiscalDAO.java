@@ -65,9 +65,11 @@ public class NotaFiscalDAO extends GenericDAO implements INotaFiscalDAO {
 
 	public List<ItemNotaFiscal> obterItens (FilterNotaFiscalDTO filter) {
 
-		StringBuilder queryBuilder = new StringBuilder("select i from CabecalhoNotaFiscal c join c.itens i where c.id is not null");
+		StringBuilder queryBuilder = new StringBuilder("select i from ItemNotaFiscal i where i.idNota in ( select c.id from CabecalhoNotaFiscal c where c.id is not null ");
 
 		queryBuilder = aplicaFilter(queryBuilder, filter);
+		
+		queryBuilder.append(" ) ");
 
 		queryBuilder.append(" order by i.idNota, i.sequencia ");
 
