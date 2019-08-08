@@ -79,6 +79,9 @@ public class MSCabecalhoNotaFiscal {
 	
 	@Column(name="statusnfe", columnDefinition="nvarchar")
 	private String statusnfe;
+	
+	@Column(name="codtipoper", columnDefinition="bigint")
+	private Long codtipoper;
 
 //	@OneToMany //(fetch = FetchType.EAGER)
 //	@JoinColumn(name = "nunota")

@@ -79,11 +79,15 @@ public class CabecalhoNotaFiscal {
 	
 	@Column(name="statusnfe", columnDefinition="varchar")
 	private String statusnfe;
+	
+	@Column(name="codtipoper", columnDefinition="number")
+	private Long codtipoper;
 
 //	@OneToMany //(fetch = FetchType.EAGER)
 //	@JoinColumn(name = "nunota")
 //	private List<ItemNotaFiscal> itens;
 	
+
 	public JsonObject toJson() {
 		//this.itens = null;
 		return (JsonObject) new JsonParser().parse(new Gson().toJson(this));		
@@ -249,13 +253,13 @@ public class CabecalhoNotaFiscal {
 		this.statusnfe = statusnfe;
 	}
 	
-//	public List<ItemNotaFiscal> getItens() {
-//		return itens;
-//	}
-//
-//	public void setItens(List<ItemNotaFiscal> itens) {
-//		this.itens = itens;
-//	}
+	public Long getCodtipoper() {
+		return codtipoper;
+	}
+
+	public void setCodtipoper(Long codtipoper) {
+		this.codtipoper = codtipoper;
+	}
 
 	@Override
 	public String toString() {
@@ -264,8 +268,17 @@ public class CabecalhoNotaFiscal {
 				+ ", vlrIcms=" + vlrIcms + ", baseSubstit=" + baseSubstit + ", vlrSubst=" + vlrSubst
 				+ ", totalCustoProd=" + totalCustoProd + ", vlrFrete=" + vlrFrete + ", vlroutros=" + vlroutros
 				+ ", vlrNota=" + vlrNota + ", codParcTransp=" + codParcTransp + ", qtdVol=" + qtdVol + ", volume="
-				+ volume + ", peso=" + peso + ", statusnfe=" + statusnfe  + "]";
+				+ volume + ", peso=" + peso + ", statusnfe=" + statusnfe + ", codtipoper=" + codtipoper + "]";
 	}
+	
+//	public List<ItemNotaFiscal> getItens() {
+//		return itens;
+//	}
+//
+//	public void setItens(List<ItemNotaFiscal> itens) {
+//		this.itens = itens;
+//	}
+
 	
 	
 }
