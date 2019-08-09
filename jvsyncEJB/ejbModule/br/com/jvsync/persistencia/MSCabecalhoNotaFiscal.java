@@ -87,7 +87,7 @@ public class MSCabecalhoNotaFiscal {
 	private Long codTipVenda;
 	
 	@Column(name="cif_fob", columnDefinition="nvarchar")
-	private Long cif_fob;
+	private String cif_fob;
 	
 
 //	@OneToMany //(fetch = FetchType.EAGER)
@@ -311,11 +311,11 @@ public class MSCabecalhoNotaFiscal {
 		this.codTipVenda = codTipVenda;
 	}
 
-	public Long getCif_fob() {
+	public String getCif_fob() {
 		return cif_fob;
 	}
 
-	public void setCif_fob(Long cif_fob) {
+	public void setCif_fob(String cif_fob) {
 		this.cif_fob = cif_fob;
 	}
 
