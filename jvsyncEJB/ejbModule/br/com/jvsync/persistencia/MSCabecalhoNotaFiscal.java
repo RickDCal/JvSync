@@ -82,6 +82,13 @@ public class MSCabecalhoNotaFiscal {
 	
 	@Column(name="codtipoper", columnDefinition="bigint")
 	private Long codtipoper;
+	
+	@Column(name="codTipVenda", columnDefinition="bigint")
+	private Long codTipVenda;
+	
+	@Column(name="cif_fob", columnDefinition="nvarchar")
+	private Long cif_fob;
+	
 
 //	@OneToMany //(fetch = FetchType.EAGER)
 //	@JoinColumn(name = "nunota")
@@ -288,6 +295,30 @@ public class MSCabecalhoNotaFiscal {
 //		this.itens = itens;
 //	}
 
+	public Long getCodtipoper() {
+		return codtipoper;
+	}
+
+	public void setCodtipoper(Long codtipoper) {
+		this.codtipoper = codtipoper;
+	}
+
+	public Long getCodTipVenda() {
+		return codTipVenda;
+	}
+
+	public void setCodTipVenda(Long codTipVenda) {
+		this.codTipVenda = codTipVenda;
+	}
+
+	public Long getCif_fob() {
+		return cif_fob;
+	}
+
+	public void setCif_fob(Long cif_fob) {
+		this.cif_fob = cif_fob;
+	}
+
 	@Override
 	public String toString() {
 		return "MSCabecalhoNotaFiscal [id=" + id + ", numNota=" + numNota + ", chavenfe=" + chavenfe + ", dtMov="
@@ -295,7 +326,10 @@ public class MSCabecalhoNotaFiscal {
 				+ baseIcms + ", vlrIcms=" + vlrIcms + ", baseSubstit=" + baseSubstit + ", vlrSubst=" + vlrSubst
 				+ ", totalCustoProd=" + totalCustoProd + ", vlrFrete=" + vlrFrete + ", vlroutros=" + vlroutros
 				+ ", vlrNota=" + vlrNota + ", codParcTransp=" + codParcTransp + ", qtdVol=" + qtdVol + ", volume="
-				+ volume + ", peso=" + peso + ", statusnfe=" + statusnfe  + "]";
+				+ volume + ", peso=" + peso + ", statusnfe=" + statusnfe + ", codtipoper=" + codtipoper
+				+ ", codTipVenda=" + codTipVenda + ", cif_fob=" + cif_fob + "]";
 	}
+
+	
 	
 }

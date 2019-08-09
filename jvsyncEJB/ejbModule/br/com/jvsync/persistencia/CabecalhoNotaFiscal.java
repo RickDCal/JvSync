@@ -82,6 +82,12 @@ public class CabecalhoNotaFiscal {
 	
 	@Column(name="codtipoper", columnDefinition="number")
 	private Long codtipoper;
+	
+	@Column(name="codTipVenda", columnDefinition="number")
+	private Long codTipVenda;
+	
+	@Column(name="cif_fob", columnDefinition="varchar2")
+	private Long cif_fob;
 
 //	@OneToMany //(fetch = FetchType.EAGER)
 //	@JoinColumn(name = "nunota")
@@ -259,6 +265,22 @@ public class CabecalhoNotaFiscal {
 
 	public void setCodtipoper(Long codtipoper) {
 		this.codtipoper = codtipoper;
+	}
+
+	public Long getCodTipVenda() {
+		return codTipVenda;
+	}
+
+	public void setCodTipVenda(Long codTipVenda) {
+		this.codTipVenda = codTipVenda;
+	}
+
+	public Long getCif_fob() {
+		return cif_fob;
+	}
+
+	public void setCif_fob(Long cif_fob) {
+		this.cif_fob = cif_fob;
 	}
 
 	@Override
