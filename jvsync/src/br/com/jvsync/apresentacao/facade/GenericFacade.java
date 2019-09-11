@@ -148,6 +148,7 @@ public class GenericFacade {
 
 		int x = service.totalRegistros(classe).intValue();
 		int i = 0;
+		int j = 0;
 		stb.append(x);
 
 		System.out.println(stb.toString());
@@ -191,19 +192,17 @@ public class GenericFacade {
 					}						
 				}				
 				service.atualizaDados(entidadesPersistir);
-				i = i + 500;
+				j = i = i + 500;
 				
 			} catch (Exception e) {
-				System.out.println("Houve uma falha ao atualizar registros. Registros atualizados até o momento: " + i);
-				e.printStackTrace();
+				System.out.println("Houve uma falha ao atualizar " + classe.getSimpleName() +". Registros atualizados até o momento: " + i);
+				i = x;
 			}			
 		}
 		
-		stb.append(" Registros atualizados: ").append(i > x ? x : i);
+		stb.append(" Registros atualizados: ").append(j > x ? x : j);
 		System.out.println(stb.toString());
 		return stb.toString();
-	}
-	
-	
+	}	
 
 }
