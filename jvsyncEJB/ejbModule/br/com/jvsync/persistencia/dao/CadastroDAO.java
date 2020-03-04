@@ -1,7 +1,10 @@
 package br.com.jvsync.persistencia.dao;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.Stateless;
 import javax.persistence.Query;
@@ -10,6 +13,7 @@ import br.com.jvsync.negocio.dto.FilterParceiroDTO;
 import br.com.jvsync.negocio.dto.FilterProdutoDTO;
 import br.com.jvsync.persistencia.Parceiro;
 import br.com.jvsync.persistencia.Produto;
+import br.com.jvsync.util.Utilities;
 
 @Stateless
 public class CadastroDAO extends GenericDAO implements ICadastroDAO {
@@ -116,6 +120,37 @@ public List<Parceiro> obterParceiros (FilterParceiroDTO filter) {
 				System.out.println("dados removidos da tabela" + tabela);
 			}			
 		}		
+	}
+	
+	public Map<String, String> ultimaAtualizacao() {
+		StringBuilder queryBuilder = new StringBuilder();
+		queryBuilder.append("select 'Cabeçalhos de Notas' as tabela , max (data_registro) as dia from TGFCAB ").append(" union ").append(System.lineSeparator());
+		queryBuilder.append("select 'Itens de Notas', max (data_registro) from TGFITE ").append(" union ").append(System.lineSeparator());
+		queryBuilder.append("select 'Tabela de Ruas', max (data_registro) from TFPLGR ").append(" union ").append(System.lineSeparator());
+		queryBuilder.append("select 'Clientes/Fornecedores', max (data_registro) from TGFPAR ").append(" union ").append(System.lineSeparator());
+		queryBuilder.append("select 'Cadastro de Produtos', max (data_registro) from TGFPRO ").append(" union ").append(System.lineSeparator());
+		queryBuilder.append("select 'Tabela de Rotas', max (data_registro) from TGFROT ").append(" union ").append(System.lineSeparator());
+		queryBuilder.append("select 'Tipos de Operações', max (data_registro) from TGFTOP ").append(" union ").append(System.lineSeparator());
+		queryBuilder.append("select 'Tipos de Vendas', max (data_registro) from TGFTPV ").append(" union ").append(System.lineSeparator());
+		queryBuilder.append("select 'Cadastro de Vendedores', max (data_registro) from TGFVEN ").append(" union ").append(System.lineSeparator());
+		queryBuilder.append("select 'Tabela de Volumes', max (data_registro) from TGFVOA ").append(" union ").append(System.lineSeparator());
+		queryBuilder.append("select 'Tabela de Bairros', max (data_registro) from TSIBAI ").append(" union ").append(System.lineSeparator());
+		queryBuilder.append("select 'Tabela de Cidades', max (data_registro) from TSICID ").append(" union ").append(System.lineSeparator());
+		queryBuilder.append("select 'Tabela de Endereços', max (data_registro) from TSIEND ").append(" union ").append(System.lineSeparator());
+		queryBuilder.append("select 'Tabela de Regiões', max (data_registro) from TSIREG ").append(" union ").append(System.lineSeparator());
+		queryBuilder.append("select 'Tabela de Estados', max (data_registro) from TSIUFS ");
+		
+		Query query = em.createNativeQuery(queryBuilder.toString());
+		
+		
+		List<Object[]> resultQuery = query.getResultList();
+		Map<String, String> map = new HashMap<>();
+
+		for (Object[] row: resultQuery) {
+			map.put((String) row[0], row[1] != null ? Utilities.dataYYYY_MM_DDeHHppmmppss((Date) row[1]) : "");
+		}
+		
+		return map;		
 	}
 	
 	

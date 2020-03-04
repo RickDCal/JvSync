@@ -1,6 +1,7 @@
 package br.com.jvsync.negocio;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -28,6 +29,10 @@ public class CadastroService implements ICadastroServiceLocal {
 	
 	public List<Produto> pesquisarProdutos (FilterProdutoDTO filter) {
 		return cadastroDao.obterProdutos(filter);
+	}
+	
+	public Map<String, String> ultimaAtualizacao() {
+		return cadastroDao.ultimaAtualizacao();
 	}
 	
 }

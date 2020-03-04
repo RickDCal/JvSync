@@ -1,6 +1,7 @@
 package br.com.jvsync.apresentacao.facade;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.naming.Context;
@@ -53,5 +54,9 @@ public class CadastroFacade {
 	public List<TipoVolume> pesquisarTipoVolume (Integer position, Integer max) throws ObjetoNaoEncontradoException, NamingException {
 		GenericFacade genericFacade = new GenericFacade();
 		return genericFacade.pesquisar(TipoVolume.class, position, max);
+	}
+	
+	public Map<String, String> ultimaAtualizacao() {
+		return service.ultimaAtualizacao();
 	}
 }

@@ -1,0 +1,35 @@
+
+
+
+.geral {
+	margin:0 auto;
+}
+
+#p {
+	margin:0; 
+	padding:0;
+	
+	
+}
+
+#accordion h1 {
+	background-color:transparent; 
+	margin:0; 
+	padding:0; 
+	border-top: 1px solid ;
+	border-color: #A0A0A0;
+	cursor:pointer; 
+	height:20px; 
+	padding:5px 0 0 10px;
+
+	
+	}
+	
+
+#accordion h1 a {
+	color:#666666; 
+	font-size:12px; 
+	text-decoration:none; 
+	height:100px;
+	font-style:inherit;
+}

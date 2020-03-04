@@ -1,6 +1,7 @@
 package br.com.jvsync.negocio;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.Local;
 
@@ -16,4 +17,5 @@ public interface ICadastroServiceLocal {
 	
 	public List<Produto> pesquisarProdutos (FilterProdutoDTO filter);
 	
+	public Map<String, String> ultimaAtualizacao();
 }
