@@ -56,47 +56,47 @@ public class DatabaseRest {
 	@Path("/atualizarDados")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String atualizarDados(@QueryParam("tabela") String tabela) {
-		setSuccess(false);
-		Object object = null;
-		try {
-			GenericFacade genericFacade = new GenericFacade();
-			switch (tabela.toLowerCase()) {
-			case "all": return genericFacade.atualizaBancoDados();
-			case "tgfcab": object = new CabecalhoNotaFiscal();break;
-			case "tgfite": object = new ItemNotaFiscal();break;
-			case "tgfpar": object = new Parceiro();break;
-			case "tgfpro": object = new Produto();break;
-			case "tgftpv": object = new TipoVenda();break;
-			case "tgfvoa": object = new TipoVolume();break;
-			case "tgfven": object = new Vendedor();break;
-			case "tgftop": object = new TipoOperacao();break;
-			case "tsibai": object = new Bairro();break;
-			case "tsicid": object = new Cidade();break;
-			case "tsireg": object = new Regiao();break;
-			case "tsiend": object = new Endereco();break;
-			case "tgfrot": object = new Rota();break;
-			case "tfplgr": object = new Logradouro();break;
-			case "tsiufs": object = new UF();break;
-			
-
-			default: break;
-			}
-			
-			System.out.println(new Date().toString());
-			
-			//não consegui fazer funcionar
-			//EmailTools email = new EmailTools();
-			//email.enviaEmail();
-			
-			if (object != null  ) {
-				return genericFacade.atualizaDados(object.getClass());
-			} else {
-				return "Não foi possivel determinar a entidade a ser atualizada. Tabela informada: " + tabela;
-			}
-								
-		} catch (NamingException | ObjetoNaoEncontradoException e) {
-			e.printStackTrace();
-		} 			
+//		setSuccess(false);
+//		Object object = null;
+//		try {
+//			GenericFacade genericFacade = new GenericFacade();
+//			switch (tabela.toLowerCase()) {
+//			case "all": return genericFacade.atualizaBancoDados();
+//			case "tgfcab": object = new CabecalhoNotaFiscal();break;
+//			case "tgfite": object = new ItemNotaFiscal();break;
+//			case "tgfpar": object = new Parceiro();break;
+//			case "tgfpro": object = new Produto();break;
+//			case "tgftpv": object = new TipoVenda();break;
+//			case "tgfvoa": object = new TipoVolume();break;
+//			case "tgfven": object = new Vendedor();break;
+//			case "tgftop": object = new TipoOperacao();break;
+//			case "tsibai": object = new Bairro();break;
+//			case "tsicid": object = new Cidade();break;
+//			case "tsireg": object = new Regiao();break;
+//			case "tsiend": object = new Endereco();break;
+//			case "tgfrot": object = new Rota();break;
+//			case "tfplgr": object = new Logradouro();break;
+//			case "tsiufs": object = new UF();break;
+//			
+//
+//			default: break;
+//			}
+//			
+//			System.out.println(new Date().toString());
+//			
+//			//não consegui fazer funcionar
+//			//EmailTools email = new EmailTools();
+//			//email.enviaEmail();
+//			
+//			if (object != null  ) {
+//				return genericFacade.atualizaDados(object.getClass());
+//			} else {
+//				return "Não foi possivel determinar a entidade a ser atualizada. Tabela informada: " + tabela;
+//			}
+//								
+//		} catch (NamingException | ObjetoNaoEncontradoException e) {
+//			e.printStackTrace();
+//		} 			
 		return montaResposta();
 	}
 }

@@ -5,7 +5,7 @@
 tr.grid, td.grid, th.grid, td.paging, td.resultadoConsulta {
 	border-style:solid;
 	border-width:thin;
-	border-color: #666;
+	border-color: #800000;
 	font-family:Verdana, Arial, Helvetica, sans-serif;
 }
 
