@@ -2,7 +2,7 @@
 /* CSS Document */
 
 body {
-background: url(../images/bg4.png) repeat-y scroll 50% 0 !important;
+background: url(../images/bg4.png) no-repeat scroll 50% 0 !important;
 background:#fff;
 font-family:Verdana, Arial, Helvetica, sans-serif;
 font-size:0.7em;

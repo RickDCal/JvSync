@@ -97,9 +97,6 @@
 	 	<hr>
 	 		 	
 	  	</div> 	    	
-	<div id="rodape">
-	<img src="<%="images/" + null %>">
-	</div>
 	
 	<script>
 	function atualizarGrid() {
