@@ -76,7 +76,7 @@
 					<input type="checkbox" id="check_<%=i%>" value="<%=tabela%>">
 				</td>
 				<td class="grid"><%=descricaoTabela%></td>
-				<td class="grid"><%=data%></td>	
+				<td id="dataAtualizacao_<%=i%>" class="grid"><%=data%></td>	
 				<td class="acao">
 					<a ><img id="load_<%=i%>"src="images/loading.gif" style="display : none"></a>
 					<a ><img id="loaded_<%=i%>"src="images/loaded.png" style="display : none"></a>
@@ -135,10 +135,16 @@
 		      this.imagem.style.display = "none";
 		      this.imagemLoaded.style.display = "block";
 		      this.checkBox.checked = false;
+		      var celula = document.getElementById(this.checkBox.id.replace("check", "dataAtualizacao"));
+			  if (celula) {
+				  celula.innerText = new Date().toLocaleDateString("pt-BR");
+			  }
+		      
 		    } else if (this.readyState == 4 && this.status != 200) {
 		      this.imagem.style.display = "none";
 			  this.imagemFail.style.display = "block";
 			  this.checkBox.checked = false;
+			 
 		    }
 		  };
 		  xhttp.open("GET", "/jvsync/rest/database/atualizarDados?tabela=" + check.value, true); // true = assincrono
@@ -148,7 +154,6 @@
 	
 	function marcaCheckbox(checked) {
 		var table=document.getElementById('grid');
-		
 		for(var i=0; i<table.rows.length;i++){
 			var check = document.getElementById('check_'+ i);
 			check.checked = checked; 
