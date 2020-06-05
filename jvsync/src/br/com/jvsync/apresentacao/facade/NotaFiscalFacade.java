@@ -13,7 +13,6 @@ import br.com.jvsync.negocio.exception.ObjetoInexistenteException;
 import br.com.jvsync.persistencia.CabecalhoNotaFiscal;
 import br.com.jvsync.persistencia.ItemNotaFiscal;
 import br.com.jvsync.persistencia.MSCabecalhoNotaFiscal;
-import br.com.jvsync.persistencia.dao.exception.ObjetoNaoEncontradoException;
 
 public class NotaFiscalFacade {
 	

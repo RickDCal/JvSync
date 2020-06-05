@@ -5,7 +5,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -15,10 +14,7 @@ import com.google.gson.JsonParser;
 @Entity  
 @Table(name="vendedor")
 
-public class MyVendedor {
-	
-	@Transient
-	public MyVendedorMS classeCorrespondente; // do tipo da classe correspondente no banco SQLserver.
+public class MyVendedorMS {
 
 	@Id 
 	@Column(name="referencia", columnDefinition="int")
@@ -54,5 +50,5 @@ public class MyVendedor {
 	public JsonObject toJson() {
 		return (JsonObject) new JsonParser().parse(new Gson().toJson(this));		
 	}	
-
+	
 }

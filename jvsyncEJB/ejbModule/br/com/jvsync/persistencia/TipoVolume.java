@@ -5,6 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -15,6 +16,9 @@ import com.google.gson.JsonParser;
 @Table(name="TGFVOA")
 
 public class TipoVolume {
+	
+	@Transient
+	public MSTipoVolume classeCorrespondente; // do tipo da classe correspondente no banco SQLserver.
 
 	@Id 
 	@Column(name="codprod", columnDefinition="number")

@@ -1,5 +1,6 @@
 package br.com.jvsync.apresentacao.facade;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -19,21 +20,12 @@ import br.com.jvsync.persistencia.Cidade;
 import br.com.jvsync.persistencia.Endereco;
 import br.com.jvsync.persistencia.ItemNotaFiscal;
 import br.com.jvsync.persistencia.Logradouro;
-import br.com.jvsync.persistencia.MSBairro;
-import br.com.jvsync.persistencia.MSCabecalhoNotaFiscal;
-import br.com.jvsync.persistencia.MSCidade;
-import br.com.jvsync.persistencia.MSEndereco;
-import br.com.jvsync.persistencia.MSItemNotaFiscal;
-import br.com.jvsync.persistencia.MSLogradouro;
-import br.com.jvsync.persistencia.MSParceiro;
-import br.com.jvsync.persistencia.MSProduto;
-import br.com.jvsync.persistencia.MSRegiao;
-import br.com.jvsync.persistencia.MSRota;
-import br.com.jvsync.persistencia.MSTipoOperacao;
-import br.com.jvsync.persistencia.MSTipoVenda;
-import br.com.jvsync.persistencia.MSTipoVolume;
-import br.com.jvsync.persistencia.MSUF;
-import br.com.jvsync.persistencia.MSVendedor;
+import br.com.jvsync.persistencia.MyParceiro;
+import br.com.jvsync.persistencia.MyParceiroX;
+import br.com.jvsync.persistencia.MyPedido;
+import br.com.jvsync.persistencia.MyPedidoItem;
+import br.com.jvsync.persistencia.MyProduto;
+import br.com.jvsync.persistencia.MyVendedor;
 import br.com.jvsync.persistencia.Parceiro;
 import br.com.jvsync.persistencia.Produto;
 import br.com.jvsync.persistencia.Regiao;
@@ -63,37 +55,12 @@ public class GenericFacade {
 
 	/*Genéricos*/
 
-	public <T> Object pesquisar(Class<T> classe, int id) throws ObjetoNaoEncontradoException {
-		return service.obter(classe, id);
-	}
-
 	public <E, T> List<E> pesquisar(Class<T> classe, Integer position, Integer max) throws ObjetoNaoEncontradoException {
 		return service.obter(classe, position, max);
 	}
 
-	public <E, T> List<E> pesquisar(Class<T> classe, String nome, Integer position, Integer max) throws ObjetoNaoEncontradoException {
-		return service.obter(classe, nome, position, max);
-	}
-
-	public void remover(Object entity) {
-		service.remover(entity);
-	}
-
-	public Object cadastrar(Object entity) throws ObjetoNaoEncontradoException {
-		return service.inserir(entity);
-	}
-
-	public Object atualizar(Object entity) throws ObjetoNaoEncontradoException {
-		return service.alterar(entity);
-
-	}
-
 	public JsonObject objetoJson(Object objeto) throws FalhaAoCriarJSONException {
 		return service.objetoJson(objeto);
-	}
-
-	public List<Object> obter (String nativeQuery) {
-		return service.obter(nativeQuery);
 	}
 	
 	public String atualizaBancoDados() {
@@ -131,6 +98,18 @@ public class GenericFacade {
 			stb.append(atualizaDados(UF.class));
 			stb.append(System.lineSeparator());
 			
+			stb.append(atualizaDados(MyParceiro.class));
+			stb.append(System.lineSeparator());
+			stb.append(atualizaDados(MyParceiroX.class));
+			stb.append(System.lineSeparator());
+			stb.append(atualizaDados(MyPedido.class));
+			stb.append(System.lineSeparator());
+			stb.append(atualizaDados(MyPedidoItem.class));
+			stb.append(System.lineSeparator());
+			stb.append(atualizaDados(MyProduto.class));
+			stb.append(System.lineSeparator());
+			stb.append(atualizaDados(MyVendedor.class));
+			
 			stb.append("Sincronização finalizada com sucesso!");			
 			System.out.println("Sincronização finalizada com sucesso!");
 			
@@ -156,34 +135,52 @@ public class GenericFacade {
 		while (i < x) {
 			try {
 				if (i > 0){ System.out.println("" + i + " linhas atualizadas");}
-				entidadesOrigem = service.obter(classe, i, 500);			
-				List<Object> entidadesPersistir = new ArrayList<>();
-				String tipo = classe.getSimpleName().toLowerCase();				
-				Class classePersistir = null;	
+				entidadesOrigem = service.obter(classe, i, 500);
+				@SuppressWarnings("rawtypes")
+				Class classePersistir = null;
+				
+				for (Field field : classe.getDeclaredFields()) {
+					if (field.getName().equalsIgnoreCase("classeCorrespondente")) {
+						classePersistir = field.getType();
+						break;
+					}
+				}
+				
+//				String tipo = classe.getSimpleName().toLowerCase();
+//				switch (tipo) {
+//				case "cabecalhonotafiscal": classePersistir = MSCabecalhoNotaFiscal.class; break;
+//				case "itemnotafiscal": classePersistir = MSItemNotaFiscal.class; break;
+//				case "parceiro": classePersistir = MSParceiro.class; break;
+//				case "produto": classePersistir = MSProduto.class; break;
+//				case "tipovenda": classePersistir = MSTipoVenda.class; break;
+//				case "tipovolume": classePersistir = MSTipoVolume.class; break;
+//				case "vendedor": classePersistir = MSVendedor.class; break;
+//				case "tipooperacao": classePersistir = MSTipoOperacao.class; break;
+//				case "bairro": classePersistir = MSBairro.class; break;
+//				case "cidade": classePersistir = MSCidade.class; break;
+//				case "endereco": classePersistir = MSEndereco.class; break;
+//				case "regiao": classePersistir = MSRegiao.class; break;
+//				case "rota": classePersistir = MSRota.class; break;
+//				case "logradouro": classePersistir = MSLogradouro.class; break;
+//				case "uf": classePersistir = MSUF.class; break;
+//				
+//				case "myparceiro": classePersistir = MyParceiroMS.class; break;
+//				case "myparceirox": classePersistir = MyParceiroXMS.class; break;
+//				case "mypedido": classePersistir = MyPedidoMS.class; break;
+//				case "mypedidoitem": classePersistir = MyPedidoItemMS.class; break;
+//				case "myproduto": classePersistir = MyProdutoMS.class; break;
+//				case "myvendedor": classePersistir = MyVendedorMS.class; break;
+//				
+//				default: break;
+//				}	
+				
 				Gson gson = new Gson();
-
-				switch (tipo) {
-				case "cabecalhonotafiscal": classePersistir = MSCabecalhoNotaFiscal.class; break;
-				case "itemnotafiscal": classePersistir = MSItemNotaFiscal.class; break;
-				case "parceiro": classePersistir = MSParceiro.class; break;
-				case "produto": classePersistir = MSProduto.class; break;
-				case "tipovenda": classePersistir = MSTipoVenda.class; break;
-				case "tipovolume": classePersistir = MSTipoVolume.class; break;
-				case "vendedor": classePersistir = MSVendedor.class; break;
-				case "tipooperacao": classePersistir = MSTipoOperacao.class; break;
-				case "bairro": classePersistir = MSBairro.class; break;
-				case "cidade": classePersistir = MSCidade.class; break;
-				case "endereco": classePersistir = MSEndereco.class; break;
-				case "regiao": classePersistir = MSRegiao.class; break;
-				case "rota": classePersistir = MSRota.class; break;
-				case "logradouro": classePersistir = MSLogradouro.class; break;
-				case "uf": classePersistir = MSUF.class; break;
-				default: break;
-				}					
 				
 				if (classePersistir == null) {
 					return "Não foi possível determinar o tipo de entidade a ser persistida. Classe de origem:" + classe.getSimpleName();
 				}
+				
+				List<Object> entidadesPersistir = new ArrayList<>();	
 
 				for (Object object : entidadesOrigem) {
 					Object entidadePersistir = gson.fromJson(gson.toJson(object), classePersistir); 

@@ -8,7 +8,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -16,12 +15,9 @@ import com.google.gson.JsonParser;
 
 
 @Entity  
-@Table(name="xp1")
+@Table(name="xp1_produto")
 
-public class MyProduto {
-	
-	@Transient
-	public MyProdutoMS classeCorrespondente; // do tipo da classe correspondente no banco SQLserver.
+public class MyProdutoMS {
 
 	@Id 
 	@Column(name="referencia", columnDefinition="int")
@@ -42,7 +38,7 @@ public class MyProduto {
 	@Column(name="preco_venda", columnDefinition="decimal")
 	private BigDecimal cnpj;
 	
-	@Column(name="custo_compra", columnDefinition="double")
+	@Column(name="custo_compra", columnDefinition="float")
 	private BigDecimal custoCompra;
 	
 	@Column(name="ultimo_reajuste", columnDefinition="datetime")
@@ -51,10 +47,10 @@ public class MyProduto {
 	@Column(name="ultima_entrada", columnDefinition="datetime")
 	private Date dataUltimasEntrada;
 	
-	@Column(name="peso_bru_por_unidade", columnDefinition="double")
+	@Column(name="peso_bru_por_unidade", columnDefinition="float")
 	private BigDecimal pesoBruto;
 	
-	@Column(name="peso_liq_por_unidade", columnDefinition="double")
+	@Column(name="peso_liq_por_unidade", columnDefinition="float")
 	private BigDecimal pesoLiquido;
 	
 	@Column(name="ncm", columnDefinition="varchar")

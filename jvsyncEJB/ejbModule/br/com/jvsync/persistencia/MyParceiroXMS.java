@@ -5,7 +5,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -13,12 +12,9 @@ import com.google.gson.JsonParser;
 
 
 @Entity  
-@Table(name="xempresa")
+@Table(name="xempresa_parceiro_auxiliar")
 
-public class MyParceiroX {
-	
-	@Transient
-	public MyParceiroXMS classeCorrespondente; // do tipo da classe correspondente no banco SQLserver.
+public class MyParceiroXMS {
 
 	@Id 
 	@Column(name="referencia", columnDefinition="int")

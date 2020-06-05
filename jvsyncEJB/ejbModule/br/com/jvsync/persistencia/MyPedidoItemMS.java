@@ -14,9 +14,9 @@ import com.google.gson.JsonParser;
 
 
 @Entity  
-@Table(name="xsaida")
+@Table(name="xsaida_item_pedido")
 
-public class MyPedidoItem {
+public class MyPedidoItemMS {
 
 	@Id 
 	@Column(name="referencia", columnDefinition="int")
@@ -31,31 +31,31 @@ public class MyPedidoItem {
 	@Column(name="produto", columnDefinition="varchar")
 	private String codigoProduto;
 	
-	@Column(name="quantidade_impressao", columnDefinition="double")
+	@Column(name="quantidade_impressao", columnDefinition="float")
 	private BigDecimal quantidadeUnidadeVenda;
 	
 	@Column(name="unidade_impressao", columnDefinition="varchar")
 	private String unidadeVenda;
 	
-	@Column(name="unitario_impressao", columnDefinition="double")
+	@Column(name="unitario_impressao", columnDefinition="float")
 	private BigDecimal valorUnidadeVenda;
 	
-	@Column(name="quantidade", columnDefinition="double")
+	@Column(name="quantidade", columnDefinition="float")
 	private BigDecimal quantidadeUnidadepadrao;
 	
-	@Column(name="valor_unitario", columnDefinition="double")
+	@Column(name="valor_unitario", columnDefinition="float")
 	private BigDecimal valorUnidadepadrao;
 	
-	@Column(name="desconto", columnDefinition="double")
+	@Column(name="desconto", columnDefinition="float")
 	private BigDecimal desconto;
 	
-	@Column(name="icms_subs", columnDefinition="double")
+	@Column(name="icms_subs", columnDefinition="float")
 	private BigDecimal icmsSt;
 	
-	@Column(name="valor_base_icms", columnDefinition="double")
+	@Column(name="valor_base_icms", columnDefinition="float")
 	private BigDecimal baseIcmsSt;
 	
-	@Column(name="valor_icms", columnDefinition="double")
+	@Column(name="valor_icms", columnDefinition="float")
 	private BigDecimal valorIcms;
 	
 	public JsonObject toJson() {

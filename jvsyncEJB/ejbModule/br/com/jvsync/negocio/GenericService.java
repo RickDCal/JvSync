@@ -26,14 +26,6 @@ public class GenericService implements IGenericServiceLocal  {
 	public GenericService() {
 
 	}
-	
-	public <T> Object obter(Class<T> classe, int id) throws ObjetoNaoEncontradoException {
-		try {
-			return genericDao.obter(classe, id);
-		} catch (ObjetoNaoEncontradoException e) {
-			throw new ObjetoNaoEncontradoException();
-		}		
-	}
 
 	public <E, T> List<E> obter(Class<T> classe, Integer position, Integer max) throws ObjetoNaoEncontradoException {
 		try {
@@ -41,26 +33,6 @@ public class GenericService implements IGenericServiceLocal  {
 		} catch (ObjetoNaoEncontradoException e) {
 			throw new ObjetoNaoEncontradoException();
 		}
-	}
-
-	public void remover(Object entity) {
-		try {
-			genericDao.remover(entity);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public Object inserir(Object entity) throws ObjetoNaoEncontradoException {
-		return genericDao.inserir(entity);
-	}
-
-	public Object alterar(Object entity) throws ObjetoNaoEncontradoException {
-		return genericDao.alterar(entity);
-	}
-
-	public <E, T> List<E> obter(Class<T> classe, String nome, Integer position, Integer max) throws ObjetoNaoEncontradoException {
-		return genericDao.obter(classe, nome, position, max);
 	}
 	
 	public JsonObject objetoJson(Object objeto) throws FalhaAoCriarJSONException {
@@ -70,11 +42,7 @@ public class GenericService implements IGenericServiceLocal  {
 		JsonObject jo = (JsonObject) jp.parse(gson.toJson(objeto));
 		return jo;		
 	}
-	
-	public List<Object> obter (String nativeQuery) {
-		return genericDao.obter(nativeQuery);
-	}
-	
+
 	public String atualizaDados (List<Object> entidadesAtualizar) {
 		return genericDao.atualizaDados(entidadesAtualizar);
 	}

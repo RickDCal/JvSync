@@ -8,7 +8,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -16,12 +15,9 @@ import com.google.gson.JsonParser;
 
 
 @Entity  
-@Table(name="empresa")
+@Table(name="empresa_parceiro")
 
-public class MyParceiro {
-	
-	@Transient
-	public MyParceiroMS classeCorrespondente; // do tipo da classe correspondente no banco SQLserver.
+public class MyParceiroMS {
 
 	@Id 
 	@Column(name="referencia", columnDefinition="int")
@@ -48,7 +44,7 @@ public class MyParceiro {
 	@Column(name="sexo", columnDefinition="varchar")
 	private String sexo;
 	
-	@Column(name="saldo", columnDefinition="double")
+	@Column(name="saldo", columnDefinition="float")
 	private BigDecimal saldo;
 	
 	@Column(name="classificacao", columnDefinition="varchar")

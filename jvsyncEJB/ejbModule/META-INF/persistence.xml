@@ -44,6 +44,13 @@
         <class>br.com.jvsync.persistencia.MSRota</class>
         <class>br.com.jvsync.persistencia.MSLogradouro</class>
         <class>br.com.jvsync.persistencia.MSUF</class>
+        
+        <class>br.com.jvsync.persistencia.MyParceiroMS</class>
+        <class>br.com.jvsync.persistencia.MyParceiroXMS</class>
+        <class>br.com.jvsync.persistencia.MyPedidoMS</class>
+        <class>br.com.jvsync.persistencia.MyPedidoItemMS</class>
+        <class>br.com.jvsync.persistencia.MyProdutoMS</class>
+        <class>br.com.jvsync.persistencia.MyVendedorMS</class>
 	    <exclude-unlisted-classes>true</exclude-unlisted-classes> 
 		<properties>   
 			<property name="hibernate.hbm2ddl.auto"	value="validate"/> 
@@ -53,9 +60,13 @@
 	
 	<persistence-unit name="dbmysql">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
-        <jta-data-source>java:/datasources/jvSyncMysql</jta-data-source>
-        <class>br.com.jvsync.persistencia.MyPedido</class>
+        <jta-data-source>java:/datasources/jvSyncMysql</jta-data-source>        
         <class>br.com.jvsync.persistencia.MyParceiro</class>
+        <class>br.com.jvsync.persistencia.MyParceiroX</class>
+        <class>br.com.jvsync.persistencia.MyPedido</class>
+        <class>br.com.jvsync.persistencia.MyPedidoItem</class>
+        <class>br.com.jvsync.persistencia.MyProduto</class>
+        <class>br.com.jvsync.persistencia.MyVendedor</class>        
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />

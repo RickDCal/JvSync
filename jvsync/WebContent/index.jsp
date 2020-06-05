@@ -65,7 +65,14 @@
 			case "Tabela de Cidades": tabela = "TSICID"; break;
 			case "Tabela de Endereços": tabela = "TSIEND"; break;
 			case "Tabela de Regiões": tabela = "TSIREG"; break;
-			case "Tabela de Estados": tabela = "TSIUFS"; break;
+			case "Tabela de Estados": tabela = "TSIUFS"; break;			
+			
+			case "Tabela de Clientes - Aliar" :  tabela = "myparceiro"; break;
+			case "Tabela de Clientes Auxiliar - Aliar":  tabela = "myparceirox"; break;
+			case "Tabela de Cabeçalho Pedidos - Aliar":  tabela = "mypedido"; break;
+			case "Tabela de Itens de Pedidos - Aliar":  tabela = "mypedidoitem"; break;
+			case "Tabela de Produtos - Aliar":  tabela = "myproduto"; break;
+			case "Tabela de Vendedores - Aliar" :  tabela = "myvendedor"; break;			
 			
 			default:break;
 			}	 		
@@ -160,16 +167,6 @@
 		}
 	}
 	
-	function loadDoc() {
-	  var xhttp = new XMLHttpRequest();
-	  xhttp.onreadystatechange = function() {
-	    if (this.readyState == 4 && this.status == 200) {
-	      document.getElementById("demo").innerHTML = this.responseText;
-	    }
-	  };
-	  xhttp.open("GET", "/jvsync/rest/database/atualizarDados?tabela=tgfven", false); // true = assincrono
-	  xhttp.send();
-	}
 	</script>
 </body>
 </html>

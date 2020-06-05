@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -14,6 +15,9 @@ import com.google.gson.JsonParser;
 @Table(name="TGFITE")
 @IdClass(value = ItemNotaPK.class)
 public class ItemNotaFiscal {
+	
+	@Transient
+	public MSItemNotaFiscal classeCorrespondente; // do tipo da classe correspondente no banco SQLserver.
 	
 	@Id 
 	@Column(name="nunota", columnDefinition="number")

@@ -19,6 +19,12 @@ import br.com.jvsync.persistencia.Cidade;
 import br.com.jvsync.persistencia.Endereco;
 import br.com.jvsync.persistencia.ItemNotaFiscal;
 import br.com.jvsync.persistencia.Logradouro;
+import br.com.jvsync.persistencia.MyParceiro;
+import br.com.jvsync.persistencia.MyParceiroX;
+import br.com.jvsync.persistencia.MyPedido;
+import br.com.jvsync.persistencia.MyPedidoItem;
+import br.com.jvsync.persistencia.MyProduto;
+import br.com.jvsync.persistencia.MyVendedor;
 import br.com.jvsync.persistencia.Parceiro;
 import br.com.jvsync.persistencia.Produto;
 import br.com.jvsync.persistencia.Regiao;
@@ -29,7 +35,6 @@ import br.com.jvsync.persistencia.TipoVolume;
 import br.com.jvsync.persistencia.UF;
 import br.com.jvsync.persistencia.Vendedor;
 import br.com.jvsync.persistencia.dao.exception.ObjetoNaoEncontradoException;
-import br.com.jvsync.util.EmailTools;
 
 @Path("/database")
 public class DatabaseRest {
@@ -76,8 +81,14 @@ public class DatabaseRest {
 			case "tsiend": object = new Endereco();break;
 			case "tgfrot": object = new Rota();break;
 			case "tfplgr": object = new Logradouro();break;
-			case "tsiufs": object = new UF();break;
+			case "tsiufs": object = new UF();break;	
 			
+			case "myparceiro": object = new MyParceiro();break;
+			case "myparceirox": object = new MyParceiroX();break;
+			case "mypedido": object = new MyPedido();break;
+			case "mypedidoitem": object = new MyPedidoItem();break;
+			case "myproduto": object = new MyProduto();break;
+			case "myvendedor": object = new MyVendedor();break;			
 
 			default: break;
 			}
