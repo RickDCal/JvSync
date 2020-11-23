@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.naming.NamingException;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -11,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import br.com.jvsync.apresentacao.facade.GenericFacade;
 import br.com.jvsync.persistencia.Bairro;
@@ -28,7 +30,9 @@ import br.com.jvsync.persistencia.MyVendedor;
 import br.com.jvsync.persistencia.Parceiro;
 import br.com.jvsync.persistencia.Produto;
 import br.com.jvsync.persistencia.Regiao;
+import br.com.jvsync.persistencia.RelacionamentoProduto;
 import br.com.jvsync.persistencia.Rota;
+import br.com.jvsync.persistencia.TipoMovimentoJiva;
 import br.com.jvsync.persistencia.TipoOperacao;
 import br.com.jvsync.persistencia.TipoVenda;
 import br.com.jvsync.persistencia.TipoVolume;
@@ -110,4 +114,34 @@ public class DatabaseRest {
 		} 			
 		return montaResposta();
 	}
+	
+	@POST
+	@Path("/atualizarRelacionamentoProduto")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String atualizarRelacionamentoProduto(String jsonString) throws NamingException {
+		if (jsonString != null && !jsonString.isEmpty()) {
+			JsonObject json = (JsonObject) new JsonParser().parse(jsonString);
+			GenericFacade genericFacade = new GenericFacade();
+			
+			RelacionamentoProduto rel = new RelacionamentoProduto();
+			if (json.get("id")!= null && !json.get("id").getAsString().isEmpty()) {
+				rel.setId(json.get("id").getAsInt());
+			}
+			rel.setCodigoAliar(json.get("codigoAliar").getAsString());
+			rel.setCodigoJiva(json.get("codigoJiva").getAsString());
+			rel.setTipoMovimentoJiva ((TipoMovimentoJiva) genericFacade.obter(TipoMovimentoJiva.class, json.get("tipoMovimento").getAsString()));
+				
+			if (rel.getId() == 0) {
+				genericFacade.inserirSqlServer(rel);
+			} else {
+				genericFacade.alterarSqlServer(rel);
+			}
+	
+		}
+		setSuccess(true);
+		return montaResposta();
+	}
+	
+	
+	
 }

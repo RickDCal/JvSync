@@ -1,5 +1,6 @@
 package br.com.jvsync.persistencia.dao;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -7,12 +8,15 @@ import java.util.List;
 import java.util.Map;
 
 import javax.ejb.Stateless;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import br.com.jvsync.negocio.dto.FilterParceiroDTO;
 import br.com.jvsync.negocio.dto.FilterProdutoDTO;
 import br.com.jvsync.persistencia.Parceiro;
 import br.com.jvsync.persistencia.Produto;
+import br.com.jvsync.persistencia.RelacionamentoProduto;
+import br.com.jvsync.persistencia.TipoMovimentoJiva;
 import br.com.jvsync.util.Utilities;
 
 @Stateless
@@ -158,6 +162,49 @@ public List<Parceiro> obterParceiros (FilterParceiroDTO filter) {
 		
 		return map;		
 	}
+	
+	public List<RelacionamentoProduto> obterRelacionamentoProduto (Integer id, String codigoAliar, String codigoJiva) {
+		
+		StringBuilder queryBuilder = new StringBuilder("select r from RelacionamentoProduto r where r.id > 0 ");
+		Map<String, Object> parametros = new HashMap<>();
+		
+		
+		if (id != null) {
+			 queryBuilder.append(" and r.id = :id");
+			 parametros.put("id", id);
+		}
+		
+		if (codigoJiva != null) {
+			 queryBuilder.append(" and r.codigoJiva = :codigoJiva");
+			 parametros.put("codigoJiva", codigoJiva);
+		}
+		
+		if (codigoAliar != null) {
+			 queryBuilder.append(" and r.codigoAliar = :codigoAliar");
+			 parametros.put("codigoAliar", codigoAliar);
+		}
+		
+		Query query = em.createQuery(queryBuilder.toString());
+		
+		for (Map.Entry<String,Object> entry : parametros.entrySet()) {
+			query.setParameter(entry.getKey(), entry.getValue());
+		}
+		
+		try {
+			return query.getResultList();
+		} catch (NoResultException e) {
+			return new ArrayList<>();
+		} 		
+		
+	}
+	
+	
+	public List<TipoMovimentoJiva> obterTipoMovimentoJiva () {
+		Query  query = em.createQuery("select t from TipoMovimentoJiva t ");
+		return query.getResultList();
+	}
+	
+	
 	
 	
 	

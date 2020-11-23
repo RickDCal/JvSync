@@ -1,0 +1,111 @@
+
+<!DOCTYPE html">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>JvSync</title>
+<link type="text/css" rel="stylesheet" href="css/estilo.css" />
+<link type="text/css" rel="stylesheet" href="css/estiloGrid.css" />
+<script type="text/javascript" src="js/script.js"></script>
+
+</head>
+
+<body>	
+    <div id="topo">    
+       
+    </div>
+  	 		  		
+   		
+	<br>	
+	<div id = "conteudo">
+	
+		<div id="titulo">
+			Vincular Produtos
+	 	</div>	 		 	 	
+	 	<br> 	
+	 	<p class="subtitulo"> Opções</p>
+	 	<br>
+	 	
+	 	<table id="grid">
+
+<tbody>
+<tr>
+<th>#</th>
+<th>Código Jiva</th>
+<th>Código Aliar</th>
+<th></th>
+</tr>
+<tr>
+<td></td>
+<td contenteditable='true'></td>
+<td contenteditable='true'></td>
+<td><a ><img src="images/edit20.png" alt="editar"  onclick="editar(12)"/></td>
+</tr>
+<tr>
+<td></td>
+<td contenteditable='true'></td>
+<td contenteditable='true'></td>
+</tr>
+</tbody>
+</table>
+	 	
+	 	<br><br><br>
+	 	
+	 	
+	 	
+	 	<table id="grid">
+	 
+			<tr class="grid">	 		
+				<td class="grid"><a href="vincularProdutos.jsp">Atualizar Cadastros</a></td>														
+			</tr>
+				   
+		      	    	
+	 	</table>
+	 	<br>
+	 	 		 	
+	  	</div> 	    	
+	
+	<script>
+	
+	
+	
+	function atualizarTabela(check, imagem, imagemLoaded, imagemFail) {
+		var xhttp = new XMLHttpRequest();
+		xhttp.checkBox = check;
+		xhttp.imagem = imagem;
+		xhttp.imagemLoaded = imagemLoaded;
+		xhttp.imagemFail = imagemFail;
+		
+		  xhttp.onreadystatechange = function(check, imagem, imagemLoaded) {
+		    if (this.readyState == 4 && this.status == 200) {
+		      this.imagem.style.display = "none";
+		      this.imagemLoaded.style.display = "block";
+		      this.checkBox.checked = false;
+		      var celula = document.getElementById(this.checkBox.id.replace("check", "dataAtualizacao"));
+			  if (celula) {
+				  celula.innerText = new Date().toLocaleDateString("pt-BR");
+			  }
+		      
+		    } else if (this.readyState == 4 && this.status != 200) {
+		      this.imagem.style.display = "none";
+			  this.imagemFail.style.display = "block";
+			  this.checkBox.checked = false;
+			 
+		    }
+		  };
+		  xhttp.open("GET", "/jvsync/rest/database/atualizarDados?tabela=" + check.value, true); // true = assincrono
+		  xhttp.send();
+		
+	}
+	
+	function marcaCheckbox(checked) {
+		var table=document.getElementById('grid');
+		for(var i=0; i<table.rows.length;i++){
+			var check = document.getElementById('check_'+ i);
+			check.checked = checked; 
+		}
+	}
+	
+	</script>
+</body>
+</html>

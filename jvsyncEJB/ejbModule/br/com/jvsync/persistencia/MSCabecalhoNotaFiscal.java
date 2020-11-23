@@ -89,6 +89,9 @@ public class MSCabecalhoNotaFiscal {
 	@Column(name="cif_fob", columnDefinition="nvarchar")
 	private String cif_fob;
 	
+	@Column(name="tipmov", columnDefinition="nvarchar")
+	private String tipmov;
+	
 
 //	@OneToMany //(fetch = FetchType.EAGER)
 //	@JoinColumn(name = "nunota")
@@ -317,6 +320,14 @@ public class MSCabecalhoNotaFiscal {
 
 	public void setCif_fob(String cif_fob) {
 		this.cif_fob = cif_fob;
+	}
+
+	public String getTipmov() {
+		return tipmov;
+	}
+
+	public void setTipmov(String tipmov) {
+		this.tipmov = tipmov;
 	}
 
 	@Override

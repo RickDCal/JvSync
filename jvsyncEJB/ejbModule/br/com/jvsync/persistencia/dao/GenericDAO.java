@@ -33,6 +33,10 @@ public class GenericDAO {
 	protected EntityManagerFactory emmyFactory;
 
 	protected Map<String, Object> parametros = new HashMap();
+	
+	public <T> Object obter(Class<T> classe, Object codigo) {		
+		return  em.find(classe, codigo);
+	}
 
 	@SuppressWarnings("unchecked")
 	public <E, T> List<E> obter (Class<T> classe, Integer position, Integer max) throws ObjetoNaoEncontradoException {
@@ -90,6 +94,34 @@ public class GenericDAO {
 		
 		}	
 		return (Long) query.getSingleResult();		
+	}
+	
+	public <E, T> List<E> obterDeSqlServer (Class<T> classe, Integer position, Integer max) {
+
+		String className = classe.getSimpleName();
+		String consulta = "select o from " + className + " o";
+
+		Query query = em.createQuery(consulta);		
+
+		if (position != null) {
+			query.setFirstResult(position);	
+		}
+		if (max != null) {
+			query.setMaxResults(max);
+		}
+		return query.getResultList();
+	}
+	
+	public Object inserirSqlServer (Object entity) {
+		em.persist(entity);
+		em.flush();		
+		return entity;
+	}
+
+	public Object alterarSqlServer (Object entity) {
+		em.merge(entity);
+		em.flush();		
+		return entity;
 	}
 
 }

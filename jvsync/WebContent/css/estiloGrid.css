@@ -5,18 +5,29 @@
 tr.grid, td.grid, th.grid, td.paging, td.resultadoConsulta {
 	border-style:solid;
 	border-width:thin;
-	border-color: #800000;
+	border-color: #e6e6e603;;
 	font-family:Verdana, Arial, Helvetica, sans-serif;
+  	border-spacing: 5px;
+  	border-left: none;
+    border-right: none;
+    background-color: #e6e6e659;
 }
 
 tr.grid:hover {
 	background-color: #E6E6E6;
 }
 
-#grid {
-	min-width: 800px;
-	border-collapse:collapse;
+
+
+
+#grid, #gridNovoRelacionamento
+{
+  border-collapse: separate;
+  border-spacing: 5px;
+  border: 0;
 }
+
+
 
 th.grid, th.acao, td.paging  {
 	background:url("../images/bg_head.png") bottom center repeat-x;
@@ -135,6 +146,9 @@ input.cell, select.cell {
     height: 21px;
 }
 
-
-
+select {
+	background-color: transparent;
+	width: 100%;
+	border: none;
+}
 

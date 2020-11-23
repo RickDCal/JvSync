@@ -54,6 +54,10 @@ public class GenericFacade {
 	}
 
 	/*Genéricos*/
+	
+	public <T> Object obter(Class<T> classe, Object codigo) {
+		return service.obter(classe, codigo);
+	}
 
 	public <E, T> List<E> pesquisar(Class<T> classe, Integer position, Integer max) throws ObjetoNaoEncontradoException {
 		return service.obter(classe, position, max);
@@ -201,5 +205,17 @@ public class GenericFacade {
 		System.out.println(stb.toString());
 		return stb.toString();
 	}	
+	
+	public <E, T> List<E> obterDeSqlServer (Class<T> classe, Integer position, Integer max) {
+		return service.obterDeSqlServer(classe, position, max);
+	}
+	
+	public Object inserirSqlServer (Object entity) {
+		return service.inserirSqlServer(entity);
+	}
+	
+	public Object alterarSqlServer (Object entity) {
+		return service.alterarSqlServer(entity);
+	}
 
 }

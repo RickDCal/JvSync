@@ -92,6 +92,9 @@ public class CabecalhoNotaFiscal {
 	
 	@Column(name="cif_fob", columnDefinition="varchar2")
 	private String cif_fob;
+	
+	@Column(name="tipmov", columnDefinition="varchar")
+	private String tipmov;
 
 //	@OneToMany //(fetch = FetchType.EAGER)
 //	@JoinColumn(name = "nunota")
@@ -285,6 +288,14 @@ public class CabecalhoNotaFiscal {
 
 	public void setCif_fob(String cif_fob) {
 		this.cif_fob = cif_fob;
+	}
+
+	public String getTipmov() {
+		return tipmov;
+	}
+
+	public void setTipmov(String tipmov) {
+		this.tipmov = tipmov;
 	}
 
 	@Override

@@ -26,6 +26,10 @@ public class GenericService implements IGenericServiceLocal  {
 	public GenericService() {
 
 	}
+	
+	public <T> Object obter(Class<T> classe, Object codigo) {
+		return genericDao.obter(classe, codigo);
+	}
 
 	public <E, T> List<E> obter(Class<T> classe, Integer position, Integer max) throws ObjetoNaoEncontradoException {
 		try {
@@ -50,7 +54,18 @@ public class GenericService implements IGenericServiceLocal  {
 	public <T> Long totalRegistros(Class<T> classe) {
 		return genericDao.totalRegistros(classe);
 	}
-
+	
+	public <E, T> List<E> obterDeSqlServer (Class<T> classe, Integer position, Integer max) {
+		return genericDao.obterDeSqlServer(classe, position, max);
+	}
+	
+	public Object inserirSqlServer (Object entity) {
+		return genericDao.inserirSqlServer(entity);
+	}
+	
+	public Object alterarSqlServer (Object entity) {
+		return genericDao.alterarSqlServer(entity);
+	}
 
 }
 

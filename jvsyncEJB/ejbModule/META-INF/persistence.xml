@@ -51,6 +51,9 @@
         <class>br.com.jvsync.persistencia.MyPedidoItemMS</class>
         <class>br.com.jvsync.persistencia.MyProdutoMS</class>
         <class>br.com.jvsync.persistencia.MyVendedorMS</class>
+        
+        <class>br.com.jvsync.persistencia.RelacionamentoProduto</class>
+        <class>br.com.jvsync.persistencia.TipoMovimentoJiva</class>
 	    <exclude-unlisted-classes>true</exclude-unlisted-classes> 
 		<properties>   
 			<property name="hibernate.hbm2ddl.auto"	value="validate"/> 

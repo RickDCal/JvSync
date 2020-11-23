@@ -10,6 +10,7 @@ import br.com.jvsync.negocio.dto.FilterParceiroDTO;
 import br.com.jvsync.negocio.dto.FilterProdutoDTO;
 import br.com.jvsync.persistencia.Parceiro;
 import br.com.jvsync.persistencia.Produto;
+import br.com.jvsync.persistencia.RelacionamentoProduto;
 import br.com.jvsync.persistencia.dao.ICadastroDAO;
 
 @Stateless
@@ -33,6 +34,10 @@ public class CadastroService implements ICadastroServiceLocal {
 	
 	public Map<String, String> ultimaAtualizacao() {
 		return cadastroDao.ultimaAtualizacao();
+	}
+	
+	public List<RelacionamentoProduto> obterRelacionamentoProduto (Integer id, String codigoAliar, String codigoJiva) {
+		return cadastroDao.obterRelacionamentoProduto(id, codigoAliar, codigoJiva);
 	}
 	
 }
