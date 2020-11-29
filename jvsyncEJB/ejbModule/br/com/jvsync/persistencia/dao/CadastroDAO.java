@@ -143,12 +143,12 @@ public List<Parceiro> obterParceiros (FilterParceiroDTO filter) {
 		queryBuilder.append("select 'Tabela de Endereços', max (data_registro) from TSIEND ").append(" union ").append(System.lineSeparator());
 		queryBuilder.append("select 'Tabela de Regiões', max (data_registro) from TSIREG ").append(" union ").append(System.lineSeparator());
 		queryBuilder.append("select 'Tabela de Estados', max (data_registro) from TSIUFS ").append(" union ").append(System.lineSeparator());
-		queryBuilder.append("select 'Tabela de Clientes - Aliar', max (data_registro) from EMPRESA_parceiro ").append(" union ").append(System.lineSeparator());
-		queryBuilder.append("select 'Tabela de Clientes Auxiliar - Aliar', max (data_registro) from XEMPRESA_parceiro_auxiliar ").append(" union ").append(System.lineSeparator());
-		queryBuilder.append("select 'Tabela de Cabeçalho Pedidos - Aliar', max (data_registro) from SAIDA_cabecalho_pedido ").append(" union ").append(System.lineSeparator());
-		queryBuilder.append("select 'Tabela de Itens de Pedidos - Aliar', max (data_registro) from XSAIDA_item_pedido ").append(" union ").append(System.lineSeparator());
-		queryBuilder.append("select 'Tabela de Produtos - Aliar', max (data_registro) from XP1_produto ").append(" union ").append(System.lineSeparator());
-		queryBuilder.append("select 'Tabela de Vendedores - Aliar', max (data_registro) from VENDEDOR ");
+		queryBuilder.append("select 'Tabela de Clientes - Aliar', max (data_registro) from aliar_EMPRESA_parceiro ").append(" union ").append(System.lineSeparator());
+		queryBuilder.append("select 'Tabela de Clientes Auxiliar - Aliar', max (data_registro) from aliar_XEMPRESA_parceiro_auxiliar ").append(" union ").append(System.lineSeparator());
+		queryBuilder.append("select 'Tabela de Cabeçalho Pedidos - Aliar', max (data_registro) from aliar_SAIDA_cabecalho_pedido ").append(" union ").append(System.lineSeparator());
+		queryBuilder.append("select 'Tabela de Itens de Pedidos - Aliar', max (data_registro) from aliar_XSAIDA_item_pedido ").append(" union ").append(System.lineSeparator());
+		queryBuilder.append("select 'Tabela de Produtos - Aliar', max (data_registro) from aliar_XP1_produto ").append(" union ").append(System.lineSeparator());
+		queryBuilder.append("select 'Tabela de Vendedores - Aliar', max (data_registro) from aliar_VENDEDOR ");
 		
 		Query query = em.createNativeQuery(queryBuilder.toString());
 		
