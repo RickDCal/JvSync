@@ -12,7 +12,7 @@ import com.google.gson.JsonParser;
 
 
 @Entity  
-@Table(name="vendedor")
+@Table(name="aliar_vendedor")
 
 public class MyVendedorMS {
 

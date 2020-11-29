@@ -14,7 +14,7 @@ import com.google.gson.JsonParser;
 
 
 @Entity  
-@Table(name="xsaida_item_pedido")
+@Table(name="aliar_xsaida_item_pedido")
 
 public class MyPedidoItemMS {
 

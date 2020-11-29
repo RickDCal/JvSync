@@ -12,7 +12,7 @@ import com.google.gson.JsonParser;
 
 
 @Entity  
-@Table(name="xempresa_parceiro_auxiliar")
+@Table(name="aliar_xempresa_parceiro_auxiliar")
 
 public class MyParceiroXMS {
 
