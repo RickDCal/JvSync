@@ -18,7 +18,8 @@
 
 		<% 		
 		GenericFacade genericFacade = new GenericFacade();
-		List<RelacionamentoProduto> rels = genericFacade.obterDeSqlServer(RelacionamentoProduto.class, 0, null);		
+		List<RelacionamentoProduto> rels = genericFacade.obterDeSqlServer(RelacionamentoProduto.class, 0, null);
+		genericFacade.sortRelacionamentoProduto(rels);
 		List<TipoMovimentoJiva> tiposMovimento = genericFacade.obterDeSqlServer(TipoMovimentoJiva.class, 0, null);	
 						
    		%>	 
@@ -31,41 +32,10 @@
 	<div id = "conteudo">
 	
 		<div id="titulo">
-			Vincular Produtos
-	 	</div>	 	
-	 	
+			Vinculo de Produtos
+	 	</div>	
 	 	<br>
-		<p class="subtitulo"> Produtos Vinculados</p>
-		<br>
 	 	
-	 	<table id="grid">
-			<tbody>
-				<tr>
-					<th class="grid tam2">#</th>
-					<th class="grid tam8">Código Aliar</th>
-					<th class="grid tam8">Código Jiva</th>
-					<th class="grid tam14">Tipo Movimento (Corresp. Jiva)</th>
-					<th class="grid tam0"></th>
-				</tr>
-				<%
-				for (RelacionamentoProduto rel : rels) {
-					String descricaoOperacao = rel.getTipoMovimentoJiva() != null ? rel.getTipoMovimentoJiva().getDescricao() : "";				
-				%>
-				<tr>
-					<td class="grid"><%=rel.getId()%></td>
-					<td class="grid"><%=rel.getCodigoAliar()%></td>
-					<td class="grid"><%=rel.getCodigoJiva()%></td>
-					<td class="grid"><%=descricaoOperacao%></td>
-					<td class="grid"><a><img src="images/edit20.png" alt="editar"  onclick="editar(<%=rel.getId()%>)"/></a></td>
-				</tr>
-				<%
-				}
-				%>
-			</tbody>
-		</table>
-		<br>
-		<br>
-		<hr>
 		<p id="subtituloEdicao" class="subtitulo"> Adicionar Vínculo</p>
 	 	
 	 	<table id="gridNovoRelacionamento">
@@ -97,7 +67,43 @@
 				</td>
 				<td class="grid tam0"><a><img src="images/save20.png" alt="salvar"  onclick="salvarRelacionamentoProduto()"/></a></td>
 				</tr>	 	
-	 	</table>
+	 	</table> 	
+	 	
+	 	<br>
+	 	<hr>
+	 	<br>
+		<p class="subtitulo"> Produtos Vinculados</p>
+		<br>
+		
+	 	
+	 	<table id="grid">
+			<tbody>
+				<tr>
+					<th class="grid tam2">#</th>
+					<th class="grid tam8">Código Aliar</th>
+					<th class="grid tam8">Código Jiva</th>
+					<th class="grid tam14">Tipo Movimento (Corresp. Jiva)</th>
+					<th class="grid tam0"></th>
+				</tr>
+				<%
+				for (RelacionamentoProduto rel : rels) {
+					String descricaoOperacao = rel.getTipoMovimentoJiva() != null ? rel.getTipoMovimentoJiva().getDescricao() : "";				
+				%>
+				<tr>
+					<td class="grid"><%=rel.getId()%></td>
+					<td class="grid"><%=rel.getCodigoAliar()%></td>
+					<td class="grid"><%=rel.getCodigoJiva()%></td>
+					<td class="grid"><%=descricaoOperacao%></td>
+					<td class="grid"><a><img src="images/edit20.png" alt="editar"  onclick="editar(<%=rel.getId()%>)"/></a></td>
+				</tr>
+				<%
+				}
+				%>
+			</tbody>
+		</table>
+		<br>
+		<br>
+		
 	  	</div> 	    	
 
 </body>

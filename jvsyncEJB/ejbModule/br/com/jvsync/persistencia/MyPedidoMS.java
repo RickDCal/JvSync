@@ -53,6 +53,9 @@ public class MyPedidoMS {
 	@Column(name="nome_transportadora", columnDefinition="varchar")
 	private String nomeTransportadora;	
 	
+	@Column(name="vendedor", columnDefinition="varchar")
+	private String vendedor;
+	
 	public JsonObject toJson() {
 		return (JsonObject) new JsonParser().parse(new Gson().toJson(this));		
 	}	

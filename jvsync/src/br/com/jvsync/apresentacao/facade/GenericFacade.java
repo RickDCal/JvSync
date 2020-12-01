@@ -2,6 +2,7 @@ package br.com.jvsync.apresentacao.facade;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Properties;
 
@@ -29,6 +30,7 @@ import br.com.jvsync.persistencia.MyVendedor;
 import br.com.jvsync.persistencia.Parceiro;
 import br.com.jvsync.persistencia.Produto;
 import br.com.jvsync.persistencia.Regiao;
+import br.com.jvsync.persistencia.RelacionamentoProduto;
 import br.com.jvsync.persistencia.Rota;
 import br.com.jvsync.persistencia.TipoOperacao;
 import br.com.jvsync.persistencia.TipoVenda;
@@ -216,6 +218,10 @@ public class GenericFacade {
 	
 	public Object alterarSqlServer (Object entity) {
 		return service.alterarSqlServer(entity);
+	}
+	
+	public void sortRelacionamentoProduto(List<RelacionamentoProduto> rels) {
+		rels.sort(Comparator.comparing(o -> o.getCodigoAliar()));
 	}
 
 }

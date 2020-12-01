@@ -32,6 +32,9 @@ public class TipoOperacao {
 	@Column(name="dhalter", columnDefinition="date")
 	private Date dhalter;
 	
+	@Column(name="tipmov", columnDefinition="nvarchar")
+	private String tipmov;
+	
 	public JsonObject toJson() {
 		return (JsonObject) new JsonParser().parse(new Gson().toJson(this));		
 	}
@@ -58,6 +61,14 @@ public class TipoOperacao {
 
 	public void setDhalter(Date dhalter) {
 		this.dhalter = dhalter;
+	}
+
+	public String getTipmov() {
+		return tipmov;
+	}
+
+	public void setTipmov(String tipmov) {
+		this.tipmov = tipmov;
 	}
 
 	@Override
