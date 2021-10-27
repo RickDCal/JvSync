@@ -140,7 +140,7 @@ public class GenericFacade {
 		List<Object> entidadesOrigem;		
 		while (i < x) {
 			try {
-				if (i > 0){ System.out.println("" + i + " linhas atualizadas");}
+				if (i > 0){ System.out.println(classe.getSimpleName() +  " - " + i + " linhas atualizadas");}
 				entidadesOrigem = service.obter(classe, i, 500);
 				@SuppressWarnings("rawtypes")
 				Class classePersistir = null;
