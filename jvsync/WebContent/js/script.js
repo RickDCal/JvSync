@@ -15,30 +15,6 @@ function editar(id) {
 }
 	
 function atualizarGrid() {
-	
-	var table=document.getElementById('grid');
-	var tabelas = [];
-	var imagens = [];
-
-	for(var i=0; i<table.rows.length;i++){
-		var imagem, check;
-		check = document.getElementById('check_'+ i);
-		imagem = document.getElementById('load_'+ i);
-		imagemLoaded = document.getElementById('loaded_'+ i);	
-		imagemFail = document.getElementById('fail_'+ i);
-		
-		if (check && check.checked && imagem) {
-			imagem.style.display = "block";
-			atualizarTabela(check, imagem, imagemLoaded, imagemFail);				
-		} else {
-			imagem.style.display = "none";
-			imagemLoaded.style.display = "none";
-			imagemFail.style.display = "none";
-		}
-	}
-}
-
-function atualizarGrid() {
 		
 	var table=document.getElementById('grid');
 	var tabelas = [];
@@ -118,7 +94,7 @@ function salvarRelacionamentoProduto() {
 	
 	  xhttp.onreadystatechange = function() {
 	    if (this.readyState == 4 && this.status == 200) {
-	      alert('Funcionou');
+	      alert('Registro Salvo!');
 	      window.location.reload(); 
 	      
 	    } else if (this.readyState == 4 && this.status != 200) {
