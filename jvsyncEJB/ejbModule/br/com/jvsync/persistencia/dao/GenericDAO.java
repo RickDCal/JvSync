@@ -32,7 +32,7 @@ public class GenericDAO {
 	@PersistenceUnit(unitName = "dbmysql")
 	protected EntityManagerFactory emmyFactory;
 
-	protected Map<String, Object> parametros = new HashMap();
+	protected Map<String, Object> parametros = new HashMap<>();
 	
 	public <T> Object obter(Class<T> classe, Object codigo) {		
 		return  em.find(classe, codigo);

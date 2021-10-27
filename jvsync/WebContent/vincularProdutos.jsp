@@ -90,10 +90,11 @@
 					String descricaoOperacao = rel.getTipoMovimentoJiva() != null ? rel.getTipoMovimentoJiva().getDescricao() : "";				
 				%>
 				<tr>
-					<td class="grid"><%=rel.getId()%></td>
-					<td class="grid"><%=rel.getCodigoAliar()%></td>
-					<td class="grid"><%=rel.getCodigoJiva()%></td>
+					<td class="grid" id="<%="idRelacionamento"+rel.getId()%>"><%=rel.getId()%></td>
+					<td class="grid" id="<%="codigoAliar"+rel.getId()%>"><%=rel.getCodigoAliar()%></td>
+					<td class="grid" id="<%="codigoJiva"+rel.getId()%>"><%=rel.getCodigoJiva()%></td>
 					<td class="grid"><%=descricaoOperacao%></td>
+					<td class="grid" id="<%="codTipo"+rel.getId()%>" hidden=true><%=rel.getTipoMovimentoJiva().getTipoMovimento()%></td>
 					<td class="grid"><a><img src="images/edit20.png" alt="editar"  onclick="editar(<%=rel.getId()%>)"/></a></td>
 				</tr>
 				<%

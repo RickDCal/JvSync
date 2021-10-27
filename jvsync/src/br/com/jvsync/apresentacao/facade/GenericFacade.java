@@ -1,6 +1,7 @@
 package br.com.jvsync.apresentacao.facade;
 
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -135,12 +136,19 @@ public class GenericFacade {
 		int i = 0;
 		int j = 0;
 		stb.append(x);
+		
+		Double x1 = new Double(x);
+		Double i1 = 0.0;
+		Double percentual = 0.0;
+		
 
 		System.out.println(stb.toString());
 		List<Object> entidadesOrigem;		
 		while (i < x) {
 			try {
-				if (i > 0){ System.out.println("" + i + " linhas atualizadas");}
+				
+				percentual = x1 == 0.0 ? 0.0 : (i1/x1)*100.00;
+				if (i > 0){ System.out.println(classe.getSimpleName() + " -> " + String.format("%.2f", percentual)  + " % executado.");}
 				entidadesOrigem = service.obter(classe, i, 500);
 				@SuppressWarnings("rawtypes")
 				Class classePersistir = null;
@@ -151,34 +159,6 @@ public class GenericFacade {
 						break;
 					}
 				}
-				
-//				String tipo = classe.getSimpleName().toLowerCase();
-//				switch (tipo) {
-//				case "cabecalhonotafiscal": classePersistir = MSCabecalhoNotaFiscal.class; break;
-//				case "itemnotafiscal": classePersistir = MSItemNotaFiscal.class; break;
-//				case "parceiro": classePersistir = MSParceiro.class; break;
-//				case "produto": classePersistir = MSProduto.class; break;
-//				case "tipovenda": classePersistir = MSTipoVenda.class; break;
-//				case "tipovolume": classePersistir = MSTipoVolume.class; break;
-//				case "vendedor": classePersistir = MSVendedor.class; break;
-//				case "tipooperacao": classePersistir = MSTipoOperacao.class; break;
-//				case "bairro": classePersistir = MSBairro.class; break;
-//				case "cidade": classePersistir = MSCidade.class; break;
-//				case "endereco": classePersistir = MSEndereco.class; break;
-//				case "regiao": classePersistir = MSRegiao.class; break;
-//				case "rota": classePersistir = MSRota.class; break;
-//				case "logradouro": classePersistir = MSLogradouro.class; break;
-//				case "uf": classePersistir = MSUF.class; break;
-//				
-//				case "myparceiro": classePersistir = MyParceiroMS.class; break;
-//				case "myparceirox": classePersistir = MyParceiroXMS.class; break;
-//				case "mypedido": classePersistir = MyPedidoMS.class; break;
-//				case "mypedidoitem": classePersistir = MyPedidoItemMS.class; break;
-//				case "myproduto": classePersistir = MyProdutoMS.class; break;
-//				case "myvendedor": classePersistir = MyVendedorMS.class; break;
-//				
-//				default: break;
-//				}	
 				
 				Gson gson = new Gson();
 				
@@ -196,6 +176,7 @@ public class GenericFacade {
 				}				
 				service.atualizaDados(entidadesPersistir);
 				j = i = i + 500;
+				i1 = i1 + 500.00;
 				
 			} catch (Exception e) {
 				System.out.println("Houve uma falha ao atualizar " + classe.getSimpleName() +". Registros atualizados até o momento: " + i);

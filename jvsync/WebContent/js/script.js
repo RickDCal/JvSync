@@ -1,5 +1,17 @@
-function editar(valor) {
-		alert(valor);
+function editar(id) {
+
+		
+		var table=document.getElementById('gridNovoRelacionamento');
+		idRelacionamento = document.getElementById('idRelacionamento'+id).innerText;
+		codigoAliar = document.getElementById('codigoAliar'+id).innerText;
+		codigoJiva = document.getElementById('codigoJiva'+id).innerText;
+		tipoMovimento = document.getElementById('codTipo'+id).innerText;
+		
+		document.getElementById('idRelacionamento').innerText = idRelacionamento;
+		document.getElementById('codigoAliar').innerText = codigoAliar;
+		document.getElementById('codigoJiva').innerText = codigoJiva;
+		document.getElementById('selectTipo').value = tipoMovimento;	
+		
 }
 	
 function atualizarGrid() {
